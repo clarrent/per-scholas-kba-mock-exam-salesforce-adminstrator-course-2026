@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎓 KBA Lesson 7-9 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 8px; }
+  .q-hint { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; margin-top: 14px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 7-9 &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">2</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Object Manager and Lightning App Builder: picklists, value sets, page layouts, record types, App Manager, navigation, utility bar, actions</li>
+      <li>Productivity and Collaboration: activity management (tasks, events), email integration, Einstein Activity Capture, Chatter</li>
+    </ul>
+
+    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Object Manager and Lightning App Builder</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="q-hint hidden" id="q-hint"></div>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
+        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const OBJ = "Object Manager and Lightning App Builder";
+  const PNC = "Productivity and Collaboration";
+
+  const BANK = [
+    { domain: OBJ, source: "Get Started with Picklists",
+      q: "What type of field should be used when a user must choose from a predefined, admin-controlled list of values instead of typing free text?",
+      opts: ["Picklist", "Text Area (Long)", "Formula", "Auto Number"],
+      notes: ["Correct, a picklist restricts entry to a defined set of values.", "A long text area still allows unrestricted free text.", "A formula field calculates a value, it isn't user-entered.", "Auto Number generates a sequential value automatically, it isn't a choice field."],
+      correct: 0,
+      why: "Picklists constrain a field to a defined, admin-controlled set of values, which is what keeps data clean and reportable instead of relying on free text." },
+
+    { domain: OBJ, source: "Manage Your Picklist Values",
+      q: "Which picklist type can an administrator delete from the org entirely?",
+      opts: ["Standard Picklist", "Custom Picklist", "Neither can be deleted", "Only picklists with fewer than 5 values"],
+      notes: ["Standard picklists ship with the org and cannot be deleted.", "Correct, a Custom Picklist (single or multi-select) can be deleted from the org, unlike a Standard Picklist.", "This is incorrect, custom picklist types can be deleted.", "The number of values has no bearing on deletability."],
+      correct: 1,
+      why: "Only custom picklist types (single-select or multi-select) can be deleted from the org outright; standard picklists cannot." },
+
+    { domain: OBJ, source: "Manage Your Picklist Values",
+      q: "Which two picklist types support being marked as Restricted? Select 2.",
+      type: "multi",
+      opts: ["Standard Picklist", "Custom Picklist", "Custom Multi-Select Picklist", "Auto Number"],
+      notes: ["Standard Picklists cannot be restricted.", "Correct, Custom Picklists can be restricted.", "Correct, Custom Multi-Select Picklists can be restricted.", "Auto Number isn't a picklist type at all."],
+      correct: [1, 2],
+      why: "Restricting a picklist (limiting entry to only its defined values, even via API or data load) is available on Custom Picklists and Custom Multi-Select Picklists, but not on Standard Picklists." },
+
+    { domain: OBJ, source: "Manage Your Picklist Values",
+      q: "An administrator wants to maximize data quality on a picklist field. Which two settings should be combined? Select 2.",
+      type: "multi",
+      opts: ["Restricted", "Required", "Hidden", "Read-Only for all profiles"],
+      notes: ["Correct, Restricted blocks any value outside the defined list.", "Correct, Required blocks the field from being left blank.", "Hiding the field prevents data entry altogether, it doesn't improve quality of captured data.", "Making it read-only for everyone means no one could ever set a value."],
+      correct: [0, 1],
+      why: "Restricted blocks invalid values and Required blocks blank values, combined they close the two biggest data-quality gaps on a picklist field." },
+
+    { domain: OBJ, source: "Share Values with Global Value Sets",
+      q: "What is the main advantage of a Global Value Set over a picklist's own field-level value set?",
+      opts: ["The same list of values can be reused across multiple fields and objects, and updating it in one place updates every field using it", "It allows the field to store multiple data types", "It removes the need for field-level security", "It automatically translates values into other languages"],
+      notes: ["Correct, this reusability is the entire point of a Global Value Set.", "Global Value Sets don't change the field's data type.", "Field-level security still applies normally regardless of value set type.", "Automatic translation isn't a feature of Global Value Sets."],
+      correct: 0,
+      why: "A Global Value Set is defined once and can be attached to picklist fields across multiple objects, so updating the shared list in one place updates it everywhere it's used." },
+
+    { domain: OBJ, source: "Create Picklists and Field Dependencies",
+      q: "In a field dependency, which statement is correct?",
+      opts: ["A standard picklist can be a controlling field, but it can never be a dependent field", "A multi-select picklist can be a controlling field", "Both fields in a dependency must be custom multi-select picklists", "A checkbox can never be a controlling field"],
+      notes: ["Correct, this is a standard field dependency rule.", "A multi-select picklist can be dependent, but never controlling.", "Controlling and dependent fields can be standard picklists, custom picklists, or checkboxes, not exclusively multi-select.", "A checkbox actually can be a controlling field."],
+      correct: 0,
+      why: "A standard picklist field is allowed to control another field's values, but it can never be the dependent field itself, only custom fields can sit on the dependent side." },
+
+    { domain: OBJ, source: "Create Picklists and Field Dependencies",
+      q: "Which field type can be a dependent field but can never be a controlling field?",
+      opts: ["Multi-select picklist", "Checkbox", "Single-select standard picklist", "Currency field"],
+      notes: ["Correct, multi-select picklists can be dependent but never controlling.", "Checkboxes can control another field's values.", "Standard single-select picklists can be controlling fields.", "Currency fields aren't part of field dependencies at all."],
+      correct: 0,
+      why: "A multi-select picklist can be set up as the dependent field, but it is never allowed to act as the controlling field for another field." },
+
+    { domain: OBJ, source: "Create Record Types",
+      q: "An admin needs the same Industry field to show a short, curated list of values on one record type and the full standard list on another. Which feature accomplishes this?",
+      opts: ["Record-type-specific picklist values", "A second Industry field built just for that record type", "Field-level security", "A validation rule"],
+      notes: ["Correct, this is exactly what record-type-specific picklist values are built for.", "Duplicating the field is unnecessary and against best practice once record types solve this.", "Field-level security controls visibility/editability, not which value subset is offered.", "A validation rule blocks a save based on criteria, it doesn't trim a picklist's values."],
+      correct: 0,
+      why: "Record types let the same picklist field present a different, trimmed subset of its full value set depending on which record type applies to the record." },
+
+    { domain: OBJ, source: "Customize Record Pages",
+      q: "When a Lightning page is saved for the first time in Lightning App Builder, what must an admin still do before users see the changes?",
+      opts: ["Activate the page and assign it to an app, record type, and profile", "Nothing, saving automatically pushes it live", "Delete the previous page layout", "Deactivate the org's other Lightning pages"],
+      notes: ["Correct, saving alone never pushes a page to users, only Activation does.", "Saving does not automatically activate a page for users.", "The classic page layout doesn't need to be deleted for a new Lightning page to work.", "Other pages don't need to be deactivated to activate a new one."],
+      correct: 0,
+      why: "Saving a Lightning page in App Builder only stores the design. It has to be separately activated and assigned to a combination of app, record type, and profile before any user actually sees it." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, App Manager",
+      q: "Where does an administrator set an app's developer name and apply branding such as a logo and primary color?",
+      opts: ["Lightning App Manager", "Object Manager", "Company Information", "Login Access Policies"],
+      notes: ["Correct, App Manager is where a Lightning app is named, given a developer name, and branded.", "Object Manager configures objects and fields, not app-level branding.", "Company Information holds org-wide defaults like time zone and currency, not app branding.", "Login Access Policies controls admin login-as-user behavior."],
+      correct: 0,
+      why: "The Lightning App Manager is where an admin sets an app's name, developer name, and branding (logo image and primary color)." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, App Manager: Navigation Items",
+      q: "What do Navigation Items control in a Lightning app?",
+      opts: ["Which tabs appear in the app's navigation bar, and their order", "Which users can log into the app", "Which fields are required on a page layout", "Which record types are active for an object"],
+      notes: ["Correct, Navigation Items determine which tabs show and in what order.", "App login access is a separate profile/permission set assignment.", "Required fields are set on the field itself or the page layout, not Navigation Items.", "Record type activation is unrelated to app navigation."],
+      correct: 0,
+      why: "Navigation Items determine which tabs appear in a Lightning app's navigation bar and the order they display in." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, Utility Bar",
+      q: "What does adding a Utility Bar to a Lightning app provide to users?",
+      opts: ["Persistent, one-click access to tools like Notes or Recent Items from any record in the app", "A summary of the org's data storage usage", "A way to restrict login hours by profile", "A default currency setting for new records"],
+      notes: ["Correct, the Utility Bar sits at the bottom of the screen for quick access to tools without leaving the current record.", "Storage usage is shown elsewhere, on the Company Information / Storage Usage page.", "Login hour restriction is a profile setting, unrelated to the Utility Bar.", "Default currency is an org- or record-level setting, not a Utility Bar feature."],
+      correct: 0,
+      why: "The Utility Bar gives users persistent, one-click access to tools such as Notes, Recent Items, or a phone dialer, without navigating away from the record they're viewing." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, Types of Actions",
+      q: "An admin wants an action available across the entire org that isn't tied to any specific object. What type of action should be built?",
+      opts: ["Global Action", "Object-Specific Action", "Validation Rule", "Workflow Field Update"],
+      notes: ["Correct, a Global Action is not attached to any specific object and can be used org-wide.", "An Object-Specific Action only appears on records of that one object.", "A validation rule blocks saves based on criteria, it isn't an action type.", "A workflow field update changes a field automatically, it isn't a user-facing action."],
+      correct: 0,
+      why: "A Global Action isn't tied to a specific object and can be placed in general contexts like the Chatter publisher, unlike an Object-Specific Action, which only appears on records of one object." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, Types of Actions",
+      q: "A Quick Action to log a call is built so it only appears on Account records. What type of action is this?",
+      opts: ["Object-Specific Action", "Global Action", "Approval Process", "Escalation Rule"],
+      notes: ["Correct, an action scoped to appear only on one object's records is Object-Specific.", "A Global Action would be available org-wide, not scoped to just Account.", "Approval Processes route records for approval, unrelated to quick actions.", "Escalation Rules apply to Cases specifically and are unrelated to quick actions."],
+      correct: 0,
+      why: "An action built to appear specifically and only on records of one object, such as Account, is an Object-Specific Action, as opposed to a Global Action, which isn't tied to any object." },
+
+    { domain: OBJ, source: "KBA Prep Lesson 7-9, Record Types and Picklists Review",
+      q: "Which two statements are true regarding record-type-specific picklist values? Select 2.",
+      type: "multi",
+      opts: ["The same field can present a different subset of values depending on the record type", "Each record type requires its own separate field to be created", "Values shown are trimmed from the field's master value set, not duplicated onto a new field", "Values apply identically to every record type with no way to vary them"],
+      notes: ["Correct, one field, different value subsets per record type.", "This is unnecessary, record types solve this without duplicating fields.", "Correct, the field itself stays singular, only the presented value subset changes.", "This is the opposite of what record-type-specific values are for."],
+      correct: [0, 2],
+      why: "Record-type-specific picklist values let one field present a trimmed, different subset of its master value set per record type, no duplicate fields required." },
+
+    { domain: PNC, source: "Help Your Reps Use Activities",
+      q: "Which of the following is NOT a standard Task status in Salesforce?",
+      opts: ["Escalated", "Not Started", "Waiting on Someone Else", "Deferred"],
+      notes: ["Correct, 'Escalated' applies to Cases, not standard Task statuses.", "Not Started is a real, standard Task status.", "Waiting on Someone Else is a real, standard Task status.", "Deferred is a real, standard Task status."],
+      correct: 0,
+      why: "The standard Task statuses are Not Started, In Progress, Completed, Waiting on Someone Else, and Deferred. 'Escalated' is a Case concept, not a Task status." },
+
+    { domain: PNC, source: "Help Your Reps Use Activities",
+      q: "Which two are standard Task status values? Select 2.",
+      type: "multi",
+      opts: ["Deferred", "Blocked", "Waiting on Someone Else", "Rejected"],
+      notes: ["Correct, Deferred is a standard Task status.", "Blocked isn't a standard Task status value.", "Correct, Waiting on Someone Else is a standard Task status.", "Rejected isn't a standard Task status value."],
+      correct: [0, 2],
+      why: "The full set of standard Task statuses is Not Started, In Progress, Completed, Waiting on Someone Else, and Deferred. Blocked and Rejected are not standard values." },
+
+    { domain: PNC, source: "Help Your Reps Use Activities",
+      q: "What does enabling Shared Activities allow an admin to do?",
+      opts: ["Relate a single Task or Event to up to 50 different Contacts", "Let multiple users co-own the same Task", "Automatically repeat a Task every week", "Give every user visibility into every other user's private tasks"],
+      notes: ["Correct, Shared Activities raises the contact-relation limit on one activity from 1 to up to 50.", "Shared Activities is about relating multiple contacts to an activity, not shared ownership between users.", "Recurring tasks are a separate, unrelated feature.", "Shared Activities doesn't change sharing/visibility settings between users."],
+      correct: 0,
+      why: "Shared Activities lets a single Task or Event be related to up to 50 different Contacts instead of just one, useful for meetings or calls involving multiple people." },
+
+    { domain: PNC, source: "Help Your Reps Use Activities",
+      q: "Once Shared Activities is enabled for an org, how can it be turned back off?",
+      opts: ["It cannot be disabled directly, Salesforce Support must be contacted", "It can be toggled off instantly in Setup at any time", "It automatically disables after 90 days", "Disabling it is done from the user's personal settings"],
+      notes: ["Correct, reversing Shared Activities requires contacting Salesforce Support.", "There's no simple instant toggle for this once enabled.", "There's no such automatic expiration.", "Personal settings have no control over this org-wide feature."],
+      correct: 0,
+      why: "Shared Activities can be enabled through Setup, but disabling it later is not self-service, it requires contacting Salesforce Support." },
+
+    { domain: PNC, source: "Work Smarter in Calendar and Events",
+      q: "What distinguishes a Salesforce Event from a Task?",
+      opts: ["An Event has a defined start and end time on the calendar, a Task is a to-do item tracked by status", "An Event can never be related to a Contact", "A Task always recurs automatically", "There is no meaningful difference between the two"],
+      notes: ["Correct, Events are scheduled with a specific time window, Tasks are status-tracked to-do items.", "Events can absolutely be related to Contacts, that's a common use case.", "Tasks don't recur automatically by default, recurrence must be set up.", "The two are distinct object types with different behavior."],
+      correct: 0,
+      why: "An Event is a calendar item with a defined start and end time, like a meeting. A Task is a to-do item tracked through status values (Not Started, In Progress, Completed, and so on) without necessarily being tied to a specific time block." },
+
+    { domain: PNC, source: "Benefits of Gmail and Google Calendar Integration",
+      q: "What is the primary purpose of integrating Salesforce with Gmail or Outlook?",
+      opts: ["Reduce duplicate data entry and context switching between the email client and Salesforce", "Replace Salesforce entirely with the email client", "Automatically convert every email into a Lead", "Disable Salesforce's native Send Email feature"],
+      notes: ["Correct, cutting down on redundant entry and app-switching is the core benefit.", "The integration supplements Salesforce, it doesn't replace it.", "Not every email becomes a Lead automatically without separate automation.", "Native Send Email still works alongside the integration."],
+      correct: 0,
+      why: "Email integration exists to reduce the duplicate data entry and context-switching reps experience working between their email client and Salesforce." },
+
+    { domain: PNC, source: "Set Up the Gmail Integration and Einstein Activity Capture",
+      q: "Which two are genuine capabilities of Einstein Activity Capture? Select 2.",
+      type: "multi",
+      opts: ["Syncing contacts and events between Salesforce and the connected email account", "Automatically adding sent and received emails to the activity timeline of related records", "Automatically writing Apex triggers based on email content", "Blocking all incoming email from unrecognized senders"],
+      notes: ["Correct, contact/event syncing is a core Einstein Activity Capture feature.", "Correct, automatic timeline addition to related records is a named capability.", "Einstein Activity Capture doesn't generate code of any kind.", "Spam or sender blocking isn't part of Einstein Activity Capture."],
+      correct: [0, 1],
+      why: "Einstein Activity Capture's core capabilities include syncing contacts and events and automatically adding emails and events to the activity timeline of related Salesforce records; it does not write code or manage spam filtering." },
+
+    { domain: PNC, source: "Send Email Through Salesforce",
+      q: "What lets a sales rep send email from Salesforce so that it displays their real, connected Gmail or Office 365 address as the sender?",
+      opts: ["Turning on Send through External Email Services in Setup", "Enabling Multiple Currencies", "Creating a new Record Type on the Case object", "Assigning the Marketing User checkbox"],
+      notes: ["Correct, this Setup feature connects a rep's external email account so outgoing Salesforce emails show their real address.", "Multiple Currencies is unrelated to sending email.", "Record types on Case don't affect email sending.", "The Marketing User checkbox gates Campaign creation, unrelated to this feature."],
+      correct: 0,
+      why: "Setup > Send through External Email Services is what lets a rep connect Gmail or Office 365 so email sent from Salesforce actually shows their real external address as the sender." },
+
+    { domain: PNC, source: "Send Email Through Salesforce",
+      q: "With Enhanced Email turned on, how is an email sent from Salesforce actually stored?",
+      opts: ["As both an EmailMessage record and a Task record, though only the EmailMessage appears on the email detail page", "Only as a Task record", "Only as a Chatter post", "It isn't stored unless manually logged"],
+      notes: ["Correct, both record types are created, but only EmailMessage shows on the detail page.", "EmailMessage records exist and are the primary record type Enhanced Email relies on.", "Sent emails have nothing to do with Chatter posts.", "Enhanced Email stores the email automatically, no manual logging is required."],
+      correct: 0,
+      why: "With Enhanced Email enabled, a sent email is saved as both an EmailMessage record and a Task record, but only the EmailMessage record displays on the email detail page." },
+
+    { domain: PNC, source: "Get Started with Chatter",
+      q: "Which Chatter group type hides even the fact that it exists from anyone who isn't already a member or an admin?",
+      opts: ["Unlisted", "Public", "Private", "Broadcast"],
+      notes: ["Correct, an Unlisted group's existence is hidden from non-members entirely.", "A Public group is visible and open to view by anyone in the org.", "A Private group's existence is visible, even though its content is restricted to members.", "Broadcast is a posting-permission setting, not a visibility level."],
+      correct: 0,
+      why: "An Unlisted Chatter group is the most restrictive type, non-members can't see that it exists at all, unlike a Private group, whose existence is still discoverable even though its content is restricted." },
+
+    { domain: PNC, source: "Get Started with Chatter",
+      q: "Which Chatter group type can be seen and viewed by anyone in the org, but only members can post to it?",
+      opts: ["Public", "Private", "Unlisted", "Archived"],
+      notes: ["Correct, a Public group is open for anyone in the org to view, but only members can post.", "A Private group restricts both membership and content visibility.", "An Unlisted group hides its existence from non-members.", "'Archived' isn't a Chatter group visibility type."],
+      correct: 0,
+      why: "A Public Chatter group can be viewed by anyone in the org, though only its members can actually post content to it." },
+
+    { domain: PNC, source: "Become a Chatter Expert",
+      q: "What does setting a Chatter group to Broadcast-only actually restrict?",
+      opts: ["New posts can only be created by the group's owners and managers", "Members can no longer view any posts", "External users can no longer be invited", "Comments are disabled entirely for everyone"],
+      notes: ["Correct, Broadcast-only limits new top-level posts to owners/managers while members can still engage.", "Members retain view access under Broadcast-only, that isn't restricted.", "Broadcast-only doesn't control external user invitations.", "Commenting generally remains available to members even under Broadcast-only."],
+      correct: 0,
+      why: "Setting a Chatter group to Broadcast-only restricts who can create new posts to just the group's owners and managers, useful for announcement-style groups, while regular members can still view and typically comment." },
+
+    { domain: PNC, source: "Create Posts, Polls, and Questions",
+      q: "Which two post types, beyond a standard text post, can a user create in a Chatter feed? Select 2.",
+      type: "multi",
+      opts: ["Poll", "Question", "Workflow", "Approval Request"],
+      notes: ["Correct, Polls let users create multiple-choice voting posts.", "Correct, Questions let the community mark a best answer.", "Workflow isn't a Chatter post type.", "Approval Request isn't a Chatter post type."],
+      correct: [0, 1],
+      why: "Beyond a standard text post, Chatter supports Polls (multiple-choice voting) and Questions (which can be marked with a best answer) as distinct feed post types." },
+
+    { domain: PNC, source: "Create Posts, Polls, and Questions",
+      q: "On a Chatter Question post, what lets the community identify the most helpful reply?",
+      opts: ["Marking a comment as the Best Answer", "Pinning the post to the top of the feed", "Converting the post into a Task", "Adding a Poll to the same post"],
+      notes: ["Correct, Best Answer is the feature built specifically for Question posts.", "Pinning highlights a post but doesn't identify a best reply.", "Converting to a Task isn't a real Chatter feature.", "A Poll is a separate post type, not an answer-marking feature."],
+      correct: 0,
+      why: "A Chatter Question post lets the asker or moderators mark one comment as the Best Answer, surfacing the most helpful reply for anyone who finds the thread later." }
+
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      const isMulti = orig.type === 'multi';
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        multi: isMulti,
+        selectCount: isMulti ? orig.correct.length : 1,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: isMulti ? null : order.indexOf(orig.correct),
+        correctIndices: isMulti ? orig.correct.map(c => order.indexOf(c)).sort((a, b) => a - b) : null
+      };
+    });
+    answers = questions.map(item => item.multi ? [] : null);
+    current = 0;
+  }
+
+  function isAnswered(item, ans) {
+    if (item.multi) return Array.isArray(ans) && ans.length === item.selectCount;
+    return ans !== null;
+  }
+
+  function isCorrectAnswer(item, ans) {
+    if (item.multi) {
+      if (!Array.isArray(ans) || ans.length !== item.correctIndices.length) return false;
+      const sorted = ans.slice().sort((a, b) => a - b);
+      return sorted.every((v, i) => v === item.correctIndices[i]);
+    }
+    return ans === item.correctIndex;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    const qHint = document.getElementById('q-hint');
+    if (item.multi) {
+      qHint.textContent = 'Select ' + item.selectCount + ' answers';
+      qHint.classList.remove('hidden');
+    } else {
+      qHint.classList.add('hidden');
+    }
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      const ans = answers[current];
+      const isSelected = item.multi ? (Array.isArray(ans) && ans.includes(idx)) : (ans === idx);
+      if (isSelected) btn.classList.add('selected');
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        if (item.multi) {
+          const cur = Array.isArray(answers[current]) ? answers[current].slice() : [];
+          const pos = cur.indexOf(idx);
+          if (pos >= 0) {
+            cur.splice(pos, 1);
+          } else if (cur.length < item.selectCount) {
+            cur.push(idx);
+          }
+          answers[current] = cur;
+        } else {
+          answers[current] = idx;
+        }
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = !isAnswered(item, answers[current]);
+    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = isCorrectAnswer(item, answers[i]);
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Shell yeah! You're crushing it.";
+      scoreEmoji.textContent = "🐢💨";
+      launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🐢";
+      launchFireworks();
+    } else {
+      verdict.textContent = "Slow and steady, review below and try again.";
+      scoreEmoji.textContent = "🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = isCorrectAnswer(item, userAns);
+      const div = document.createElement('div');
+      div.className = 'review-item';
+
+      function labelFor(idx) { return String.fromCharCode(65 + idx) + '. ' + item.displayOpts[idx]; }
+
+      let userLabel, correctLabel, userNote;
+      if (item.multi) {
+        const ansArr = Array.isArray(userAns) ? userAns.slice().sort((a, b) => a - b) : [];
+        userLabel = ansArr.length ? ansArr.map(labelFor).join('; ') : 'No answer';
+        correctLabel = item.correctIndices.map(labelFor).join('; ');
+        const wrongNotes = ansArr.filter(idx => !item.correctIndices.includes(idx)).map(idx => item.displayNotes[idx]).filter(Boolean);
+        userNote = (!isCorrect && wrongNotes.length) ? '<div class="review-note">' + wrongNotes.join(' ') + '</div>' : '';
+      } else {
+        userLabel = userAns === null ? 'No answer' : labelFor(userAns);
+        correctLabel = labelFor(item.correctIndex);
+        userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+      }
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+</body>
+</html>
