@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎓 KBA Lesson 1-5 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 22px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 1-5 &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">3</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Configuration and Setup: company settings, fiscal year, currency, business hours</li>
+      <li>Object Manager and Lightning App Builder: relationships, objects, fields, layouts</li>
+      <li>Sales and Marketing Applications: leads, opportunities, Path, campaigns</li>
+    </ul>
+
+    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Configuration and Setup</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
+        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const CFG = "Configuration and Setup";
+  const OBJ = "Object Manager and Lightning App Builder";
+  const SLM = "Sales and Marketing Applications";
+
+  const BANK = [
+    { domain: CFG, source: "Learn About Regional Settings",
+      q: "What determines when a case actually gets flagged as overdue for escalation?",
+      opts: ["Business Hours, tied directly to Escalation Rules", "Fiscal Year settings", "Default Locale", "Holidays alone, with no other setting involved"],
+      notes: ["Business Hours defines the operational time window Escalation Rules measure elapsed time against.", "Fiscal Year sets the org's reporting and forecasting period, it has nothing to do with case timing.", "Default Locale controls date, number, and address display formatting, not timing logic.", "Holidays only pause escalation on specific dates, they don't define the operating window on their own."],
+      correct: 0,
+      why: "Escalation Rules calculate elapsed time using the org's Business Hours window, not plain clock time. Holidays are a related setting that pauses escalation on specific dates, but Business Hours is the core driver." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "What happens once Custom Fiscal Year is activated for an org?",
+      opts: ["It can be deactivated at any time with no consequence", "It cannot be deactivated, and enabling it deletes existing forecasts", "It automatically reverts to Standard after one fiscal year", "Nothing changes until an admin manually applies it"],
+      notes: ["Incorrect, per the instructor's slides this is explicitly a one-way, permanent activation.", "Correct, this is stated directly: once activated, you CANNOT deactivate Custom Fiscal Year, and enabling it deletes existing forecasts.", "There's no automatic revert built into this feature.", "Activation takes effect immediately, it isn't a staged or optional rollout."],
+      correct: 1,
+      why: "Per the instructor's slides: once Custom Fiscal Year is activated, you CANNOT deactivate it, and enabling it deletes existing forecasts. Standard Fiscal Year follows the Gregorian calendar and can start on the 1st of any month; Custom is needed when the fiscal year doesn't start on the 1st of a month, or for 13-week-quarter (4-4-5) structures." },
+
+    { domain: CFG, source: "Learn About Regional Settings / Navigate Setup",
+      q: "Where do you set the org's Default Locale, Default Currency, and Default Time Zone?",
+      opts: ["Object Manager", "Setup > Fiscal Year", "Setup > Company Information", "Setup > Login Access Policies"],
+      notes: ["Object Manager is where you view and customize standard and custom objects, not org-wide defaults.", "Fiscal Year is a separate dedicated page just for reporting and forecasting periods.", "Company Information is the central page holding org-wide address, locale, currency, storage, and license info.", "Login Access Policies controls whether admins can log in as other users for support/testing."],
+      correct: 2,
+      why: "Company Information is the central page for org-wide defaults, address, licensing, and storage usage." },
+
+    { domain: CFG, source: "Learn About Regional Settings",
+      q: "A rep in a different region wants their own dates and numbers formatted correctly without changing anything for the rest of the company. What should they do?",
+      opts: ["Ask the admin to change the org default locale", "Change their own personal Locale in their user Settings", "Request a new custom profile", "Nothing, this isn't possible"],
+      notes: ["Changing the org default would affect every single user, not just this one person, the opposite of what's needed.", "Personal Locale settings exist specifically to let one user override formatting for themselves only.", "A profile change affects permissions and access, not personal date or number formatting.", "Personal overrides are explicitly supported in Salesforce, so this isn't accurate."],
+      correct: 1,
+      why: "Personal locale, language, and time zone overrides are scoped to that one user and never touch the company-wide default or anyone else's settings." },
+
+    { domain: CFG, source: "Discover Multiple Currency Settings",
+      q: "Once Multiple Currencies is activated for an org, what happens if an admin tries to turn it back off?",
+      opts: ["It can be disabled at any time", "It cannot be turned off once activated", "Only the corporate currency can be deactivated", "It auto-disables after 90 days of inactivity"],
+      notes: ["This is not accurate, multi-currency activation is permanent.", "This is the correct, and heavily tested, behavior.", "Actually the corporate currency is the one currency that can never be deactivated, the opposite of this claim.", "There's no such auto-expiration behavior in Salesforce."],
+      correct: 1,
+      why: "Activating multi-currency is a one-way door. This is one of the most commonly tested facts about currency management." },
+
+    { domain: CFG, source: "Discover Multiple Currency Settings",
+      q: "Under standard (non-Advanced) currency management, what happens when you edit a conversion rate?",
+      opts: ["Only new records use the new rate going forward", "All existing amounts in that currency instantly recalculate using the new rate, with no history kept", "Rates cannot be edited once set", "Only closed opportunities are affected"],
+      notes: ["This describes what Advanced Currency Management does for opportunities, not the standard default behavior.", "This is the correct, retroactive default behavior.", "Conversion rates absolutely can be edited any time under standard currency management.", "It's actually the opposite, closed opportunities are what Advanced Currency Management protects from this recalculation."],
+      correct: 1,
+      why: "This retroactive, no-history behavior is exactly why Advanced Currency Management exists, to let opportunities keep the rate that was active when they closed." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "Sales reps in an org need to record opportunities in both USD and EUR. How can a Salesforce admin accomplish this?",
+      opts: ["Enable multiple currencies in Company Information, then add and activate EUR on the Manage Currencies page", "Grant a 'Multiple Currencies' permission set to the sales reps", "It is not possible to use multiple currencies in Salesforce", "Have each rep manually type a currency symbol into the Amount field"],
+      notes: ["Correct, both steps are required together: enable the feature org-wide, then add and activate the specific currency.", "There's no such thing as a 'Multiple Currencies' permission set, currency access doesn't work through permission sets.", "This is false, multi-currency is a real, supported Salesforce feature.", "Typing a symbol into a number field doesn't create real currency support, values wouldn't convert or report correctly."],
+      correct: 0,
+      why: "Enabling multi-currency (Company Information) and then adding/activating the specific currency (Manage Currencies page) are both required steps before reps can record amounts in that currency." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "An org has recently enabled multiple currencies, and additional currencies were added and activated. What will users experience when they create a new Opportunity record?",
+      opts: ["Users will be able to create opportunities in any active currency", "Users will be able to create opportunities only in the corporate currency", "Users will be able to create opportunities only in their own personal default currency", "Users will be able to create opportunities in any currency, active or inactive"],
+      notes: ["Correct, once a currency is active org-wide, any user can pick it when creating a record.", "Users aren't restricted to just the corporate currency once other currencies are active.", "Users aren't locked to only their personal default either, that's just their own display default.", "Inactive currencies can't be used for new records, only active ones."],
+      correct: 0,
+      why: "Once currencies are activated, users can select from any active currency when creating a record, not just the corporate currency or their own personal default." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "A Salesforce Administrator is considering changing the default company locale. What should they know about this change?",
+      opts: ["The company locale is set as the default for new users, but any user can change their own personal locale setting", "The company locale applies to all users and can never be changed by anyone", "Only the administrator can ever change any user's locale", "The company locale isn't a default at all, users must manually set locale on first login"],
+      notes: ["Correct, the org default only sets the starting point for new users, each user can independently change their own personal locale afterward.", "This contradicts the fact that personal overrides are supported.", "Users can change their own personal locale themselves, it isn't admin-only.", "There is a real company default, it just isn't permanently locked for every user."],
+      correct: 0,
+      why: "The company/org default locale applies to new users initially, but each user can override it with their own personal locale setting without affecting anyone else or the company default." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "What are valid reasons for using a Custom Fiscal Year instead of Standard?",
+      opts: ["The fiscal year doesn't start on the first day of a month, or the org uses 13-week fiscal quarters made of three 4-4-5 week periods", "The organization wants to follow the Gregorian calendar", "The fiscal year simply doesn't start in January", "The organization has fewer than 12 months of financial history"],
+      notes: ["Correct, these are the two specific scenarios named as valid reasons for Custom Fiscal Year.", "Following the Gregorian calendar describes Standard Fiscal Year, not a reason to go Custom.", "Standard Fiscal Year can already start on the 1st of any month, so not starting in January alone doesn't require Custom.", "Amount of financial history isn't a factor in choosing fiscal year type."],
+      correct: 0,
+      why: "Custom Fiscal Year exists for two specific scenarios: when the fiscal year doesn't start on the 1st of a month, or when using a 13-week-quarter 4-4-5 structure. Standard Fiscal Year already supports starting on the 1st of any month, so that alone doesn't require Custom." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "Where can an administrator change the organization's default time zone?",
+      opts: ["Company Information", "Profile Settings", "Business Hours", "Local Settings"],
+      notes: ["Correct, Default Time Zone is set on the Company Information page and controls all record timestamps org-wide.", "Profile Settings governs permissions and access, not org-wide time zone defaults.", "Business Hours defines support availability windows, a separate setting from the org's default time zone.", "'Local Settings' isn't an actual Salesforce settings page."],
+      correct: 0,
+      why: "The org's Default Time Zone, which controls all record timestamps and what the system treats as 'now', is set on the Company Information page." },
+
+    { domain: CFG, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "In a multi-currency org, what's the difference between Record Currency and Converted Currency?",
+      opts: ["Record Currency is the currency a specific record is actually stored in; Converted Currency is that value displayed in a viewing user's own currency based on exchange rates", "They're the same thing, just different names for it", "Record Currency only applies to Leads, Converted Currency only applies to Opportunities", "Converted Currency is set once and never changes, Record Currency updates automatically"],
+      notes: ["Correct, this distinguishes the currency a record is actually saved in from the on-the-fly converted display value shown to a specific viewer.", "These are two distinct concepts on the currency model, not synonyms.", "Both concepts apply broadly across currency-enabled objects, not restricted to just Leads or just Opportunities.", "This reverses the actual behavior, Converted Currency is the one that's calculated dynamically based on current exchange rates."],
+      correct: 0,
+      why: "Record Currency is the actual currency a record (like an Opportunity) is stored in. Converted Currency is a display-only value showing what that amount equals in the viewing user's own currency, calculated using exchange rates." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "Which relationship type cascade-deletes the child record when the parent is deleted?",
+      opts: ["Lookup", "Master-Detail", "Many-to-Many", "None, cascade delete never happens automatically"],
+      notes: ["Lookup relationships are independent, deleting the parent leaves the child record untouched.", "Master-Detail is the tightly coupled relationship where this cascade behavior is correct.", "Many-to-Many isn't a relationship type on its own, it's an outcome built using two Master-Detail relationships via a junction object.", "Cascade delete does happen automatically on Master-Detail, so this is incorrect."],
+      correct: 1,
+      why: "Master-Detail is a tightly coupled relationship: the child cannot exist without the parent and is deleted along with it." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "What is the maximum number of Master-Detail relationships a custom object can have?",
+      opts: ["1", "2", "5", "25"],
+      notes: [],
+      correct: 1,
+      why: "A custom object can have at most 2 Master-Detail relationships, which is exactly why a true many-to-many junction object needs two separate Master-Detail fields, one to each parent." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "In a Master-Detail relationship, what happens to the detail record's ownership and security?",
+      opts: ["It inherits both ownership and security from the master record", "It has fully independent ownership and security", "It inherits ownership but sets its own independent security", "Ownership and security are set manually on every detail record"],
+      notes: ["Correct, this is a defining trait of Master-Detail, per the instructor's comparison table.", "This describes Lookup relationships instead, which keep ownership and security fully independent.", "Master-Detail inherits both together, not just one of the two.", "Ownership and security are automatically inherited, not manually configured per record."],
+      correct: 0,
+      why: "A Master-Detail relationship means the detail record inherits BOTH its owner and its security settings from the master record. Lookup relationships keep ownership and security fully independent instead." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "What happens to a Lookup relationship's child record when its parent record is deleted?",
+      opts: ["Nothing by default, the child record is unaffected and remains in the system", "It's automatically deleted along with the parent", "It becomes read-only", "It's automatically reassigned to the admin"],
+      notes: ["Correct, per the comparison table, deleting the parent does not delete the child in a Lookup relationship.", "This describes Master-Detail cascade delete, the opposite behavior.", "Lookup deletion doesn't lock the child record, it stays fully editable.", "Ownership doesn't change automatically when a lookup parent is deleted."],
+      correct: 0,
+      why: "Deleting a parent in a Lookup relationship does not delete the child record, they remain independent. This is the opposite of Master-Detail, where deleting the master cascades and deletes all detail records." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "Can a standard object (like Account or Contact) be the detail side of a Master-Detail relationship?",
+      opts: ["No, standard objects cannot be the detail in a master-detail relationship", "Yes, any standard object can be a detail record", "Only Account and Contact specifically can be details", "Yes, but only if Person Accounts are enabled"],
+      notes: ["Correct, this restriction is stated directly in the instructor's slides.", "Standard objects are restricted from the detail side entirely, not permitted broadly.", "There's no special exception carved out for Account or Contact specifically.", "Enabling Person Accounts doesn't change this restriction on standard objects."],
+      correct: 0,
+      why: "Standard objects cannot be the detail (child) in a master-detail relationship. Only custom objects can sit on the detail side." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "If a Master-Detail relationship field is deleted from an object, what happens to that relationship?",
+      opts: ["It automatically converts to a Lookup relationship", "All child records are permanently deleted immediately", "The object becomes unusable until rebuilt", "Nothing changes, it stays Master-Detail with no field"],
+      notes: ["Correct, per the instructor's slides, this conversion happens automatically.", "Deleting the relationship field doesn't delete the actual child records themselves.", "The object and its records remain fully usable, they just lose the master-detail behavior.", "The relationship type does change, it doesn't just sit undefined."],
+      correct: 0,
+      why: "Deleting a master-detail relationship field converts that relationship to a lookup relationship, rather than destroying data or leaving the field type undefined." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "Which of the following is a characteristic of a Master-Detail relationship?",
+      opts: ["Deleting the master record deletes the detail record", "The detail record can exist without the master", "The relationship is always optional", "The detail record is the parent in the relationship"],
+      notes: ["Correct, cascade delete is a defining trait of Master-Detail.", "The detail can never exist without the master, this is the opposite of Master-Detail behavior.", "The relationship field is required, not optional, in Master-Detail.", "The detail is the child, not the parent, in this relationship."],
+      correct: 0,
+      why: "Cascade delete is a defining trait of Master-Detail: deleting the master always deletes its detail records. The detail can never exist independently, the relationship is required, and the detail is the child, not the parent." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx (Knowledge Check)",
+      q: "Which of the following are valid capabilities of a Lookup relationship but NOT a Master-Detail relationship?",
+      opts: ["The lookup field doesn't need to be required on the page layout, and the related record can have a different owner than the parent", "Roll-up summary fields can be added to the parent object", "When the parent record is deleted, the child record is always deleted too", "The child record inherits the parent's security settings"],
+      notes: ["Correct, these are two capabilities unique to Lookup, an optional (not required) field and independent ownership.", "Roll-up summary fields are a Master-Detail-only capability, not available on plain Lookup relationships.", "Cascade delete on parent removal is Master-Detail behavior, not Lookup.", "Inherited security is also a Master-Detail trait, Lookup keeps security independent."],
+      correct: 0,
+      why: "Lookup relationships allow an optional (not required) relationship field and fully independent record ownership, capabilities Master-Detail doesn't have. Roll-up summaries, cascade delete, and inherited security are all Master-Detail-specific behaviors instead." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 - Salesforce Basics.pptx",
+      q: "What can you do directly within Schema Builder?",
+      opts: ["Visually create and modify objects, fields, and relationships by dragging and dropping", "Only view relationships, with no ability to create anything", "Edit Apex code directly", "Manage user login access"],
+      notes: ["Correct, Schema Builder supports full drag-and-drop creation and editing.", "Schema Builder is interactive, not read-only, you can add new objects/fields/relationships directly in it.", "Schema Builder is a declarative visual tool, it doesn't edit Apex code.", "User login access is managed elsewhere in Setup, not through Schema Builder."],
+      correct: 0,
+      why: "Schema Builder is a visual, drag-and-drop tool for creating and modifying objects, fields, and relationships, and it also lets you view page layouts for selected objects." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 Salesforce Basics (KBA review guide)",
+      q: "Which relationship type allows a child record to exist even with no related parent record?",
+      opts: ["Master-Detail", "Lookup", "Junction only", "Roll-up relationship"],
+      notes: ["Master-Detail requires the parent field, the child cannot exist without it.", "Lookup relationships are optional and independent, this is the correct answer.", "A junction object is built from two Master-Detail relationships, so it inherits the required-parent behavior, not independence.", "Roll-up isn't a relationship type, it's a field type that aggregates child data onto a Master-Detail parent."],
+      correct: 1,
+      why: "Lookup relationships are optional and independent, the parent field on the child is not required." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 Salesforce Basics (KBA review guide)",
+      q: "What creates a many-to-many relationship between two objects in Salesforce?",
+      opts: ["A single Lookup field", "A Junction Object using two Master-Detail relationships", "A Record Type", "A Page Layout assignment"],
+      notes: ["A single Lookup only creates a one-to-many relationship, not many-to-many.", "This is the correct mechanism, a junction object sits in the middle with a Master-Detail relationship to each side.", "Record Types control picklist values and layouts per profile, unrelated to relationship structure.", "Page Layouts control which fields and related lists display, they don't define relationships between objects."],
+      correct: 1,
+      why: "A junction object sits in the middle with a Master-Detail relationship to each of the two objects it connects, enabling true many-to-many data and rollups to both sides." },
+
+    { domain: OBJ, source: "Unlock Business Success with Salesforce Data Platform / Store Information About Your Customers",
+      q: "Which standard object represents a company you do business with?",
+      opts: ["Contact", "Lead", "Account", "Opportunity"],
+      notes: ["Contact is the individual person who works at the company, not the company itself.", "Lead is an early-stage, unqualified prospect, not yet a confirmed business relationship.", "Account is correct, it's the standard object representing the company or organization.", "Opportunity is a specific deal in progress, not the company record itself."],
+      correct: 2,
+      why: "Account is the standard object for organizations, Contact represents the individual people who work there." },
+
+    { domain: OBJ, source: "Store Information About Your Customers",
+      q: "Which standard object represents the individual person who works at that company?",
+      opts: ["Contact", "Account", "Lead", "Campaign"],
+      notes: ["Contact is correct, it's the person, typically tied to an Account.", "Account represents the company itself, not an individual person.", "A Lead is an unqualified prospect who hasn't been confirmed as tied to a real account relationship yet.", "Campaign is a marketing initiative container, not a person record."],
+      correct: 0,
+      why: "Contact is the person, typically tied to an Account. An unassociated Contact with no account is a private, hard-to-find record." },
+
+    { domain: OBJ, source: "Unlock Business Success with Salesforce Data Platform",
+      q: "What is the correct order when creating a new custom field?",
+      opts: ["Add to page layout, then pick data type, then set security", "Pick data type, set field-level security, then decide page layout visibility", "Set security, pick data type, then delete the field", "Create a record type, then the field"],
+      notes: [],
+      correct: 1,
+      why: "Data type comes first since it governs validation and storage, then field-level security controls who can access it, then page layout controls whether it's actually shown." },
+
+    { domain: OBJ, source: "Unlock Business Success with Salesforce Data Platform",
+      q: "A field is correctly secured for a profile via field-level security but still isn't visible on the record page. What's the likely cause?",
+      opts: ["Field-level security is broken", "The field was never added to that page layout", "The object doesn't support custom fields", "Sharing rules are blocking it"],
+      notes: ["Field-level security working correctly is actually stated in the question, so this isn't the cause.", "This is correct, layout visibility is a separate gate from security.", "Every standard and custom object supports custom fields, this isn't a real limitation.", "Sharing rules control record-level access, not whether a specific field shows up on a layout."],
+      correct: 1,
+      why: "Field-level security and page layout visibility are two separate, independent gates. A field can be fully accessible by security settings and still be invisible if it's missing from the layout." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 Salesforce Basics (KBA review guide)",
+      q: "What tool lets you visually map out objects and how they relate to each other?",
+      opts: ["Schema Builder", "Path Settings", "Kanban View", "List View Controls"],
+      notes: ["Schema Builder is correct, it's the visual, drag-and-drop map of an org's objects and relationships.", "Path Settings is where an admin enables and configures Path, a stage-tracking progress bar on individual records, it has nothing to do with mapping object relationships.", "Kanban View is a drag-and-drop board that organizes a list of records into columns (like Stage), letting you update a record by dragging its card, it's for working records, not visualizing schema.", "List View Controls lets you filter, sort, and pick which fields display in a list view, unrelated to object relationship mapping."],
+      correct: 0,
+      why: "Schema Builder is the visual, drag-and-drop map of an org's objects and their relationships." },
+
+    { domain: OBJ, source: "Day 3, Lesson 601.2 Salesforce Basics (KBA review guide)",
+      q: "What primarily determines which picklist values and page layout a user sees on a record?",
+      opts: ["Profile alone", "Record Type", "Sharing Rules", "Login Access Policies"],
+      notes: ["Profile matters too (layout assignment is a Profile x Record Type combination), but Profile alone doesn't decide which picklist values show.", "Record Type is correct, it drives which picklist values and business process apply, and pairs with Profile for layout assignment.", "Sharing Rules control which records a user can see, not which fields or picklist values appear on a record they already have access to.", "Login Access Policies controls admin login-as-user behavior, unrelated to layouts or picklists."],
+      correct: 1,
+      why: "Record Type drives which picklist values and business process apply, and page layout assignment is a Profile x Record Type combination." },
+
+    { domain: OBJ, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "Which two objects are combined into a Person Account?",
+      opts: ["Contact and Account", "Lead and Account", "Opportunity and Contact", "Lead and Opportunity"],
+      notes: ["Correct, a Person Account merges Account and Contact fields into a single record.", "Lead isn't one of the two objects combined, Lead is a separate, earlier-stage object entirely.", "Opportunity isn't merged into a Person Account, it remains a separate related record.", "Neither Lead nor Opportunity are the two objects combined, this pairs two unrelated objects."],
+      correct: 0,
+      why: "Person Accounts store information about individual people by combining Account and Contact fields into one record, since a standalone person doesn't need a separate company-style Account plus a separate Contact." },
+
+    { domain: OBJ, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "Which statement is true about Person Accounts?",
+      opts: ["Person Accounts can be disabled at any time", "Person Accounts require a related Contact record", "Person Accounts are ideal for businesses with only B2B models", "Person Accounts behave as both Accounts and Contacts"],
+      notes: ["Incorrect, enabling Person Accounts is a one-way decision, once turned on it cannot be disabled.", "Incorrect, a Person Account does NOT have a separate related Contact record, the Contact fields are merged directly into the Account.", "Incorrect, Person Accounts are for B2C use cases (individual customers, clients, patients), not B2B.", "Correct, a Person Account behaves as both an Account and a Contact combined into a single record."],
+      correct: 3,
+      why: "A Person Account holds information that would normally be split across an Account and a Contact, combined into one record that behaves as both." },
+
+    { domain: OBJ, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx",
+      q: "What happens once Person Accounts are enabled in an org?",
+      opts: ["They can be disabled again at any time", "It's a permanent, one-way decision, they cannot be disabled", "They automatically replace all existing Business Accounts", "They become required for every new customer record"],
+      notes: ["Incorrect, this is explicitly a one-way decision per the instructor's slides.", "Correct, organizations must carefully consider this before enabling since it can never be turned back off.", "Enabling Person Accounts does not touch or convert any existing Business Account records.", "Business Accounts remain fully usable alongside Person Accounts, neither becomes mandatory."],
+      correct: 1,
+      why: "Person Accounts are not an out-of-the-box feature, and organizations must take great consideration before enabling them because once enabled, the feature cannot be disabled." },
+
+    { domain: OBJ, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx",
+      q: "Using the grocery store analogy from class, what does the Parent Account in an Account Hierarchy typically represent?",
+      opts: ["An individual store location (a subsidiary)", "The headquarters, with individual store locations as subsidiaries", "A single customer contact at one location", "A competitor's account record"],
+      notes: ["This describes a child/subsidiary account, not the parent.", "Correct, this is the exact analogy used in class, headquarters as Parent Account, individual locations as subsidiaries underneath it.", "Account Hierarchy relates Account records to each other, it isn't about individual Contact records.", "Competitor tracking is a separate use case for Accounts, unrelated to hierarchy structure."],
+      correct: 1,
+      why: "Account Hierarchies show how records relate to each other by defining parent accounts and their subsidiaries, like a grocery chain's headquarters (parent) and its individual store locations (subsidiaries)." },
+
+    { domain: OBJ, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx",
+      q: "In Contacts to Multiple Accounts, what does a 'Direct' relationship mean?",
+      opts: ["The original, primary Account associated with the Contact", "Any additional Account related to the Contact", "An Account the Contact has never worked with", "A duplicate Contact record"],
+      notes: ["Correct, Direct (Primary) is the original Account tied to the Contact record.", "This describes an Indirect (Related) relationship, not Direct.", "This doesn't describe either relationship type, both Direct and Indirect involve real, actual working relationships.", "Contacts to Multiple Accounts doesn't create duplicate Contacts, it relates one Contact record to several Accounts."],
+      correct: 0,
+      why: "Direct (Primary) is the original Account associated with the Contact; Indirect (Related) refers to any additional Accounts the same Contact is also related to." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx (Knowledge Check)",
+      q: "What is created when a Lead's status is changed to converted?",
+      opts: ["An Account only, nothing else", "A Contact only, nothing else", "An Opportunity only, nothing else", "An Account and a Contact are both created", "An Account and an Opportunity are both created, but never a Contact"],
+      notes: ["Incomplete, an Account is created, but a Contact is always created alongside it too.", "Incomplete, a Contact is created, but an Account is always created alongside it too.", "An Opportunity is optional at conversion, it's controlled by a checkbox, not guaranteed, and it's never created alone.", "Correct, both an Account and a Contact are always created together.", "Incorrect pairing, Opportunity isn't guaranteed, and a Contact is always part of the guaranteed pair, not left out."],
+      correct: 3,
+      why: "Lead conversion always creates an Account and a Contact together. An Opportunity is only created if you leave the 'Don't create an opportunity upon conversion' checkbox unchecked." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx (Knowledge Check)",
+      q: "Sales managers want to give proper credit to multiple sales reps who contributed different amounts of work to the same Opportunity. What should be implemented?",
+      opts: ["Create unique Opportunity Stages", "Enable and implement Opportunity Sharing", "Enable and implement Opportunity Splits", "Track Sales Reps' contributions in a Note"],
+      notes: ["Opportunity Stages track where a deal sits in the sales process, not who gets credit for working it.", "Opportunity Sharing controls record visibility and access, not how credit or commission is divided among reps.", "Correct, Opportunity Splits (revenue and overlay) exist specifically to divide credit among multiple reps on one deal.", "A Note is just a manual text log, it isn't a real reporting or compensation mechanism."],
+      correct: 2,
+      why: "Opportunity Splits are the built-in mechanism for crediting multiple reps on a single deal at different contribution levels." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx (Knowledge Check)",
+      q: "What can a user utilize to view a visual representation of their pipeline?",
+      opts: ["Opportunity Stages", "Opportunity List View", "Kanban", "Opportunities Report"],
+      notes: ["Opportunity Stages are just the picklist values themselves, not a visual pipeline layout.", "A standard list view shows records in rows, not a drag-and-drop visual pipeline.", "Correct, Kanban organizes opportunities into draggable columns, typically by Stage.", "A report can summarize pipeline data in a table or chart, but it isn't the visual, drag-and-drop board being described here."],
+      correct: 2,
+      why: "Kanban view organizes opportunities into columns reps can drag and drop between, giving a visual, at-a-glance pipeline." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx (Knowledge Check)",
+      q: "A rep converts a lead and does not want to create an Opportunity. What must they do?",
+      opts: ["Delete the converted Opportunity", "Uncheck \"Create Opportunity\" during conversion", "Change the Lead Status first", "Set a default Opportunity record type"],
+      notes: ["This implies an Opportunity was created and then removed, extra unnecessary cleanup, not the intended approach.", "Correct, per the instructor's slides, deselecting Opportunity creation on the conversion screen skips that step.", "Lead Status doesn't control whether an Opportunity gets created during conversion.", "Record type affects layout and picklists on an Opportunity, it doesn't control whether one gets created at all."],
+      correct: 1,
+      why: "The lead conversion screen includes a control for whether an Opportunity gets created alongside the Account and Contact; leaving it unchecked skips that step." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "How many Lead Assignment Rules can be active in an org at the same time?",
+      opts: ["Only one, though it can contain multiple rule entries", "Up to five", "Unlimited, all active simultaneously", "None, assignment rules are always inactive by default"],
+      notes: ["Correct, only one assignment rule is active at a time, but that one rule can have several ordered rule entries (steps).", "There's no five-rule cap named anywhere, the real constraint is that only one rule is active at once.", "Multiple rules can exist in the org, but only one can be marked active and used at a time.", "Assignment rules can absolutely be set active, that's the entire point of building one."],
+      correct: 0,
+      why: "Only one Lead Assignment Rule can be active at a time, but that single active rule can contain multiple rule entries (steps) checked in order." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "Where do you map custom Lead fields to Account, Contact, and Opportunity fields so data transfers correctly on conversion?",
+      opts: ["Setup > Object Manager > Lead > Fields & Relationships > Map Fields", "Setup > Path Settings", "Setup > Login Access Policies", "The Lead record's Related tab"],
+      notes: ["Correct, this is the exact path shown for configuring lead field mapping.", "Path Settings configures the visual stage tracker, unrelated to field mapping.", "Login Access Policies controls admin login-as-user behavior, unrelated to field mapping.", "The Related tab on a Lead record shows related activities and campaign history, not a field mapping configuration screen."],
+      correct: 0,
+      why: "Field mapping ensures custom Lead field data transfers correctly into Contact, Account, or Opportunity fields when a lead converts, configured at Setup > Object Manager > Lead > Fields & Relationships > Map Fields." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "In the Opportunity Workspace, what displays AI-powered recommendations or next steps based on email analysis and deal health?",
+      opts: ["Highlights Panel", "Activity Timeline", "Einstein Insights", "Related Lists Quick Links"],
+      notes: ["The Highlights Panel shows critical fields like Amount and Close Date plus quick actions like Edit or Log a Call, not AI recommendations.", "The Activity Timeline is a chronological log of emails, calls, tasks, and events, not an AI insights feature.", "Correct, Einstein Insights (if enabled) surfaces AI-driven recommendations based on email analysis and deal health.", "Related Lists Quick Links are just shortcut links to related records like Products or Notes, not an AI feature."],
+      correct: 2,
+      why: "Einstein Insights, when enabled, is the Opportunity Workspace feature that surfaces AI-powered recommendations and next steps based on email analysis and deal health." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "What happens to an Opportunity's Amount field when a product is added to it?",
+      opts: ["Nothing, Amount must always be entered manually", "It automatically updates based on the product's quantity and sales price", "It resets to zero until the deal closes", "It only updates if Advanced Currency Management is enabled"],
+      notes: ["Incorrect, adding a product does change the Amount automatically, that's the whole point of Opportunity Products.", "Correct, adding a product line item recalculates Amount using its quantity and sales price.", "Adding a product doesn't zero out the Amount, it recalculates it based on what was actually added.", "Advanced Currency Management affects exchange rates on closed deals, it isn't a prerequisite for this basic auto-update behavior."],
+      correct: 1,
+      why: "Adding an Opportunity Product automatically updates the Amount field based on that product's quantity and sales price." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "What's a recommended naming convention for Opportunity records?",
+      opts: ["AccountName.Today's Date, e.g. Walgreens.12.18.2024", "A randomly generated ID number", "The sales rep's name only", "The product SKU only"],
+      notes: ["Correct, this consistent Account-plus-date format keeps opportunity names organized and easy to scan across reports.", "A random ID gives no useful context at a glance, it's not a recommended convention.", "Naming by rep alone hides which account or deal the record is actually about.", "A SKU-only name hides which account or deal it belongs to, unhelpful when browsing a pipeline."],
+      correct: 0,
+      why: "A consistent naming convention like AccountName.Date (e.g., Walgreens.12.18.2024) keeps Opportunity records easy to scan and organized across reports and dashboards." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx / Optimize Sales Processes with Path in Salesforce",
+      q: "What is a Sales Path built from?",
+      opts: ["A custom object", "A picklist field", "A workflow rule", "A validation rule"],
+      notes: ["Path is layered on top of an existing field, not built as a separate object.", "Correct, Path is built on a picklist field like Lead Status or Opportunity Stage, and that picklist must be created first.", "Workflow Rules are a retired legacy automation tool, unrelated to how Path is configured.", "Validation Rules block a record from saving if criteria aren't met, they don't power the Path UI."],
+      correct: 1,
+      why: "Path is layered on top of an existing picklist field, like Lead Status or Opportunity Stage. That picklist needs to already exist before the path can be built." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx / Visualize Success with Path and Kanban",
+      q: "Per Custom Path best practices, what's the maximum recommended number of Key Fields per stage?",
+      opts: ["3", "5", "10", "Unlimited"],
+      notes: [],
+      correct: 1,
+      why: "Best practice is to keep Key Fields to a maximum of 5 per stage, the essential data reps need before advancing." },
+
+    { domain: SLM, source: "Day 4, Lesson 601.3 - Leads and Opportunities.pptx",
+      q: "When an Opportunity is created directly from a Contact or Lead, what happens automatically?",
+      opts: ["The individual is added to the Opportunity's Contact Role Related List", "A new Campaign is created", "The Opportunity is automatically marked Closed Won", "The Contact record is deleted"],
+      notes: ["Correct, the person from the source Contact or Lead is automatically added as a Contact Role on the new Opportunity.", "No Campaign is created as part of this process.", "A brand-new Opportunity starts in its first stage, not Closed Won.", "The Contact record isn't touched or deleted, it's referenced, not removed."],
+      correct: 0,
+      why: "When an Opportunity is created from a Contact or Lead, that individual is automatically added to the Opportunity's Contact Role Related List, no manual setup needed." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx",
+      q: "What must be enabled on a user's profile before that user can create or edit Campaigns and add Campaign Members?",
+      opts: ["The Marketing User checkbox", "The Sales User checkbox", "API Enabled permission", "The Knowledge User checkbox"],
+      notes: ["Correct, and per the instructor's slides, Standard Profiles do NOT have this checked by default.", "There's no standard 'Sales User' checkbox that gates campaign creation.", "API Enabled controls programmatic API access, unrelated to who can build a campaign in the UI.", "Knowledge User grants access to Salesforce Knowledge articles, a completely different feature."],
+      correct: 0,
+      why: "The Marketing User checkbox on a user's profile is required to create/edit Campaigns and add Campaign Members. Standard Profiles don't have it checked by default, an admin has to enable it." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "Which of the following correctly lists objects that can be added to Campaigns as Campaign Members?",
+      opts: ["Leads, Contacts, and Person Accounts", "Leads and Contacts only", "Contacts and Opportunities", "Leads, Contacts, and Cases"],
+      notes: ["Correct, this is exactly the set confirmed on the instructor's Knowledge Check slide.", "Close, but incomplete, Person Accounts (when enabled) are also eligible Campaign Members.", "Opportunities are never Campaign Members, they're associated to campaigns through Campaign Influence instead.", "Cases are never Campaign Members."],
+      correct: 0,
+      why: "A Campaign Member links a Lead, Contact, or (optionally, if enabled) Person Account to a Campaign." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "Which two objects can be associated to a Campaign Member record by default?",
+      opts: ["Contact and Lead", "Account and Opportunity", "Contact and Account", "Lead and Opportunity"],
+      notes: ["Correct, per the instructor's Knowledge Check, Contact and Lead are the two default-eligible objects.", "Neither Account nor Opportunity are default Campaign Member objects.", "Account isn't a default Campaign Member object, only Person Accounts are (when that feature is enabled).", "Opportunity is never a Campaign Member object."],
+      correct: 0,
+      why: "By default, a Campaign Member record is tied to either a Contact or a Lead." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "What is the purpose of the Primary Campaign Source field on an Opportunity?",
+      opts: ["It links the Opportunity to a Lead", "It tracks the user who created the Opportunity", "It links the Opportunity to the Campaign that influenced it", "It triggers workflow rules for Opportunities"],
+      notes: ["The Opportunity's link to a Lead happens through lead conversion, not this field.", "Opportunity Owner or Created By tracks the user, not this field.", "Correct, Primary Campaign Source identifies the main campaign that drove the Opportunity.", "This field doesn't trigger any workflow rules, it's purely a tracking/attribution field."],
+      correct: 2,
+      why: "Primary Campaign Source records the main campaign that drove a given Opportunity, and additional influential campaigns can be added via a related list (Campaign Influence)." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx (Knowledge Check)",
+      q: "Adam is a marketing manager who wants to track how effective their trade shows are by associating interested prospects with a specific marketing initiative. Which standard object should be used?",
+      opts: ["Opportunity", "Campaign", "Lead", "Account"],
+      notes: ["An Opportunity tracks a specific deal, not a marketing initiative or the prospects it attracted.", "Correct, a Campaign is the container built specifically to associate prospects with a marketing initiative like a trade show.", "A Lead is one individual prospect, not the marketing initiative itself.", "An Account represents a company, not a marketing initiative."],
+      correct: 1,
+      why: "A Campaign is the standard object built to track a marketing initiative (like a trade show) and associate the prospects it generated." },
+
+    { domain: SLM, source: "Day 5, Lesson 601.5 - Accounts, Contacts, and Campaigns.pptx",
+      q: "Which feature groups related campaigns together using the Parent Campaign field?",
+      opts: ["Campaign Hierarchy", "Campaign Record Type", "Campaign Member Status", "Lead Assignment Rule"],
+      notes: ["This is correct per Trailhead documentation, hierarchy is built entirely through the Parent Campaign field.", "Campaign Record Type lets different campaign types track different custom fields, unrelated to grouping campaigns together.", "Campaign Member Status tracks an individual member's response progress, not how campaigns relate to each other.", "Lead Assignment Rules route new leads to a user or queue, unrelated to campaign structure."],
+      correct: 0,
+      why: "Campaign Hierarchy is built through the Parent Campaign field. Note: this specific term didn't appear in your Day 5 slides, they covered Campaign Influence and Primary Campaign Source instead, still worth knowing both concepts." }
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: order.indexOf(orig.correct)
+      };
+    });
+    answers = new Array(questions.length).fill(null);
+    current = 0;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      if (answers[current] === idx) btn.classList.add('selected');
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        answers[current] = idx;
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = answers[current] === null;
+    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = answers[i] === item.correctIndex;
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Shell yeah! You're crushing it.";
+      scoreEmoji.textContent = "🐢💨";
+      launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🐢";
+      launchFireworks();
+    } else {
+      verdict.textContent = "Slow and steady, review below and try again.";
+      scoreEmoji.textContent = "🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = userAns === item.correctIndex;
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      const userLabel = userAns === null ? 'No answer' : String.fromCharCode(65 + userAns) + '. ' + item.displayOpts[userAns];
+      const correctLabel = String.fromCharCode(65 + item.correctIndex) + '. ' + item.displayOpts[item.correctIndex];
+      const userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+</body>
+</html>
