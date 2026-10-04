@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎓 KBA Lesson 6 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 22px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 6 (602.1 / 602.2) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">2</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Data Security (Lesson 602.1): org-wide defaults, role hierarchy, sharing rules, manual sharing, profiles, permission sets, permission set groups, muting</li>
+      <li>User Management and Authentication (Lesson 602.2): user setup and licensing, freeze/deactivate, My Domain, SSO, MFA, password policies, setup audit trail, login hours, session settings</li>
+    </ul>
+
+    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Data Security (Lesson 602.1)</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
+        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const DS = "Data Security (602.1)";
+  const UM = "User Management & Authentication (602.2)";
+
+  const BANK = [
+    { domain: DS, source: "Lesson 602.1 - Data Security / Trailhead: Data Security",
+      q: "What do Organization-Wide Defaults (OWDs) actually establish?",
+      opts: ["The baseline, most restrictive level of record access for each object, which role hierarchy, sharing rules, or manual sharing can then widen", "The maximum access any user can ever reach to a record, with no further widening possible", "Which fields show up on a page layout", "Which hours a user is allowed to log in"],
+      notes: ["Correct, OWD is the floor. Everything else (hierarchy, sharing rules, manual sharing) can only open access up from there.", "This reverses it, OWD is a floor, not a ceiling, other mechanisms raise access above it.", "Field visibility on a layout is controlled separately, not by OWD.", "Login hours are a Profile setting, unrelated to OWD."],
+      correct: 0,
+      why: "OWD sets the most restrictive baseline access to a given object's records. Role hierarchy, sharing rules, and manual sharing can only ever widen access above that baseline, never restrict below it." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "Which OWD setting ties a child record's visibility directly to whatever access the user already has to its related parent record?",
+      opts: ["Private", "Public Read Only", "Controlled by Parent", "Public Read/Write"],
+      notes: ["Private means only the owner, people above them in the hierarchy, and users explicitly granted access can see the record, it isn't tied to a parent.", "Public Read Only gives everyone view access regardless of a parent record, it's a flat setting.", "Correct, Controlled by Parent means the detail record has no independent OWD, it simply mirrors access to its parent.", "Public Read/Write is also a flat, independent setting, not tied to a parent record."],
+      correct: 2,
+      why: "Controlled by Parent means the child/detail record doesn't have its own independent sharing setting, it inherits whatever access level the user already has to the related parent record." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "By default, what does the role hierarchy grant on top of OWD (for objects where this behavior isn't disabled)?",
+      opts: ["Users automatically gain access to records owned by users below them in the hierarchy", "Users only ever see their own records, regardless of role", "Only direct reports' records are visible, never records further down the chain", "The role hierarchy only affects report roll-ups, never record access"],
+      notes: ["Correct, this is the default behavior unless 'Grant Access Using Hierarchies' is unchecked, which is only possible for custom objects.", "That would describe Private OWD with no hierarchy access at all.", "Hierarchy access cascades down through every level below a user, not just direct reports.", "Role hierarchy affects both reporting roll-ups and actual record-level access."],
+      correct: 0,
+      why: "Role hierarchy automatically grants users visibility into records owned by anyone below them in the chain, in addition to OWD. This can be turned off per custom object via the 'Grant Access Using Hierarchies' checkbox, but not for standard objects." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "What is a sharing rule allowed to do?",
+      opts: ["Automatically widen record access beyond OWD for a defined group of users, based on record ownership or criteria", "Restrict access below whatever OWD already allows", "Replace the need for OWD settings entirely", "Control which page layout a profile sees"],
+      notes: ["Correct, sharing rules are strictly an access-widening tool layered on top of OWD.", "Sharing rules can never pull access back below the OWD floor, that isn't how they work.", "OWD is still required, sharing rules only build on top of it.", "Page layout assignment is a Profile x Record Type combination, unrelated to sharing rules."],
+      correct: 0,
+      why: "A sharing rule automatically extends access above the OWD baseline to a specific set of users, based either on who owns the record or criteria the record meets. It can never be used to restrict access below OWD." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "Who is able to manually share an individual record with another specific user?",
+      opts: ["The record owner, anyone above the owner in the role hierarchy, or anyone with Full Access on that record", "Only a System Administrator, regardless of ownership", "Any user in the org, with no restriction", "Manual sharing isn't a real Salesforce feature"],
+      notes: ["Correct, manual sharing is available to the owner, those above the owner in the hierarchy, and anyone already holding Full Access.", "System Administrators can do it too, but so can the owner and others with Full Access, it isn't admin-exclusive.", "Record access still gates who can even see the record well enough to share it, it isn't open to everyone.", "Manual, one-off record sharing is a real and commonly used feature for exception cases."],
+      correct: 0,
+      why: "Manual sharing lets the record owner, anyone above them in the role hierarchy, or anyone with Full Access to that record grant case-by-case access to another specific user or group." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "Besides sharing rules and manual sharing, which other mechanism extends record-level access above the OWD baseline?",
+      opts: ["Role hierarchy", "Field-level security", "Permission sets", "Validation rules"],
+      notes: ["Correct, role hierarchy is the third core mechanism for extending record-level access, alongside sharing rules and manual sharing.", "Field-level security controls which fields within a record a user can see or edit, not whether they can see the record at all.", "Permission sets grant object, field, and system permissions, they don't themselves open up record-level access the way sharing mechanisms do.", "Validation rules enforce data quality on save, they have nothing to do with record visibility."],
+      correct: 0,
+      why: "Role hierarchy, sharing rules, and manual sharing are the three mechanisms that open up record-level access above OWD. Field-level security and permission sets operate at the field/object level, and validation rules are unrelated to access entirely." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "Where on a profile can an admin restrict the specific window of time during which its users are allowed to log in?",
+      opts: ["Login Hours", "Password Policies", "Setup Audit Trail", "Permission Set Groups"],
+      notes: ["Correct, Login Hours is a Profile-level setting that restricts the days/times users under that profile can access Salesforce.", "Password Policies control complexity, expiration, and lockout rules, not login time windows.", "Setup Audit Trail is a read-only log of configuration changes, it doesn't restrict anything.", "Permission Set Groups bundle permissions, they don't control login timing."],
+      correct: 0,
+      why: "Login Hours is configured directly on a Profile and restricts the days and times during which users assigned to that profile can log in to Salesforce." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "What do Login IP Ranges on a profile control?",
+      opts: ["The specific IP ranges from which users with that profile can log in without being challenged for additional identity verification", "Which fields that profile's users are able to edit", "The default time zone applied to that profile's users", "Which currencies that profile's users can view on records"],
+      notes: ["Correct, logging in from a trusted/whitelisted IP range skips the extra identity-verification challenge that would otherwise appear.", "Field edit access is controlled by field-level security and permissions, not Login IP Ranges.", "Time zone is a personal user setting, unrelated to Login IP Ranges.", "Currency visibility relates to multi-currency activation, not IP ranges."],
+      correct: 0,
+      why: "Login IP Ranges define trusted IP addresses for a profile. Logging in from within that range skips the extra identity-verification step a user would otherwise face from an unrecognized location." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security",
+      q: "What is the primary purpose of a permission set?",
+      opts: ["To grant additional, specific permissions and access on top of a user's single profile, without changing that profile", "To completely replace a user's profile", "To take away permissions a profile already grants", "To set the org-wide sharing defaults for an object"],
+      notes: ["Correct, permission sets are additive, layered on top of a user's one profile to extend access for a particular task or role.", "A user still needs exactly one profile, a permission set only supplements it, it doesn't replace it.", "Permission sets grant additional access, they can't be used to subtract what a profile already allows.", "OWD is configured separately at the org level, not through permission sets."],
+      correct: 0,
+      why: "Every user has exactly one profile but can be assigned many permission sets. Permission sets extend a user's access for specific tasks without having to modify or duplicate their profile." },
+
+    { domain: DS, source: "Lesson 602.1 - Data Security / Permission Set Groups module, Unit 1",
+      q: "What is the benefit of bundling several permission sets into a permission set group?",
+      opts: ["All the permissions needed for a job function can be assigned to a user in a single assignment, instead of assigning several permission sets individually", "It automatically deletes any permission sets not currently in use", "It converts those permission sets into a single profile", "It removes the need to configure OWD for that object"],
+      notes: ["Correct, a permission set group organizes multiple permission sets around a job function so admins assign one group instead of managing several separate assignments.", "Permission set groups don't delete anything, unused permission sets stay exactly as they are.", "A permission set group is still a group of permission sets, it never becomes a profile.", "OWD is a completely separate, org-wide setting unaffected by permission set groups."],
+      correct: 0,
+      why: "Permission set groups bundle permission sets together by job function, so an admin can assign (and later update) one group instead of juggling several individual permission set assignments per user." },
+
+    { domain: DS, source: "Permission Set Groups module, Unit 1",
+      q: "What does a Muting Permission Set do inside a permission set group?",
+      opts: ["It removes, or mutes, specific permissions a permission set in that group would otherwise grant, without changing the underlying permission set itself", "It permanently deletes the underlying permission set from the org", "It silences in-app notifications for the assigned user", "It hides the permission set group from the Setup menu"],
+      notes: ["Correct, muting is especially useful for managed package permission sets, which can't be edited directly, letting you dial back specific permissions just within that group's context.", "The original permission set is untouched outside the group, muting only affects its contribution within that specific group.", "Muting Permission Sets have nothing to do with notifications.", "Muting changes effective permissions, not visibility of the group in Setup."],
+      correct: 0,
+      why: "A Muting Permission Set lets you remove specific permissions that a permission set would otherwise contribute to a permission set group, without editing the original permission set. This matters most for managed package permission sets, which can't be directly modified." },
+
+    { domain: DS, source: "Permission Set Groups module, Unit 1",
+      q: "What triggers a permission set group to recalculate its effective permissions?",
+      opts: ["Changing, adding, or removing a permission set within that group", "A user simply logging into Salesforce", "The org's routine nightly data backup", "Changing a page layout assignment"],
+      notes: ["Correct, any of these three changes to the group's permission sets kicks off a recalculation that propagates through to the group.", "Logging in doesn't trigger any permission set group recalculation.", "Backups are unrelated to permission set group status.", "Page layout changes don't touch permission set groups at all."],
+      correct: 0,
+      why: "Changing, adding, or removing a permission set in a group triggers a recalculation. While it's in progress, assigned users keep the permissions from the last completed recalculation; status shows as Updated, Outdated, Updating, or Failed." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What must be true of every Salesforce username, even across completely unrelated orgs?",
+      opts: ["It must be unique across all of Salesforce globally and formatted like an email address", "It only needs to be unique within that one org", "It must exactly match the user's real email address", "Usernames can be freely reused once the original user is deactivated"],
+      notes: ["Correct, usernames are globally unique across every Salesforce org, not just the org they were created in.", "Uniqueness is enforced globally, not just org by org, which is why a username collision can occur even between two completely unrelated companies.", "The username must look like an email format but does not have to be a real, reachable email address, and doesn't have to match the user's actual Email field.", "A username stays reserved even after the user that held it is deactivated."],
+      correct: 0,
+      why: "Usernames must be globally unique across all of Salesforce, not just within a single org, and must follow an email-address format, though they don't need to be a real, deliverable email address." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "Why can't a Salesforce admin simply delete a user record outright?",
+      opts: ["Salesforce doesn't support permanently deleting users, deactivating instead preserves historical ownership and audit history", "Deletion is technically possible but requires paying an extra fee", "Only the original creator of the account is allowed to delete it", "Deleting a user would also delete every record that user ever owned"],
+      notes: ["Correct, users are deactivated rather than deleted specifically to preserve data integrity, audit trails, and historical record ownership.", "There's no fee-based workaround to delete a user, deletion simply isn't supported.", "This isn't a creator-permission issue, deletion of users isn't available to anyone.", "Deactivating a user does not delete any records they own, those records and their history remain intact."],
+      correct: 0,
+      why: "Salesforce never allows a user record to be permanently deleted. Deactivating a user blocks their login while keeping historical data, audit trails, and record ownership intact." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What's the key difference between freezing a user and deactivating a user?",
+      opts: ["Freezing blocks login immediately while keeping the license and user record fully intact; deactivating also blocks login but frees that license for reassignment", "Freezing permanently deletes the account, while deactivating keeps it", "They are the exact same action, just two different names for it", "Freezing is only possible for System Administrator accounts"],
+      notes: ["Correct, freezing is often used for a fast, temporary lockout (for example during an investigation) without touching license allocation; deactivating goes further and releases the license.", "Freezing doesn't delete anything, and deactivating doesn't delete the user record either, it just blocks login.", "They produce a similar login-block effect but differ specifically in what happens to the license.", "Any user can be frozen, this isn't restricted to admin accounts."],
+      correct: 0,
+      why: "Freezing a user blocks login immediately while leaving the license assigned, useful for a fast, temporary lockout. Deactivating also blocks login but frees up that user's license so it can be reassigned to someone else." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What happens to a user's historical records and activity once that user is deactivated?",
+      opts: ["Historical records and reports referencing that user are preserved; the user can no longer log in but can still appear as a record owner or in lookups", "All records that user owned are automatically deleted along with the account", "All of that user's records are automatically reassigned to the admin", "Any report referencing that deactivated user stops running entirely"],
+      notes: ["Correct, deactivation only blocks login, it doesn't touch ownership, history, or reporting data tied to that user.", "Deactivation never deletes the records a user owned, that data is preserved.", "There's no automatic reassignment of owned records on deactivation, an admin would have to do that manually if needed.", "Reports keep working and can still reference a deactivated user's historical activity."],
+      correct: 0,
+      why: "Deactivating a user only blocks their ability to log in. All records they owned, all audit history, and all reports referencing them remain fully intact and functional." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What does a feature license do?",
+      opts: ["Grants access to one specific additional feature, like Marketing User or Knowledge User, layered on top of a user's base user license", "Replaces the need for that user to have a profile at all", "Determines the org's default time zone", "Determines the user's position in the role hierarchy"],
+      notes: ["Correct, feature licenses unlock a specific capability (for example, the Marketing User checkbox enabling Campaign creation) in addition to the base user license.", "A profile is still required regardless of any feature license assigned.", "Org default time zone is set on the Company Information page, unrelated to feature licenses.", "Role hierarchy placement is configured separately from any feature license."],
+      correct: 0,
+      why: "A feature license adds access to one additional specific feature, such as Marketing User, Knowledge User, or Service Cloud User, on top of whatever base User License the person already has." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What does a user's User License primarily determine?",
+      opts: ["Which profiles and permission sets are even available to be assigned to that user", "The user's personal time zone", "The user's position in the role hierarchy", "Whether multi-factor authentication is required for that specific user"],
+      notes: ["Correct, the User License sets the pool of profiles and permission sets that can legally be assigned to that user.", "Time zone is an independent personal setting, not tied to User License.", "Role hierarchy placement is configured separately from User License.", "MFA is required for essentially all users regardless of their specific User License."],
+      correct: 0,
+      why: "A user's User License determines which Profiles and Permission Sets can even be assigned to them, since each license type unlocks a different pool of available features and permissions." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "Which of these is a benefit of enabling My Domain?",
+      opts: ["A custom, branded login URL, plus the ability to run multiple SSO configurations and apply authentication policies at the domain level", "It automatically encrypts all data at rest with no further configuration", "It removes the requirement for users to have individual licenses", "It disables every external integration connected to the org"],
+      notes: ["Correct, My Domain gives the org its own branded login URL and unlocks domain-level features like multiple SSO configurations and per-domain authentication policies.", "My Domain is unrelated to Shield Platform Encryption or any automatic data-at-rest encryption.", "Licensing requirements are completely separate from My Domain.", "My Domain doesn't disable integrations, in fact it's often a prerequisite for configuring certain ones securely."],
+      correct: 0,
+      why: "My Domain gives an org a unique, branded login URL and is a prerequisite for several security and identity features, including running multiple SSO configurations and applying authentication policies at the domain level." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What does Single Sign-On (SSO) allow a user to do?",
+      opts: ["Authenticate once with an external identity provider and gain access to Salesforce without a separate Salesforce login", "Access Salesforce with no credentials at all, even on the very first login", "Bypass every permission set assigned to their account", "Automatically unfreeze any other frozen user in the org"],
+      notes: ["Correct, SSO lets a user authenticate through a trusted external identity provider instead of maintaining a separate Salesforce password.", "SSO still requires authenticating with the identity provider, it isn't credential-free access.", "SSO only changes how a user proves their identity, it has no effect on their permissions.", "SSO has nothing to do with other users' frozen/active status."],
+      correct: 0,
+      why: "SSO lets a user authenticate once through a trusted external identity provider and then access Salesforce without needing a separate, independent Salesforce password." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What does Salesforce's Multi-Factor Authentication (MFA) policy require?",
+      opts: ["All users must use MFA for every direct UI login to Salesforce", "MFA is entirely optional and left up to each individual org to decide", "MFA only applies to users holding the System Administrator profile", "MFA replaces the need for a password entirely"],
+      notes: ["Correct, Salesforce requires MFA be enforced for all direct UI logins, it is not optional.", "This isn't an optional, org-by-org choice, it's a Salesforce-wide requirement.", "MFA applies across all users logging in directly, not just admins.", "MFA is an additional verification step on top of a password, not a replacement for one."],
+      correct: 0,
+      why: "Salesforce requires multi-factor authentication for every user logging directly into the UI. It's a platform-wide requirement, not an optional, per-org setting, and it adds a second verification factor on top of the password rather than replacing it." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "Which of these is configured under Password Policies?",
+      opts: ["Minimum password length, complexity requirements, expiration period, and password history", "Which objects a given profile is allowed to access", "The org's fiscal year start month", "Which fields display on a particular page layout"],
+      notes: ["Correct, Password Policies cover exactly these settings: length, complexity, expiration, history, and related lockout behavior.", "Object access is controlled through Profiles and Permission Sets, not Password Policies.", "Fiscal year is configured on its own dedicated Setup page, unrelated to passwords.", "Page layout field visibility has nothing to do with Password Policies."],
+      correct: 0,
+      why: "Password Policies govern minimum length, complexity requirements, how often passwords expire, password history (preventing reuse), and lockout behavior after failed attempts." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What does the Setup Audit Trail track?",
+      opts: ["Configuration changes made in Setup, including who made each change and when", "Every single record a user has ever viewed", "A user's personal to-do list and tasks", "The full content of every email sent from Salesforce"],
+      notes: ["Correct, Setup Audit Trail is specifically a log of administrative/configuration changes, with the user and timestamp for each.", "Record-view history isn't what Setup Audit Trail tracks, it's focused on configuration changes.", "Personal tasks have nothing to do with the Setup Audit Trail.", "Email content isn't logged in the Setup Audit Trail at all."],
+      correct: 0,
+      why: "The Setup Audit Trail records configuration changes made in Setup, who made them, and when, giving admins a history of who changed what in the org." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "What do Session Settings control?",
+      opts: ["Things like how long a session stays active before timing out, and whether a session can be locked to the IP address it started from", "Which currency is used in financial reports", "The org's default time zone", "Which users belong to a given public group"],
+      notes: ["Correct, Session Settings govern session timeout duration and session-to-IP locking, among other session security behaviors.", "Currency settings are managed separately under company/currency settings, unrelated to sessions.", "Default time zone is set on the Company Information page, not Session Settings.", "Public group membership is managed on its own setup page, unrelated to sessions."],
+      correct: 0,
+      why: "Session Settings control session-level security behavior, including how long a session can stay idle before timing out and whether a session gets locked to the IP address it originated from." },
+
+    { domain: UM, source: "Lesson 602.2 - User Management and Authentication",
+      q: "When might Salesforce prompt a user for extra identity verification, such as a one-time code, beyond their regular password?",
+      opts: ["When logging in from an unrecognized device, browser, or location", "Every single time they log in, even from the exact same trusted computer, with no way to avoid it", "Only when MFA has been disabled for the org", "Only right when a password policy expiration date hits"],
+      notes: ["Correct, identity verification challenges are triggered by unfamiliar devices, browsers, or locations that fall outside the user's established pattern (or outside a trusted Login IP Range).", "A recognized, trusted device typically isn't re-challenged every single login, that's the point of device/browser recognition.", "Identity verification challenges can occur independent of whether MFA is enabled, they serve a related but distinct purpose.", "Password expiration and identity verification are two separate mechanisms, one isn't a trigger for the other."],
+      correct: 0,
+      why: "Salesforce challenges a user with identity verification when they log in from a device, browser, or location it doesn't recognize, or one that falls outside a trusted Login IP Range, as an extra check beyond the password itself." }
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: order.indexOf(orig.correct)
+      };
+    });
+    answers = new Array(questions.length).fill(null);
+    current = 0;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' · ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      if (answers[current] === idx) btn.classList.add('selected');
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        answers[current] = idx;
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = answers[current] === null;
+    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = answers[i] === item.correctIndex;
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Shell yeah! You're crushing it.";
+      scoreEmoji.textContent = "🐢💨";
+      launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🐢";
+      launchFireworks();
+    } else {
+      verdict.textContent = "Slow and steady, review below and try again.";
+      scoreEmoji.textContent = "🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = userAns === item.correctIndex;
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      const userLabel = userAns === null ? 'No answer' : String.fromCharCode(65 + userAns) + '. ' + item.displayOpts[userAns];
+      const correctLabel = String.fromCharCode(65 + item.correctIndex) + '. ' + item.displayOpts[item.correctIndex];
+      const userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+</body>
+</html>
