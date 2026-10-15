@@ -205,8 +205,8 @@
     </div>
 
     <ul class="domains">
-      <li>Reports (Lesson 603.1 / 603.2): report formats, custom report types, bucket fields, row-level formulas, summaries, cross filters, filter logic, chart types, folder sharing</li>
-      <li>Dashboards and Forecasting (Lesson 603.2): component types, filters, running user, dynamic dashboards, subscriptions, forecast categories, quotas, territories</li>
+      <li>Reports (Lesson 603.1 / 603.2): report formats, report types and custom report types, filters and locked filters, cross filters, filter logic, bucket fields, summary and row-level formulas, charts, limits, folder sharing, exporting</li>
+      <li>Dashboards and Forecasting (Lesson 603.1 / 603.2): widgets and limits, component types, filters, running user and view-as options, dynamic dashboards, subscriptions, forecast categories, quotas, territories</li>
       <li>Data Management and Quality (Lesson 603.3): Data Import Wizard, Data Loader, Export All, import failures, matching, duplicate, and validation rules</li>
     </ul>
 
@@ -254,7 +254,7 @@
 <script>
 (function() {
   const RPT = "Reports (603.1 / 603.2)";
-  const DSH = "Dashboards & Forecasting (603.2)";
+  const DSH = "Dashboards & Forecasting (603.1 / 603.2)";
   const DAT = "Data Management & Quality (603.3)";
 
   const BANK = [
@@ -640,7 +640,194 @@
       opts: ["Validation rules", "Duplicate and matching rules", "Picklists and required fields", "Dynamic dashboards"],
       notes: ["Correct, they stop bad data from being saved.", "Correct, they prevent and flag duplicates.", "Correct, they standardize and require key data.", "Dynamic dashboards display data, they don't improve its quality."],
       correct: [0, 1, 2],
-      why: "Data quality improves with validation rules, duplicate and matching rules, picklists, required fields, and regular cleanup using reports." }
+      why: "Data quality improves with validation rules, duplicate and matching rules, picklists, required fields, and regular cleanup using reports." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Report Formats",
+      q: "Tony, a Sales Manager, needs a report of Open Opportunities created last month, showing only the number of Open Opportunities owned by each Sales Rep. Which report format meets his needs?",
+      opts: ["Summary", "Tabular", "Matrix", "Joined"],
+      notes: ["Correct, grouping by Opportunity Owner gives a count per rep.", "Tabular can't group or subtotal by rep.", "Matrix groups by rows and columns, which is more than he needs.", "Joined is for combining separate report blocks."],
+      correct: 0,
+      why: "Tony needs one grouping (Owner) with a count per group. That's exactly what a summary report does." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Report Types",
+      q: "Tyler is building a report that shows the products related to current Open Opportunities. Which report type should he select?",
+      opts: ["Opportunities with Products", "Opportunities", "Opportunities with Opportunity Products", "Opportunity History"],
+      notes: ["Correct, this standard report type includes Opportunities and their related products.", "The plain Opportunities report type doesn't include product line items.", "This isn't the name of the standard report type.", "Opportunity History tracks stage and amount changes, not products."],
+      correct: 0,
+      why: "The standard 'Opportunities with Products' report type joins Opportunities with their product line items." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Custom Report Types",
+      q: "You need to build a report that shows Accounts with or without Opportunities. What should you use?",
+      opts: ["Custom Report Type", "Joined Report", "Standard Report Type", "Dashboard Filter"],
+      notes: ["Correct, a custom report type lets you choose 'A records may or may not have related B records'.", "Joined reports combine blocks but don't create a with-or-without relationship.", "Standard report types don't let you pick the with-or-without option.", "Dashboard filters only filter components."],
+      correct: 0,
+      why: "Custom report types let you set the relationship to 'with or without' related records, like Accounts with or without Opportunities." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Custom Report Types",
+      q: "What is the maximum number of objects that can be linked in a Custom Report Type?",
+      opts: ["4", "2", "3", "5"],
+      notes: ["Correct, a primary object plus up to 3 related levels, 4 objects total.", "You can link more than 2.", "You can link more than 3.", "The limit is 4, not 5."],
+      correct: 0,
+      why: "A custom report type can include up to 4 objects: the primary object, its child, grandchild, and great-grandchild." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Cross Filters",
+      q: "Which report feature allows filtering based on child objects?",
+      opts: ["Cross Filters", "Summary Filters", "Row-Level Formulas", "Bucketing"],
+      notes: ["Correct, cross filters filter parent records by their related child records.", "This isn't a feature for filtering on child objects.", "Row-level formulas calculate values per row.", "Bucketing categorizes values."],
+      correct: 0,
+      why: "Cross filters let you include or exclude parent records based on child records, such as Accounts without Opportunities where Stage = Closed Won." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Report Filters",
+      q: "Rob is sharing an Accounts report with many users and doesn't want them to change his filters. What should he do?",
+      opts: ["Lock the filters before sharing the report", "Create a separate report for each user", "Export the report and email it to everyone", "Take a screenshot of the report"],
+      notes: ["Correct, locked filters can't be changed by other users who run the report.", "That's a lot of extra work and isn't necessary.", "Exports go out of date and lose the live report.", "A screenshot isn't a usable live report."],
+      correct: 0,
+      why: "Locking a filter keeps other users from changing it when they run a shared report." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Filters",
+      q: "What is the maximum number of filters that can be added to a report?",
+      opts: ["20", "3", "5", "10"],
+      notes: ["Correct, a report can have up to 20 filters.", "3 is the dashboard filter limit.", "5 is the limit for bucket columns and summary formulas.", "The limit is 20."],
+      correct: 0,
+      why: "Reports allow up to 20 field filters. Don't mix this up with dashboards, which allow 3 filters." },
+
+    { domain: RPT, source: "Lesson 603.1, Types of Filters",
+      q: "A rep creates a filter: Stage equals Closed Won. What type of filter is this?",
+      opts: ["Field filter", "Standard filter", "Cross filter", "Filter logic"],
+      notes: ["Correct, a field filter uses a field, an operator, and a value.", "Standard filters are built-in ones like date range and 'show me' (owner).", "Cross filters filter on related records.", "Filter logic combines numbered filters."],
+      correct: 0,
+      why: "Field filters pick a field, an operator (equals, contains, greater than), and a value. Standard filters are built in, like Created Date range and record owner." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Features and Limits",
+      q: "Which report formats can display a report chart? Select 3.",
+      type: "multi",
+      opts: ["Summary", "Matrix", "Joined", "Tabular"],
+      notes: ["Correct, summary reports support charts.", "Correct, matrix reports support charts.", "Correct, joined reports support charts.", "Tabular reports have no groupings, so they can't show a chart."],
+      correct: [0, 1, 2],
+      why: "Report charts need groupings, so they're available on summary, matrix, and joined reports, not tabular." },
+
+    { domain: RPT, source: "Lesson 603.1, Formulas in Summary Reports",
+      q: "A manager wants a win rate calculated for each Opportunity Owner grouping in a summary report. What should be added?",
+      opts: ["Summary formula", "Row-level formula", "Bucket field", "Cross filter"],
+      notes: ["Correct, summary formulas calculate at the grouping or grand total level.", "Row-level formulas calculate per record, not per group.", "Bucket fields categorize values.", "Cross filters filter on related records."],
+      correct: 0,
+      why: "Summary formulas calculate at the subtotal or grand total level, which is perfect for metrics like win rate per owner." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Features and Limits",
+      q: "How many summary (custom) formulas can be added to a single report?",
+      opts: ["5", "1", "3", "20"],
+      notes: ["Correct, up to 5 summary formulas per report.", "1 is the limit for row-level formulas.", "The limit is higher than 3.", "20 is the report filter limit."],
+      correct: 0,
+      why: "A report can have up to 5 summary formulas, up to 5 bucket columns, 20 filters, and 1 row-level formula." },
+
+    { domain: RPT, source: "Lesson 603.1, Matrix Reports",
+      q: "When building a matrix report, what do you do first?",
+      opts: ["Group by rows, then group by columns", "Group by columns, then add rows", "Add a chart first", "Create a joined report first"],
+      notes: ["Correct, adding a row grouping makes it a summary report, then adding a column grouping makes it matrix.", "Rows are grouped first.", "A chart isn't required to make a matrix report.", "Joined reports are a different format."],
+      correct: 0,
+      why: "A matrix report is a summary report plus a column grouping. Group by rows first, then group by columns." },
+
+    { domain: RPT, source: "Lesson 603.1, Joined Reports",
+      q: "What is the maximum number of blocks in a joined report?",
+      opts: ["5", "2", "3", "10"],
+      notes: ["Correct, joined reports allow up to 5 blocks.", "You can have more than 2 blocks.", "You can have more than 3 blocks.", "The limit is 5."],
+      correct: 0,
+      why: "Joined reports can have up to 5 blocks, and each block can have its own report type, filters, and columns." },
+
+    { domain: RPT, source: "Lesson 603.1, Custom Report Types",
+      q: "Why would an admin create a custom report type instead of using the standard one that Salesforce auto-creates for a custom object? Select 2.",
+      type: "multi",
+      opts: ["To add fields from related objects via lookup", "To set a 'with or without' relationship to related records", "To raise the report filter limit above 20", "To bypass the user's record access"],
+      notes: ["Correct, custom report types can add lookup fields from related objects.", "Correct, custom report types let you choose 'may or may not have' related records.", "Custom report types don't change filter limits.", "Reports always respect record access."],
+      correct: [0, 1],
+      why: "Auto-created standard report types can't be customized. Custom report types let you choose the objects, the with-or-without relationship, default columns, and fields from related objects via lookup." },
+
+    { domain: RPT, source: "Lesson 603.1, Custom Report Types",
+      q: "In the custom report type 'Contacts with Cases and Activities', each Contact must have at least one Case and each Case must have at least one Activity. Which Contacts appear?",
+      opts: ["Only Contacts that have Cases, where those Cases have Activities", "All Contacts, with or without Cases", "Only Contacts without Cases", "All Cases, with or without Contacts"],
+      notes: ["Correct, 'must have at least one' at each level only keeps records that have related children.", "That would need the 'may or may not have' option.", "That would need a cross filter for 'without'.", "The primary object is Contacts, not Cases."],
+      correct: 0,
+      why: "'Each A record must have at least one related B record' drops any parent without children. Use 'may or may not have' when you want parents with no related records too." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Report Sharing",
+      q: "How is access to reports controlled in Salesforce?",
+      opts: ["Folder-level sharing", "Field-level security", "Profile access to each report", "Sharing rules on the report object"],
+      notes: ["Correct, reports live in folders, and folder sharing controls who can access them.", "FLS controls fields, not access to reports.", "Profiles don't grant access to individual reports.", "Reports aren't shared with sharing rules."],
+      correct: 0,
+      why: "Reports and dashboards are stored in folders. Folder sharing (View, Edit, Manage) controls who can access them." },
+
+    { domain: RPT, source: "Lesson 603.1 Knowledge Check, Report Sharing",
+      q: "Which users can see a report stored in a public folder?",
+      opts: ["Users with access to the folder", "Everyone in the organization", "Only users with View All Data", "Users above the folder owner in the role hierarchy"],
+      notes: ["Correct, access depends on who the folder is shared with.", "Only if the folder is shared with everyone.", "View All Data isn't required.", "The role hierarchy doesn't grant folder access."],
+      correct: 0,
+      why: "Folder access is what matters. A folder can be shared with users, roles, public groups, or the whole org." },
+
+    { domain: RPT, source: "Lesson 603.1, Exporting Reports",
+      q: "In which file formats can a report be exported? Select 3.",
+      type: "multi",
+      opts: [".csv", ".xls", ".xlsx", ".pdf"],
+      notes: ["Correct, details-only exports can be .csv.", "Correct, .xls is supported.", "Correct, .xlsx is supported (formatted or details only).", ".pdf isn't a report export format."],
+      correct: [0, 1, 2],
+      why: "Users with export permission can export reports as .csv, .xls, or .xlsx." },
+
+    { domain: RPT, source: "Lesson 603.1, Exporting Reports",
+      q: "How can a joined report be exported?",
+      opts: ["Only as a formatted Excel file (.xlsx)", "Only as .csv", "As .csv or .xls", "Joined reports can't be exported"],
+      notes: ["Correct, joined reports only export as formatted .xlsx.", "Joined reports can't export to .csv.", "Joined reports can't export to .csv or .xls.", "They can be exported, just in one format."],
+      correct: 0,
+      why: "Joined reports can only be exported as a formatted Excel report (.xlsx)." },
+
+    { domain: DSH, source: "Lesson 603.1 Knowledge Check, Dashboard Running User",
+      q: "What determines the data a user sees in a dashboard with a fixed running user?",
+      opts: ["The fixed running user's record visibility", "The viewer's own profile", "The dashboard folder", "The viewer's organization-wide defaults"],
+      notes: ["Correct, everyone sees data based on the running user's access.", "The viewer's profile doesn't change the data shown.", "The folder controls who can open it, not the data.", "The viewer's access isn't used unless the dashboard is dynamic."],
+      correct: 0,
+      why: "With a fixed running user, every viewer sees the same data, filtered through that one user's security settings and record access." },
+
+    { domain: DSH, source: "Lesson 603.1 Knowledge Check, Dynamic Dashboards",
+      q: "Molly is building a dynamic dashboard for Sales Reps, Sales Managers, and the VP of Sales. What should she consider? Select 3.",
+      type: "multi",
+      opts: ["Dynamic dashboards can't be saved in a private folder", "Dynamic dashboards must be refreshed manually", "Viewers see data according to their own access", "Depending on edition, you can build up to 15 dynamic dashboards"],
+      notes: ["Correct, dynamic dashboards must be saved in a shared folder.", "Correct, dynamic dashboards can't be refreshed on a schedule.", "Correct, each viewer sees data based on their own access.", "The edition limit is 5 (Enterprise) or 10 (Unlimited and Performance), not 15."],
+      correct: [0, 1, 2],
+      why: "Dynamic dashboards run as the viewer, can't be saved in private folders, can't be scheduled for refresh, and are limited by edition." },
+
+    { domain: DSH, source: "Lesson 603.1, Dashboard View Options",
+      q: "A sales manager wants to view a dashboard as any rep below them in the role hierarchy. Which permission allows this?",
+      opts: ["View My Team's Dashboards", "View All Data", "Manage Users", "Export Reports"],
+      notes: ["Correct, this lets users view the dashboard as anyone below them in the role hierarchy.", "View All Data lets them pick ANY user, which is more access than needed.", "Manage Users isn't about viewing dashboards.", "Export Reports is about exporting."],
+      correct: 0,
+      why: "With 'Let dashboard viewers choose whom they view the dashboard as', View My Team's Dashboards lets a manager pick users below them. View All Data lets them pick anyone." },
+
+    { domain: DSH, source: "Lesson 603.1, Dashboard Widgets",
+      q: "What is the maximum number of widgets (components) on a single dashboard?",
+      opts: ["25", "20", "10", "3"],
+      notes: ["Correct, up to 25 widgets total.", "20 is the limit for charts and tables combined.", "The limit is higher than 10.", "3 is the image limit and the dashboard filter limit."],
+      correct: 0,
+      why: "A dashboard can have up to 25 widgets, with a max of 20 charts and tables and 3 images." },
+
+    { domain: DSH, source: "Lesson 603.1, Report and Dashboard Sharing",
+      q: "All users with access to a dashboard folder see the same data on a dashboard, unless what?",
+      opts: ["The dashboard is dynamic", "The dashboard has filters", "The folder is public", "The dashboard has more than 20 components"],
+      notes: ["Correct, dynamic dashboards show each viewer their own data.", "Filters change the view but still use the running user's access.", "Public folders still show the same data to everyone.", "Component count has nothing to do with the data shown."],
+      correct: 0,
+      why: "Standard dashboards show everyone the running user's data. Only dynamic dashboards show each viewer data based on their own access." },
+
+    { domain: DSH, source: "Lesson 603.1, Report and Dashboard Subscriptions",
+      q: "Which statements about report and dashboard subscriptions are true? Select 3.",
+      type: "multi",
+      opts: ["Frequency can be daily, weekly, or monthly", "You can set conditions, like a minimum record count, for the email to send", "Dynamic dashboards can't be subscribed to", "Subscriptions can only be sent to the System Administrator"],
+      notes: ["Correct, those are the frequency options.", "Correct, report subscriptions can send only when conditions are met.", "Correct, per the lesson, dynamic dashboards can't be subscribed.", "Any user can subscribe, and others can be added as recipients."],
+      correct: [0, 1, 2],
+      why: "Subscriptions email results daily, weekly, or monthly at a chosen time, can include conditions and attachments, and can't be used on dynamic dashboards." },
+
+    { domain: DSH, source: "Lesson 603.1, Report and Dashboard Subscriptions",
+      q: "When setting up a report subscription, why should you be careful about choosing 'Another Person' as the running user?",
+      opts: ["Recipients could see data they shouldn't have access to", "The report will stop refreshing", "The report gets deleted after it's sent", "It turns the report into a joined report"],
+      notes: ["Correct, recipients see the data as that other person sees it.", "The subscription still runs.", "Reports aren't deleted by subscriptions.", "The running user doesn't change the report format."],
+      correct: 0,
+      why: "The subscription runs as the selected user. If that user has broad access, recipients may see records they couldn't normally see." }
 
   ];
 
