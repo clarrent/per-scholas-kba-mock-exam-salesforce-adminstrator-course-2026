@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎓 KBA Lesson 603 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 8px; }
+  .q-hint { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; margin-top: 14px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 603 (603.1 / 603.2 / 603.3) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">3</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Reports (Lesson 603.1 / 603.2): report formats, custom report types, bucket fields, row-level formulas, summaries, cross filters, filter logic, chart types, folder sharing</li>
+      <li>Dashboards and Forecasting (Lesson 603.2): component types, filters, running user, dynamic dashboards, subscriptions, forecast categories, quotas, territories</li>
+      <li>Data Management and Quality (Lesson 603.3): Data Import Wizard, Data Loader, Export All, import failures, matching, duplicate, and validation rules</li>
+    </ul>
+
+    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Reports (603.1 / 603.2)</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="q-hint hidden" id="q-hint"></div>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
+        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const RPT = "Reports (603.1 / 603.2)";
+  const DSH = "Dashboards & Forecasting (603.2)";
+  const DAT = "Data Management & Quality (603.3)";
+
+  const BANK = [
+    { domain: RPT, source: "Lesson 603.1, Report Formats",
+      q: "A manager wants a simple list of all open Cases with no grouping or subtotals. Which report format fits best?",
+      opts: ["Tabular", "Summary", "Matrix", "Joined"],
+      notes: ["Correct, tabular is a plain list of rows and columns, like a spreadsheet.", "Summary adds row groupings and subtotals, which isn't needed here.", "Matrix groups by both rows and columns.", "Joined combines multiple report blocks."],
+      correct: 0,
+      why: "Tabular reports are the simplest format: a flat list of records with columns, no groupings. Good for lists like contact lists or open cases." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Formats",
+      q: "A sales manager wants Opportunities grouped by Stage, with subtotals of Amount for each stage. Which report format fits best?",
+      opts: ["Summary", "Tabular", "Joined", "Matrix"],
+      notes: ["Correct, summary reports group rows and show subtotals per group.", "Tabular reports can't group rows.", "Joined reports are for combining multiple report blocks.", "Matrix works but is meant for grouping by rows AND columns, which isn't asked."],
+      correct: 0,
+      why: "Summary reports group rows by one or more fields and show subtotals for each group, like Opportunities by Stage." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Formats",
+      q: "A VP wants to see total Opportunity Amount grouped by Owner down the side and by Close Month across the top. Which report format should be used?",
+      opts: ["Matrix", "Summary", "Tabular", "Joined"],
+      notes: ["Correct, matrix reports group by both rows and columns, like a pivot table.", "Summary reports only group by rows.", "Tabular reports have no grouping.", "Joined reports combine separate report blocks."],
+      correct: 0,
+      why: "Matrix reports group data by rows and columns at the same time, similar to a pivot table in Excel." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Formats",
+      q: "An admin needs one report that shows Opportunities and Cases side by side for each Account, with each section having its own filters. Which format should they use?",
+      opts: ["Joined", "Matrix", "Summary", "Tabular"],
+      notes: ["Correct, joined reports hold multiple report blocks, each with its own report type and filters.", "Matrix reports use one report type with row and column groupings.", "Summary reports use one report type and one set of filters.", "Tabular reports are a single flat list."],
+      correct: 0,
+      why: "Joined reports combine multiple blocks in one view. Each block can use a different report type and its own filters, grouped by a common field like Account." },
+
+    { domain: RPT, source: "Lesson 603.1, Custom Report Types",
+      q: "The standard report types don't include a custom object the admin needs to report on with Accounts. What should the admin create?",
+      opts: ["A custom report type", "A joined report", "A bucket field", "A dashboard filter"],
+      notes: ["Correct, custom report types define which objects and fields are available to reports.", "Joined reports still need a report type that includes the object.", "Bucket fields group values inside an existing report.", "Dashboard filters filter components, they don't add objects."],
+      correct: 0,
+      why: "A custom report type defines the primary object, the related objects, and the fields users can pick from when building reports." },
+
+    { domain: RPT, source: "Lesson 603.1, Custom Report Types",
+      q: "An admin wants a report showing Accounts that have no related Contacts. How should the custom report type relationship be set up?",
+      opts: ["Accounts with or without related Contacts", "Accounts with at least one related Contact", "Contacts with Accounts", "Contacts with or without Accounts"],
+      notes: ["Correct, 'with or without' includes Accounts that have zero Contacts, so you can filter for them.", "'With at least one' excludes Accounts that have no Contacts.", "Starting from Contacts can't show Accounts with no Contacts.", "Starting from Contacts can't show Accounts with no Contacts."],
+      correct: 0,
+      why: "In a custom report type, choosing 'A records may or may not have related B records' keeps parent records that have no children, so you can find Accounts without Contacts." },
+
+    { domain: RPT, source: "Lesson 603.2, Bucket Fields in Reports",
+      q: "A manager wants to group Accounts into Small, Medium, and Large based on Annual Revenue, without creating a new field on the object. What should the admin use?",
+      opts: ["Bucket field", "Formula field on the Account object", "Cross filter", "Row-level formula"],
+      notes: ["Correct, bucket fields group values into categories right in the report.", "This would create a new field on the object, which the manager wants to avoid.", "Cross filters filter on related records, they don't categorize values.", "A row-level formula calculates a value, it doesn't bucket ranges into named groups as simply."],
+      correct: 0,
+      why: "Bucket fields let you group report values into named categories without creating a formula or custom field on the object." },
+
+    { domain: RPT, source: "Lesson 603.2, Bucket Fields in Reports",
+      q: "Which field types can be used to create a bucket field? Select 3.",
+      type: "multi",
+      opts: ["Picklist", "Number", "Text", "Lookup"],
+      notes: ["Correct, picklist values can be bucketed.", "Correct, numeric ranges can be bucketed.", "Correct, text values can be bucketed.", "Lookup isn't a supported bucket field type."],
+      correct: [0, 1, 2],
+      why: "Bucket fields support Picklist, Number (including currency and percent), and Text field types." },
+
+    { domain: RPT, source: "Lesson 603.2, Bucket Fields in Reports",
+      q: "What is the maximum number of bucket columns allowed in a single report?",
+      opts: ["5", "3", "10", "20"],
+      notes: ["Correct, each report can have up to 5 bucket columns.", "The limit is higher than 3.", "The limit is lower than 10.", "20 is the limit for buckets per column, not bucket columns per report."],
+      correct: 0,
+      why: "A report can have up to 5 bucket columns. Each bucket column can have up to 20 buckets." },
+
+    { domain: RPT, source: "Lesson 603.2, Row-Level Formulas",
+      q: "A manager wants each row of an Opportunity report to show the Amount with a 15% discount applied. What should the admin add to the report?",
+      opts: ["Row-level formula", "Summary formula", "Bucket field", "Filter logic"],
+      notes: ["Correct, a row-level formula calculates a value for each record row.", "Summary formulas calculate at the grouping or grand total level, not per row.", "Bucket fields categorize values, they don't calculate them.", "Filter logic controls which records show, not calculated values."],
+      correct: 0,
+      why: "Row-level formulas calculate a value for each record in the report, like a discounted Amount or days until close." },
+
+    { domain: RPT, source: "Lesson 603.2, Row-Level Formulas",
+      q: "How many row-level formulas can be added to a single report?",
+      opts: ["1", "5", "10", "Unlimited"],
+      notes: ["Correct, only one row-level formula is allowed per report.", "The limit is 1, not 5.", "The limit is 1, not 10.", "There is a limit of 1."],
+      correct: 0,
+      why: "Each report can have only one row-level formula. Supported outputs are Number, Currency, Percent, Text, and Date." },
+
+    { domain: RPT, source: "Lesson 603.2, Column Summaries in Reports",
+      q: "Which summary options can be applied to a numeric column in a report? Select 3.",
+      type: "multi",
+      opts: ["Sum", "Average", "Max / Min", "Concatenate"],
+      notes: ["Correct, Sum totals the values.", "Correct, Average gives the mean.", "Correct, Max and Min find the highest and lowest values.", "Concatenate isn't a report column summary."],
+      correct: [0, 1, 2],
+      why: "Numeric columns can be summarized with Sum, Average, Max, Min, and Median. These summaries can drive charts and conditional formatting." },
+
+    { domain: RPT, source: "Lesson 603.2, Cross Filters",
+      q: "A sales manager wants a report of Accounts that have no Opportunities. What should the admin use?",
+      opts: ["A cross filter: Accounts without Opportunities", "Filter logic with OR", "A bucket field on Amount", "A row-level formula"],
+      notes: ["Correct, cross filters show parent records with or without related child records.", "Filter logic combines field filters but can't check for missing related records.", "Bucket fields categorize values.", "Row-level formulas calculate per-row values."],
+      correct: 0,
+      why: "Cross filters filter parent records based on related child records, for example Accounts WITH or WITHOUT Opportunities, and can include subfilters on the child." },
+
+    { domain: RPT, source: "Lesson 603.2, Filter Logic in Reports",
+      q: "What is the purpose of filter logic in reports?",
+      opts: ["Create complex conditions by combining filters with AND, OR, and parentheses", "Hide filters from users", "Reorder report columns", "Convert text fields into numbers"],
+      notes: ["Correct, filter logic combines numbered filters into more complex conditions.", "Filter logic doesn't hide filters.", "Column order is set in the report builder, not filter logic.", "Filter logic doesn't change field types."],
+      correct: 0,
+      why: "Filter logic lets you combine filters with AND, OR, and NOT using parentheses, for example (1 OR 2) AND 3." },
+
+    { domain: RPT, source: "Lesson 603.2, Filter Logic in Reports",
+      q: "Filter 1: Type = New Customer. Filter 2: Lead Source = Web. Filter 3: Closed = False. Which filter logic shows open Opportunities that are either New Customer or from Web?",
+      opts: ["(1 OR 2) AND 3", "1 AND 2 AND 3", "1 OR 2 OR 3", "1 AND (2 OR 3)"],
+      notes: ["Correct, either condition 1 or 2, and it must also be open.", "This requires both New Customer AND Web, which is too narrow.", "This would include closed Opportunities too.", "This requires New Customer every time."],
+      correct: 0,
+      why: "The parentheses group the either/or part first, (1 OR 2), and then AND 3 requires the Opportunity to not be closed." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Chart Types",
+      q: "Which chart type is ideal for showing trends over time?",
+      opts: ["Line", "Pie", "Funnel", "Gauge"],
+      notes: ["Correct, line charts show how values change over time.", "Pie charts show proportions of a whole.", "Funnel charts show sales stages.", "Gauges show a single value against a range."],
+      correct: 0,
+      why: "Line charts are best for trends over time, like monthly closed revenue." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Chart Types",
+      q: "A sales manager wants a chart that shows how many deals are at each sales stage, narrowing from early to late stages. Which chart type fits best?",
+      opts: ["Funnel", "Scatter plot", "Line", "Donut"],
+      notes: ["Correct, funnel charts are built for sales stages.", "Scatter plots show correlation between two numbers.", "Line charts show trends over time.", "Donut charts show proportions, not stage flow."],
+      correct: 0,
+      why: "Funnel charts show values moving through stages, which makes them a natural fit for the Opportunity pipeline." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Chart Types",
+      q: "Which chart type shows the correlation between two numeric values?",
+      opts: ["Scatter plot", "Pie", "Funnel", "Bar"],
+      notes: ["Correct, scatter plots compare two numeric values to show a relationship.", "Pie charts show proportions.", "Funnel charts show stage flow.", "Bar charts compare grouped values."],
+      correct: 0,
+      why: "Scatter plots place each record by two numeric values, making relationships or correlations easy to spot." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Chart Types",
+      q: "Which chart type is best to show what share of total revenue each Lead Source contributes?",
+      opts: ["Pie or Donut", "Line", "Scatter plot", "Funnel"],
+      notes: ["Correct, pie and donut charts show proportions of a whole.", "Line charts show trends over time.", "Scatter plots show correlation.", "Funnel charts show stage progression."],
+      correct: 0,
+      why: "Pie and donut charts show how each part contributes to the total." },
+
+    { domain: RPT, source: "Lesson 603.1, Report Options: Hide Details",
+      q: "A manager only wants to see the grouping subtotals in a summary report, not the individual record rows. What should they do?",
+      opts: ["Turn off Detail Rows (hide details)", "Delete the columns", "Change the report to Tabular", "Add a cross filter"],
+      notes: ["Correct, hiding detail rows leaves only the groupings and summaries.", "Deleting columns removes data but still shows each row.", "Tabular reports have no subtotals to show.", "Cross filters filter records, they don't hide rows."],
+      correct: 0,
+      why: "Toggling off Detail Rows collapses the report to just the groupings and their totals, which is cleaner for summary views." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Sharing: Folders",
+      q: "When sharing a report folder, which access levels can users be given? Select 3.",
+      type: "multi",
+      opts: ["View", "Edit", "Manage", "Administrator"],
+      notes: ["Correct, View lets users see and run the reports.", "Correct, Edit lets users change reports in the folder.", "Correct, Manage lets users edit reports and manage the folder's sharing.", "Administrator isn't a folder access level."],
+      correct: [0, 1, 2],
+      why: "Report and dashboard folders are shared with View, Edit, or Manage access (shown as Viewer, Editor, and Manager in Setup)." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Sharing: Running User",
+      q: "Two reps run the same Opportunity report from a shared folder, but each sees different records. Why?",
+      opts: ["Reports only show the records the person running the report has access to", "The report is broken", "Each rep has a different report type", "Folders show different data to each user"],
+      notes: ["Correct, reports follow the running user's record access (OWD, role hierarchy, sharing).", "This is expected behavior, not a bug.", "They're running the same report with the same report type.", "Folders control who can open the report, not which records appear."],
+      correct: 0,
+      why: "Access to a report folder lets you open the report, but the results still respect your own record access. Two users can see different rows in the same report." },
+
+    { domain: RPT, source: "Lesson 603.2, Report Sharing: Folders",
+      q: "A user can see a report in a shared folder but gets no rows for some Accounts that exist. What controls which records appear?",
+      opts: ["The user's record access through the sharing model", "The report folder's access level", "The report chart settings", "The dashboard's running user"],
+      notes: ["Correct, reports respect OWD, role hierarchy, and sharing for the running user.", "Folder access only controls opening the report.", "Chart settings only change the visual.", "Dashboard running user only applies to dashboards."],
+      correct: 0,
+      why: "Folder sharing decides who can open a report. The sharing model decides which records each user actually sees inside it." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Component Types",
+      q: "Which dashboard component is best for tracking goal attainment against thresholds, like progress toward a quota?",
+      opts: ["Gauge", "Table", "Chart", "Metric"],
+      notes: ["Correct, gauges show one value inside a range with color thresholds.", "Tables show rows of detail.", "Charts show trends and comparisons.", "Metrics show one number but without the range or thresholds."],
+      correct: 0,
+      why: "Gauges show a single value within a min to max range, with breakpoints that color-code performance. Great for goal attainment." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Component Types",
+      q: "Which dashboard component type displays a single key number, like Total Closed Won this quarter?",
+      opts: ["Metric", "Chart", "Table", "Funnel"],
+      notes: ["Correct, metric components highlight one key number.", "Charts show trends or comparisons.", "Tables show rows of details.", "Funnel is a chart type, not a single number."],
+      correct: 0,
+      why: "Metric components show one summary value, good for quick snapshots like total revenue." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Component Types",
+      q: "A manager wants a dashboard component listing the top 10 Opportunities with Owner, Amount, and Close Date. Which component should be used?",
+      opts: ["Table", "Gauge", "Metric", "Donut chart"],
+      notes: ["Correct, table components show rows of detailed data.", "Gauges show one value in a range.", "Metrics show one number.", "Donut charts show proportions."],
+      correct: 0,
+      why: "Table components are used when you want details, displaying rows and columns from the source report." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Chart Properties",
+      q: "Where does every dashboard component get its data?",
+      opts: ["A source report", "Directly from the object", "A list view", "A custom report type only"],
+      notes: ["Correct, each component is built on a source report.", "Components can't pull straight from an object.", "List views can't feed dashboard components.", "A report type is used to build the report, not the component itself."],
+      correct: 0,
+      why: "Every dashboard component needs a source report. If the report doesn't have the data or grouping, the component can't show it." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Filters",
+      q: "How many filters can be applied to a single dashboard?",
+      opts: ["3", "1", "5", "10"],
+      notes: ["Correct, a dashboard can have up to 3 filters.", "You can add more than 1.", "The limit is 3, not 5.", "The limit is 3, not 10."],
+      correct: 0,
+      why: "Dashboards support up to 3 filters. They apply across multiple components and work on fields common to the source reports." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboard Filters",
+      q: "Which statements about dashboard filters are true? Select 2.",
+      type: "multi",
+      opts: ["They can filter multiple components at once", "They use fields common to the source reports", "They permanently change the source reports", "They let each user see records they don't have access to"],
+      notes: ["Correct, one filter can apply to many components.", "Correct, the filter field must exist in the components' source reports.", "Filters change the view only, not the source reports.", "Filters never override record access."],
+      correct: [0, 1],
+      why: "Dashboard filters let users slice the whole dashboard, like by Region, using a field the source reports share. They don't edit the reports or bypass sharing." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboards: Running User",
+      q: "A dashboard is set to run as the VP of Sales. A rep opens it. Whose data access determines what the rep sees on the dashboard?",
+      opts: ["The VP of Sales (the running user)", "The rep viewing it", "The dashboard folder owner", "The System Administrator"],
+      notes: ["Correct, a dashboard shows data based on its running user's access.", "Only dynamic dashboards run as the logged-in viewer.", "The folder owner doesn't determine the data shown.", "The admin's access isn't used unless they're the running user."],
+      correct: 0,
+      why: "A standard dashboard displays data as the running user. Everyone who can see the dashboard sees the same data, even records they couldn't open themselves." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboards: Dynamic Dashboards",
+      q: "Each sales rep should see only their own pipeline on the same dashboard, without the admin building one dashboard per rep. What should the admin use?",
+      opts: ["A dynamic dashboard (run as the logged-in user)", "A separate folder for each rep", "A dashboard with the VP as running user", "A matrix report"],
+      notes: ["Correct, dynamic dashboards show each viewer their own accessible data.", "Folders control access, not which data shows.", "Every rep would see the VP's data.", "A report format doesn't change who the dashboard runs as."],
+      correct: 0,
+      why: "Dynamic dashboards run as the logged-in user, so each viewer sees data based on their own access. One dashboard works for the whole team." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboards: Dynamic Dashboards",
+      q: "Which statement about dynamic dashboards is true?",
+      opts: ["The number allowed depends on the org's edition", "Every org can have unlimited dynamic dashboards", "They can't use filters", "They always show all records to every user"],
+      notes: ["Correct, editions have limits (for example, Enterprise Edition allows 5).", "There is an edition-based limit.", "Dynamic dashboards can use filters.", "They show each user only what that user can access."],
+      correct: 0,
+      why: "Dynamic dashboards are limited by edition, such as 5 in Enterprise Edition and 10 in Unlimited and Performance Editions." },
+
+    { domain: DSH, source: "Lesson 603.2, Dashboards: Subscribe",
+      q: "A manager wants dashboard results emailed to them every Monday morning. What should they do?",
+      opts: ["Subscribe to the dashboard", "Create a dynamic dashboard", "Add a dashboard filter", "Share the dashboard folder with themselves"],
+      notes: ["Correct, subscribing schedules a refresh and emails the results.", "Dynamic dashboards change who it runs as, not delivery.", "Filters change the view, not delivery.", "Folder sharing controls access, not emails."],
+      correct: 0,
+      why: "Subscribing to a report or dashboard refreshes it on a schedule and emails the results to you (and other subscribers you add)." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting",
+      q: "Which object is used to generate forecasts in Salesforce?",
+      opts: ["Opportunities", "Leads", "Tasks", "Accounts"],
+      notes: ["Correct, forecasts are built from Opportunity data.", "Leads aren't converted to revenue yet, so they aren't forecasted.", "Tasks are activities, not revenue.", "Accounts aren't the source of forecast amounts."],
+      correct: 0,
+      why: "Forecasts are based on Opportunity Stage, Amount, and Close Date." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting",
+      q: "Which Opportunity fields drive what shows up in a forecast? Select 3.",
+      type: "multi",
+      opts: ["Stage", "Amount", "Close Date", "Lead Source"],
+      notes: ["Correct, Stage maps to the forecast category.", "Correct, Amount is the revenue being forecast.", "Correct, Close Date places it in the right forecast period.", "Lead Source doesn't drive the forecast."],
+      correct: [0, 1, 2],
+      why: "Forecasts use Opportunity Stage (mapped to a forecast category), Amount, and Close Date. Keeping these accurate keeps the forecast accurate." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting and Quotas",
+      q: "Collaborative Forecasting can forecast which two types of measurements? Select 2.",
+      type: "multi",
+      opts: ["Revenue", "Quantity", "Number of Leads", "Number of Cases"],
+      notes: ["Correct, forecasts can track revenue (amount).", "Correct, forecasts can track quantity (units).", "Leads aren't a forecast measurement.", "Cases aren't a forecast measurement."],
+      correct: [0, 1],
+      why: "Collaborative Forecasting can forecast revenue (opportunity amounts) and quantity (units sold)." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting Categories",
+      q: "A deal is expected to close and the rep is confident in it. Which forecast category does it fall into?",
+      opts: ["Commit", "Pipeline", "Best Case", "Closed"],
+      notes: ["Correct, Commit is for deals expected to close.", "Pipeline is for early-stage deals.", "Best Case is for deals with some chance of closing.", "Closed is only for deals that are already Closed Won."],
+      correct: 0,
+      why: "Forecast categories map from Opportunity Stage: Pipeline (early), Best Case (some chance), Commit (expected), and Closed (Closed Won)." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting Categories",
+      q: "Where do forecast categories come from on an Opportunity?",
+      opts: ["They're mapped from the Opportunity Stage", "They're typed in by the rep each time", "They come from the Account's Industry", "They come from the Lead Source"],
+      notes: ["Correct, each Stage maps to a forecast category, and admins can customize the mapping.", "They're set automatically from Stage.", "Industry has no effect on forecast category.", "Lead Source has no effect on forecast category."],
+      correct: 0,
+      why: "Each Opportunity Stage maps to a forecast category. Admins can customize these stage mappings." },
+
+    { domain: DSH, source: "Lesson 603.2, Quotas",
+      q: "What is a quota in Salesforce forecasting?",
+      opts: ["A sales target assigned to a user for a period", "The maximum number of Opportunities a user can own", "A limit on report rows", "The number of dashboards a user can create"],
+      notes: ["Correct, quotas are sales targets tracked alongside forecasts.", "Quotas don't limit record ownership.", "Quotas aren't a report limit.", "Quotas aren't a dashboard limit."],
+      correct: 0,
+      why: "Quotas are sales targets set by an admin or manager, tracked alongside forecast categories to measure attainment." },
+
+    { domain: DSH, source: "Lesson 603.2, Quotas",
+      q: "Which methods can be used to add quotas? Select 2.",
+      type: "multi",
+      opts: ["The Forecasts Quotas page", "Data Loader", "Chatter", "The Opportunity page layout"],
+      notes: ["Correct, quotas can be entered on the Forecasts Quotas page.", "Correct, quotas can be loaded in bulk with Data Loader.", "Chatter is for collaboration.", "Page layouts don't set quotas."],
+      correct: [0, 1],
+      why: "Quotas can be added through the Forecasts Quotas page or loaded in bulk with Data Loader." },
+
+    { domain: DSH, source: "Lesson 603.2, Territories",
+      q: "What can sales territories be based on? Select 3.",
+      type: "multi",
+      opts: ["Location", "Industry", "Products or services", "The user's password policy"],
+      notes: ["Correct, location is a common way to split territories.", "Correct, territories can be split by industry.", "Correct, territories can be split by product or service line.", "Password policies have nothing to do with territories."],
+      correct: [0, 1, 2],
+      why: "Territories divide the sales team based on location, industry, products or services, or other business needs." },
+
+    { domain: DSH, source: "Lesson 603.2, Forecasting",
+      q: "Forecasts can be organized by which of the following? Select 3.",
+      type: "multi",
+      opts: ["User / team", "Territory", "Product Family", "Case Priority"],
+      notes: ["Correct, forecasts roll up by user and team.", "Correct, forecasts can be organized by territory.", "Correct, forecasts can be organized by product family.", "Case Priority has nothing to do with forecasts."],
+      correct: [0, 1, 2],
+      why: "Forecasts can be organized by user or team (role hierarchy), territory, or product family." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Import Wizard",
+      q: "What is the maximum number of records the Data Import Wizard can import at one time?",
+      opts: ["50,000", "5,000", "500,000", "5 million"],
+      notes: ["Correct, the Import Wizard handles up to 50,000 records.", "The limit is higher than 5,000.", "The limit is lower than 500,000.", "5 million is the Data Loader range."],
+      correct: 0,
+      why: "The Data Import Wizard imports up to 50,000 records at a time. For more than that, use Data Loader." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Import Wizard",
+      q: "Which objects does the Data Import Wizard support? Select 3.",
+      type: "multi",
+      opts: ["Accounts and Contacts", "Leads", "Campaign Members", "Opportunities"],
+      notes: ["Correct, Accounts and Contacts can be imported with the wizard.", "Correct, Leads are supported.", "Correct, Campaign Members are supported.", "Opportunities aren't supported by the wizard, use Data Loader."],
+      correct: [0, 1, 2],
+      why: "The Data Import Wizard supports Accounts, Contacts, Leads, Campaign Members, Solutions, and Custom Objects. Opportunities need Data Loader." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Loader",
+      q: "An admin needs to import 200,000 Opportunity records. Which tool should they use?",
+      opts: ["Data Loader", "Data Import Wizard", "Mass Update from a list view", "Report export"],
+      notes: ["Correct, Data Loader handles large volumes and supports Opportunities.", "The wizard caps at 50,000 records and doesn't support Opportunities.", "List view mass update can't import new records.", "Reports export data, they don't import it."],
+      correct: 0,
+      why: "Data Loader handles up to 5 million records and works with all standard and custom objects, including Opportunities." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Loader",
+      q: "Which operations does Data Loader support? Select 3.",
+      type: "multi",
+      opts: ["Upsert", "Delete", "Export", "Merge duplicate Accounts"],
+      notes: ["Correct, Upsert updates existing records or inserts new ones.", "Correct, Data Loader can mass delete records.", "Correct, Data Loader can export data.", "Merging duplicates is done in the UI, not Data Loader."],
+      correct: [0, 1, 2],
+      why: "Data Loader supports Insert, Update, Upsert, Delete, Export, and Export All (plus Hard Delete with the right permission)." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Loader: Upsert",
+      q: "What does an Upsert do in Data Loader?",
+      opts: ["Updates matching records and inserts records that don't match", "Only inserts new records", "Only deletes records", "Exports records including deleted ones"],
+      notes: ["Correct, Upsert is update plus insert, matched on an ID or external ID.", "That's Insert.", "That's Delete.", "That's Export All."],
+      correct: 0,
+      why: "Upsert matches on the record ID or an external ID field. Matches get updated, and non-matches are inserted as new records." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Loader: Export All",
+      q: "What is the difference between Export and Export All in Data Loader?",
+      opts: ["Export All also includes soft-deleted (Recycle Bin) and archived records", "Export All includes all fields, Export only includes required fields", "Export All works on all objects, Export only on custom objects", "There is no difference"],
+      notes: ["Correct, Export All includes deleted records in the Recycle Bin and archived activities.", "You choose fields for both operations.", "Both work on standard and custom objects.", "They are different."],
+      correct: 0,
+      why: "Export pulls active records. Export All also pulls soft-deleted records still in the Recycle Bin and archived activity records." },
+
+    { domain: DAT, source: "Lesson 603.3, Import Failures",
+      q: "What can cause a record import to fail? Select 3.",
+      type: "multi",
+      opts: ["A required field is missing", "A validation rule blocks the record", "A duplicate rule is set to block duplicates", "The file has column headers"],
+      notes: ["Correct, missing required fields stop the record from saving.", "Correct, validation rules still fire on imports.", "Correct, blocking duplicate rules can stop records from saving.", "Column headers are expected and are used to map fields."],
+      correct: [0, 1, 2],
+      why: "Imports fail when records break the same rules as manual entry: missing required fields, validation rules, duplicate rules, bad formats, or invalid lookups." },
+
+    { domain: DAT, source: "Lesson 603.3, Matching Rules",
+      q: "What does a matching rule do?",
+      opts: ["Defines how Salesforce identifies records as possible duplicates", "Blocks a record from saving if a field is blank", "Assigns records to a queue", "Merges duplicate records automatically"],
+      notes: ["Correct, matching rules set the criteria for spotting duplicates.", "That's a validation rule or required field.", "That's an assignment rule.", "Matching rules don't merge records on their own."],
+      correct: 0,
+      why: "Matching rules define the logic for spotting duplicates (exact or fuzzy matching on fields). Duplicate rules then decide what happens: allow, alert, or block." },
+
+    { domain: DAT, source: "Lesson 603.3, Matching and Duplicate Rules",
+      q: "An admin wants users to see a warning when creating a Contact that looks like a duplicate, but still let them save. What should they configure?",
+      opts: ["A duplicate rule set to Allow with an alert, using a matching rule", "A validation rule", "A sharing rule", "A row-level formula"],
+      notes: ["Correct, the duplicate rule sets the action (allow with alert) and uses a matching rule to find duplicates.", "Validation rules block saves, they don't detect duplicates.", "Sharing rules control record access.", "Row-level formulas are for reports."],
+      correct: 0,
+      why: "Duplicate rules use a matching rule to find possible duplicates, then either allow (with or without an alert) or block the save." },
+
+    { domain: DAT, source: "Lesson 603.3, Validation Rules",
+      q: "An admin wants to stop users from saving an Opportunity with a Close Date in the past. What should they use?",
+      opts: ["Validation rule", "Matching rule", "Bucket field", "Dashboard filter"],
+      notes: ["Correct, a validation rule shows an error and blocks the save when the formula is true.", "Matching rules find duplicates.", "Bucket fields are for reports.", "Dashboard filters are for dashboards."],
+      correct: 0,
+      why: "Validation rules use a formula. When it evaluates to TRUE, the user sees an error message and the record can't be saved." },
+
+    { domain: DAT, source: "Lesson 603.3, Data Quality",
+      q: "Which tools help improve data quality in Salesforce? Select 3.",
+      type: "multi",
+      opts: ["Validation rules", "Duplicate and matching rules", "Picklists and required fields", "Dynamic dashboards"],
+      notes: ["Correct, they stop bad data from being saved.", "Correct, they prevent and flag duplicates.", "Correct, they standardize and require key data.", "Dynamic dashboards display data, they don't improve its quality."],
+      correct: [0, 1, 2],
+      why: "Data quality improves with validation rules, duplicate and matching rules, picklists, required fields, and regular cleanup using reports." }
+
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      const isMulti = orig.type === 'multi';
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        multi: isMulti,
+        selectCount: isMulti ? orig.correct.length : 1,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: isMulti ? null : order.indexOf(orig.correct),
+        correctIndices: isMulti ? orig.correct.map(c => order.indexOf(c)).sort((a, b) => a - b) : null
+      };
+    });
+    answers = questions.map(item => item.multi ? [] : null);
+    current = 0;
+  }
+
+  function isAnswered(item, ans) {
+    if (item.multi) return Array.isArray(ans) && ans.length === item.selectCount;
+    return ans !== null;
+  }
+
+  function isCorrectAnswer(item, ans) {
+    if (item.multi) {
+      if (!Array.isArray(ans) || ans.length !== item.correctIndices.length) return false;
+      const sorted = ans.slice().sort((a, b) => a - b);
+      return sorted.every((v, i) => v === item.correctIndices[i]);
+    }
+    return ans === item.correctIndex;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    const qHint = document.getElementById('q-hint');
+    if (item.multi) {
+      qHint.textContent = 'Select ' + item.selectCount + ' answers';
+      qHint.classList.remove('hidden');
+    } else {
+      qHint.classList.add('hidden');
+    }
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      const ans = answers[current];
+      const isSelected = item.multi ? (Array.isArray(ans) && ans.includes(idx)) : (ans === idx);
+      if (isSelected) btn.classList.add('selected');
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        if (item.multi) {
+          const cur = Array.isArray(answers[current]) ? answers[current].slice() : [];
+          const pos = cur.indexOf(idx);
+          if (pos >= 0) {
+            cur.splice(pos, 1);
+          } else if (cur.length < item.selectCount) {
+            cur.push(idx);
+          }
+          answers[current] = cur;
+        } else {
+          answers[current] = idx;
+        }
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = !isAnswered(item, answers[current]);
+    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = isCorrectAnswer(item, answers[i]);
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Shell yeah! You're crushing it.";
+      scoreEmoji.textContent = "🐢💨";
+      launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🐢";
+      launchFireworks();
+    } else {
+      verdict.textContent = "Slow and steady, review below and try again.";
+      scoreEmoji.textContent = "🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = isCorrectAnswer(item, userAns);
+      const div = document.createElement('div');
+      div.className = 'review-item';
+
+      function labelFor(idx) { return String.fromCharCode(65 + idx) + '. ' + item.displayOpts[idx]; }
+
+      let userLabel, correctLabel, userNote;
+      if (item.multi) {
+        const ansArr = Array.isArray(userAns) ? userAns.slice().sort((a, b) => a - b) : [];
+        userLabel = ansArr.length ? ansArr.map(labelFor).join('; ') : 'No answer';
+        correctLabel = item.correctIndices.map(labelFor).join('; ');
+        const wrongNotes = ansArr.filter(idx => !item.correctIndices.includes(idx)).map(idx => item.displayNotes[idx]).filter(Boolean);
+        userNote = (!isCorrect && wrongNotes.length) ? '<div class="review-note">' + wrongNotes.join(' ') + '</div>' : '';
+      } else {
+        userLabel = userAns === null ? 'No answer' : labelFor(userAns);
+        correctLabel = labelFor(item.correctIndex);
+        userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+      }
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+</body>
+</html>
