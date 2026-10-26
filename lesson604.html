@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎓 KBA Lesson 604 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 8px; }
+  .q-hint { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; margin-top: 14px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 604 (604.1 / 604.2 / 604.3) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">3</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Flow Types and Building (Lesson 604.1 / 604.2): screen, record-triggered, schedule-triggered, autolaunched flows, before-save vs after-save, Decision, Assignment, Update Records, debug vs run, versions, flow failures</li>
+      <li>Flow Distribution and Order of Execution (Lesson 604.3): Lightning pages, quick actions, utility bar, Experience Builder, VDAA(R)WEP, validation, duplicate, assignment, auto-response, escalation rules</li>
+      <li>Approval Processes (Lesson 604.3): entry criteria, steps, approvers, delegated approvers, first response vs unanimous, locking, actions (task, email alert, field update, outbound message), recall</li>
+    </ul>
+
+    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Flow Types & Building (604.1 / 604.2)</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="q-hint hidden" id="q-hint"></div>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">← Back</button>
+      <button class="btn-next" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
+        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const FLW = "Flow Types & Building (604.1 / 604.2)";
+  const DST = "Flow Distribution & Order of Execution (604.3)";
+  const APR = "Approval Processes (604.3)";
+
+  const BANK = [
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Screen Flows",
+      q: "An admin needs an automation that guides Case Managers through collecting information from customers to resolve technical issues. Which type of flow should be built?",
+      opts: ["Screen Flow", "Record-Triggered Flow", "Schedule-Triggered Flow", "Autolaunched Flow"],
+      notes: ["Correct, screen flows show screens that guide users and collect input.", "Record-triggered flows run in the background when a record changes, no screens.", "Schedule-triggered flows run at a set time in the background.", "Autolaunched flows run with no user interaction."],
+      correct: 0,
+      why: "Screen flows are the only flow type with screens, so they're used when a user needs to be guided step by step or enter information." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Screen Flows",
+      q: "Which statement about screen flows is true?",
+      opts: ["They require user interaction and can be shown on an Experience Cloud site", "They run automatically when a record is saved", "They run on a schedule with no user involved", "They can't be added to a Lightning page"],
+      notes: ["Correct, screen flows need a user to click through and can be shared externally on Experience Cloud.", "That's a record-triggered flow.", "That's a schedule-triggered flow.", "Screen flows can be added with the Flow component."],
+      correct: 0,
+      why: "Screen flows need a user to run them. They can be used internally or on Experience Cloud (community) sites for customers and partners." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Screen Flows",
+      q: "What are common use cases for a screen flow? Select 2.",
+      type: "multi",
+      opts: ["A guided call script for service agents", "A form that collects information from a user", "Updating a field every night at midnight", "Recalculating a field every time a record is saved"],
+      notes: ["Correct, screen flows can walk agents through a script.", "Correct, screen flows collect input on screens.", "That's a schedule-triggered flow.", "That's a record-triggered flow."],
+      correct: [0, 1],
+      why: "Screen flows are for guided, user-facing processes like call scripts, wizards, surveys, and data-entry forms." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Record-Triggered Flows",
+      q: "A record-triggered flow can run when a record is... Select 3.",
+      type: "multi",
+      opts: ["Created", "Updated", "Deleted", "Viewed"],
+      notes: ["Correct, flows can run when a record is created.", "Correct, flows can run when a record is updated.", "Correct, flows can run when a record is deleted.", "Viewing a record doesn't trigger a flow."],
+      correct: [0, 1, 2],
+      why: "Record-triggered flows run on four events: when a record is created, updated, created or updated, or deleted." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Record-Triggered Flows",
+      q: "Every time an Opportunity is set to Closed Won, a follow-up Task should be created automatically. Which flow type should be used?",
+      opts: ["Record-Triggered Flow", "Screen Flow", "Schedule-Triggered Flow", "Experience Cloud Flow"],
+      notes: ["Correct, it runs automatically when the record is updated and meets the condition.", "Screen flows need a user to launch them.", "Schedule-triggered flows run at a set time, not when the record changes.", "That isn't a flow type."],
+      correct: 0,
+      why: "Record-triggered flows fire automatically when a record is created, updated, or deleted and meets the entry conditions." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Schedule-Triggered Flows",
+      q: "Every Monday at 6 AM, all open Cases older than 30 days should be flagged. Which flow type should be used?",
+      opts: ["Schedule-Triggered Flow", "Screen Flow", "Record-Triggered Flow", "Autolaunched Flow launched from a button"],
+      notes: ["Correct, it runs at a set time and frequency on a batch of records.", "Screen flows need a user.", "Record-triggered flows wait for a record change, not a schedule.", "A button needs someone to click it."],
+      correct: 0,
+      why: "Schedule-triggered flows run at a specific time and frequency (once, daily, weekly) against a batch of records." },
+
+    { domain: FLW, source: "Lesson 604.1, Types of Flows: Autolaunched Flows",
+      q: "Which statement describes an autolaunched flow?",
+      opts: ["It runs in the background with no user interaction and is started by something else, like another flow, Apex, or a button", "It always shows screens to the user", "It only runs on a schedule", "It can only run when a record is deleted"],
+      notes: ["Correct, autolaunched flows have no screens and are called by another process.", "Only screen flows show screens.", "That's a schedule-triggered flow.", "That's one option of a record-triggered flow."],
+      correct: 0,
+      why: "Autolaunched (no trigger) flows run without screens. They're launched by other flows (as subflows), Apex, REST API, or custom buttons." },
+
+    { domain: FLW, source: "Lesson 604.2, Features of Flow: Fast Field Updates",
+      q: "A record-triggered flow only needs to update fields on the same record that triggered it, as fast as possible. Which option should be selected?",
+      opts: ["Fast Field Updates (before-save)", "Actions and Related Records (after-save)", "A schedule-triggered path", "A screen flow"],
+      notes: ["Correct, before-save flows update the triggering record before it's saved, which is very fast.", "After-save is for related records and actions, and it's slower.", "Scheduled paths run later, not instantly.", "Screen flows need a user."],
+      correct: 0,
+      why: "Fast Field Updates (before-save) change fields on the triggering record before it's saved, so there's no extra save. They're much faster than after-save flows." },
+
+    { domain: FLW, source: "Lesson 604.2, Features of Flow: Before-Save vs After-Save",
+      q: "A flow needs to create a related Task and send an email when an Opportunity is updated. Which record-triggered flow option is needed?",
+      opts: ["Actions and Related Records (after-save)", "Fast Field Updates (before-save)", "Screen flow", "Validation rule"],
+      notes: ["Correct, after-save flows can create related records and run actions like emails.", "Before-save flows can only update fields on the triggering record.", "Screen flows need a user.", "Validation rules block saves, they don't create records."],
+      correct: 0,
+      why: "Before-save flows can only change the record being saved. Creating other records or sending emails needs an after-save (Actions and Related Records) flow." },
+
+    { domain: FLW, source: "Lesson 604.2, Elements of Flow: Decision",
+      q: "In a flow, a new record OR an email should be created depending on criteria. Which logic element should be used?",
+      opts: ["Decision", "Loop", "Create Records", "Action"],
+      notes: ["Correct, a Decision element sends the flow down different paths based on conditions.", "A Loop repeats steps for each item in a collection.", "Create Records only creates the record, it doesn't choose a path.", "An Action runs a task like sending an email, it doesn't choose a path."],
+      correct: 0,
+      why: "The Decision element works like an if/then. It checks conditions and routes the flow down different outcomes." },
+
+    { domain: FLW, source: "Lesson 604.2, Elements of Flow: Assignment",
+      q: "Which flow element is used to set or change the value of a variable?",
+      opts: ["Assignment", "Decision", "Get Records", "Screen"],
+      notes: ["Correct, Assignment sets, adds to, or changes variable values.", "Decision chooses a path.", "Get Records looks up records from the database.", "Screen shows information to a user."],
+      correct: 0,
+      why: "The Assignment element sets values on variables (like adding to a counter or setting a field value before saving)." },
+
+    { domain: FLW, source: "Lesson 604.2, Elements of Flow: Update Records",
+      q: "Which flow element changes field values on existing records in the database?",
+      opts: ["Update Records", "Assignment", "Decision", "Loop"],
+      notes: ["Correct, Update Records saves changes to existing records.", "Assignment only changes a variable in the flow, it doesn't save to the database by itself.", "Decision chooses a path.", "Loop repeats steps over a collection."],
+      correct: 0,
+      why: "Update Records writes changes to existing Salesforce records. Assignment only changes values inside the flow." },
+
+    { domain: FLW, source: "Lesson 604.3 Knowledge Check, Building Flows",
+      q: "Which of the following are used when creating a flow? Select 3.",
+      type: "multi",
+      opts: ["Elements", "Connectors", "Resources", "Branches"],
+      notes: ["Correct, elements are the actions and logic steps.", "Correct, connectors link the elements together in order.", "Correct, resources store values like variables, constants, and formulas.", "Branches isn't a flow building block."],
+      correct: [0, 1, 2],
+      why: "Flows are built from Elements (the steps), Connectors (the arrows between steps), and Resources (variables, constants, formulas, and other values)." },
+
+    { domain: FLW, source: "Lesson 604.2, Features of Flow: Debug",
+      q: "What does the Debug button in Flow Builder do?",
+      opts: ["Runs the flow step by step and shows which path was taken and what happened at each element", "Deletes inactive flow versions", "Publishes the flow to an Experience Cloud site", "Converts the flow into a validation rule"],
+      notes: ["Correct, debug highlights the path and shows details for each step.", "Debug doesn't delete versions.", "Debug doesn't distribute the flow.", "Debug doesn't convert anything."],
+      correct: 0,
+      why: "Debug lets you test a flow and see the highlighted path and a details pane for each element, so you can find where logic goes wrong." },
+
+    { domain: FLW, source: "Lesson 604.3, Running vs Debugging a Flow",
+      q: "What happens to data when you click Run on a flow in Flow Builder?",
+      opts: ["The flow runs as an end user would experience it, and any records created or updated are real changes in the database", "Nothing is saved, it's only a preview", "Changes are saved only to a temporary copy of the org", "The flow is automatically deactivated"],
+      notes: ["Correct, Run commits changes to the database.", "Run does save changes.", "There's no temporary copy, changes are real.", "Running doesn't deactivate the flow."],
+      correct: 0,
+      why: "Run executes the flow exactly like a user would and commits the changes. That's why final testing should happen in a sandbox." },
+
+    { domain: FLW, source: "Lesson 604.2, Considerations: Flow Versions",
+      q: "An admin activates a new version of a flow. What happens to the previously active version?",
+      opts: ["It is automatically deactivated but still saved", "It's deleted permanently", "Both versions stay active", "It's converted into a subflow"],
+      notes: ["Correct, only one version can be active, and old versions stay saved so you can go back.", "Old versions aren't deleted.", "Only one version of a flow can be active at a time.", "It isn't converted to anything."],
+      correct: 0,
+      why: "Only one version of a flow can be active at a time. Activating a new version deactivates the old one, but it stays saved so you can reactivate it if needed." },
+
+    { domain: FLW, source: "Lesson 604.2, Considerations: What causes a flow to fail?",
+      q: "What can cause a flow to fail? Select 3.",
+      type: "multi",
+      opts: ["The record being saved breaks a validation rule", "A required field is missing when creating a record", "The running user doesn't have permission to the object", "The flow has a description filled in"],
+      notes: ["Correct, validation rules still apply to flow saves.", "Correct, missing required fields stop the record from saving.", "Correct, missing access can cause an error.", "Descriptions don't affect how a flow runs."],
+      correct: [0, 1, 2],
+      why: "Flows fail for the same reasons a manual save fails, plus things like missing permissions, null values from Get Records, or hitting limits. A fault path can handle errors." },
+
+    { domain: FLW, source: "Lesson 604.2, Considerations: Flow Errors",
+      q: "A flow hits an error and there's no fault path. Who usually gets notified?",
+      opts: ["The admin who last modified the flow (or the designated flow error email recipient) gets an error email", "Every user in the org", "The customer who triggered it", "No one, errors are silent"],
+      notes: ["Correct, Salesforce sends a flow error email with the details.", "Not everyone gets the email.", "External customers don't get flow error emails.", "Salesforce does send an error email."],
+      correct: 0,
+      why: "When a flow fails without a fault path, Salesforce emails the flow's last modifier (or the recipient set in Process Automation Settings) with details to help debug." },
+
+    { domain: DST, source: "Lesson 604.3, Flow Distribution",
+      q: "Which are options for distributing a screen flow inside Salesforce? Select 3.",
+      type: "multi",
+      opts: ["Add it to a Lightning page with the Flow component", "Create a quick action", "Add it to the utility bar", "Add it to a validation rule"],
+      notes: ["Correct, the Flow component puts the flow on a Lightning page.", "Correct, a quick action launches the flow from a record.", "Correct, the utility bar makes it available across the app.", "Validation rules can't run flows."],
+      correct: [0, 1, 2],
+      why: "Screen flows can be placed on Lightning pages, launched from quick actions, added to the utility bar, launched from custom buttons or links, or shown on Experience Cloud sites." },
+
+    { domain: DST, source: "Lesson 604.3, Add to a Lightning Page",
+      q: "A screen flow on a Lightning record page should only appear for users on the Support profile. What should the admin use?",
+      opts: ["Component visibility filters", "A validation rule", "A sharing rule", "Field-level security"],
+      notes: ["Correct, visibility filters control who sees a component and when.", "Validation rules block saves.", "Sharing rules control record access.", "FLS controls fields, not page components."],
+      correct: 0,
+      why: "Component visibility filters on the Lightning page control who sees the Flow component and under what conditions." },
+
+    { domain: DST, source: "Lesson 604.3, Add to the Utility Bar",
+      q: "A screen flow on the utility bar is only available where?",
+      opts: ["In the specific Lightning app it was added to", "In every app in the org", "Only on Experience Cloud sites", "Only on the mobile app"],
+      notes: ["Correct, utility bar items belong to one app.", "Each app has its own utility bar.", "Experience Cloud uses Experience Builder pages instead.", "It's not limited to mobile."],
+      correct: 0,
+      why: "The utility bar is set per app (Setup > App Manager > Edit > Utility Items). The flow is only there when users are in that app." },
+
+    { domain: DST, source: "Lesson 604.3, Add to the Utility Bar",
+      q: "Where does an admin add a screen flow to an app's utility bar?",
+      opts: ["Setup > App Manager > Edit the app > Utility Items", "Object Manager > Page Layouts", "Setup > Process Automation Settings", "Flow Builder > Debug"],
+      notes: ["Correct, utility bar items are managed in App Manager.", "Page layouts don't control the utility bar.", "That's for automation settings, not the utility bar.", "Debug is for testing."],
+      correct: 0,
+      why: "Utility bar items are added in App Manager: select the app, Edit, then Utility Items." },
+
+    { domain: DST, source: "Lesson 604.3, Create a Quick Action",
+      q: "Users on the Account page should click a button to launch a guided screen flow for that Account. What should the admin create?",
+      opts: ["A quick action that launches the flow, added to the Account page layout", "A schedule-triggered flow", "A matching rule", "A dashboard component"],
+      notes: ["Correct, a flow quick action launches the screen flow from the record.", "A scheduled flow has no user interaction.", "Matching rules find duplicates.", "Dashboards display report data."],
+      correct: 0,
+      why: "A quick action of type Flow, added to the object's page layout, launches the screen flow when the user clicks it." },
+
+    { domain: DST, source: "Lesson 604.3, Experience Builder",
+      q: "Customers who buy a product need a self-service way to register it without an internal Salesforce login. Where should the screen flow be distributed?",
+      opts: ["An Experience Builder (Experience Cloud) site page", "The utility bar of an internal app", "A Lightning record page for internal users", "A report folder"],
+      notes: ["Correct, Experience Cloud sites let customers and partners use flows externally.", "Utility bars are for internal users.", "Internal record pages need an internal login.", "Report folders store reports."],
+      correct: 0,
+      why: "Experience Builder sites display Salesforce pages outside the org, so customers and partners can use flows like registrations, surveys, and case submissions." },
+
+    { domain: DST, source: "Lesson 604.3, Experience Builder",
+      q: "Which are common uses of flows on Experience Builder pages? Select 3.",
+      type: "multi",
+      opts: ["Surveys", "Registration forms", "Case submissions", "Editing org-wide defaults"],
+      notes: ["Correct, surveys are a common use.", "Correct, registration forms are a common use.", "Correct, customers can submit Cases through a flow.", "Org-wide defaults are set by admins in Setup."],
+      correct: [0, 1, 2],
+      why: "Flows on Experience Builder pages often handle surveys, registration forms, interest forms, quote generators, and case submissions." },
+
+    { domain: DST, source: "Lesson 604.3, Other Distribution Options",
+      q: "Which are other ways to launch a screen flow? Select 2.",
+      type: "multi",
+      opts: ["A custom button or link", "A direct URL", "A roll-up summary field", "A picklist value"],
+      notes: ["Correct, custom buttons and links can launch flows.", "Correct, flows can be opened with a direct URL.", "Roll-up summary fields calculate values.", "Picklist values don't launch flows."],
+      correct: [0, 1],
+      why: "Besides Lightning pages, quick actions, and the utility bar, screen flows can be launched by custom buttons or links, a direct URL, or Experience Cloud pages." },
+
+    { domain: DST, source: "Lesson 604.3, Order of Execution (Exam Tip)",
+      q: "Which memory phrase matches the order of execution covered in class?",
+      opts: ["Very Determined Admins Are Wanting Exciting Projects", "Admins Very Determined Are Wanting Exciting Projects", "Very Exciting Admins Are Determined Wanting Projects", "Projects Are Very Exciting When Admins Determine"],
+      notes: ["Correct: Validation, Duplicate, Assignment, Auto-Response, Workflow, Escalation, Process (Flows).", "Assignment doesn't come before validation.", "Escalation doesn't come second.", "This order is scrambled."],
+      correct: 0,
+      why: "VDAA(R)WEP: Very (Validation), Determined (Duplicate), Admins (Assignment), Are (Auto-Response), Wanting (Workflow), Exciting (Escalation), Projects (Process / Flows)." },
+
+    { domain: DST, source: "Lesson 604.3, Order of Execution",
+      q: "Which runs first when a record is saved?",
+      opts: ["Validation rules", "Assignment rules", "Auto-response rules", "Roll-up summary fields"],
+      notes: ["Correct, validation (system, then custom) happens at the start.", "Assignment rules run after the record is saved.", "Auto-response rules run after assignment rules.", "Roll-up summaries are near the end."],
+      correct: 0,
+      why: "Validation rules run near the very start of the save, so bad data is stopped before anything else happens." },
+
+    { domain: DST, source: "Lesson 604.3, Order of Execution",
+      q: "What runs right after custom validation rules?",
+      opts: ["Duplicate rules", "Escalation rules", "Auto-response rules", "Roll-up summary fields"],
+      notes: ["Correct, duplicate rules run right after custom validation.", "Escalation rules are near the end.", "Auto-response rules come after assignment rules.", "Roll-up summaries are near the end."],
+      correct: 0,
+      why: "The order starts: System Validation, Before Triggers, Custom Validation, then Duplicate Rules, before the record is saved." },
+
+    { domain: DST, source: "Lesson 604.3 Knowledge Check, Order of Execution",
+      q: "An admin is building a flow to update records, create tasks, and send emails. When will the flow be evaluated in the order of execution?",
+      opts: ["After Assignment Rules", "Before Assignment Rules", "After Roll-Up Summary Fields", "After Escalation Rules"],
+      notes: ["Correct, flows (processes) come after assignment and auto-response rules.", "Assignment rules run before flows.", "Roll-up summaries come at the end, after flows.", "The two class decks list escalation and flows in different orders, so this isn't the safe pick. Assignment rules always run before flows."],
+      correct: 0,
+      why: "In the order of execution, assignment rules and auto-response rules run before flows (processes). Roll-up summary fields are recalculated after." },
+
+    { domain: DST, source: "Lesson 604.3, Order of Execution (Exam Tip)",
+      q: "Why do assignment rules run before escalation rules?",
+      opts: ["A Case has to be assigned to someone before it can sit long enough to be escalated", "Escalation rules are faster", "Assignment rules only run on Leads", "Escalation rules run before validation rules"],
+      notes: ["Correct, you can't escalate something that hasn't been assigned.", "Speed isn't the reason.", "Assignment rules run on both Leads and Cases.", "Validation always runs first."],
+      correct: 0,
+      why: "Assignment is near the start of the automation chain and Escalation is near the end, since a Case must be owned before it can be escalated." },
+
+    { domain: DST, source: "Lesson 604.3, Order of Execution",
+      q: "Which happens near the very end of the order of execution, after flows?",
+      opts: ["Roll-up summary fields are recalculated", "Custom validation rules", "System validation rules", "Duplicate rules"],
+      notes: ["Correct, roll-up summaries recalculate on parent records near the end.", "Custom validation runs near the start.", "System validation runs first.", "Duplicate rules run near the start."],
+      correct: 0,
+      why: "Roll-up summary fields recalculate on parent and grandparent records near the end, after the automations, before the commit." },
+
+    { domain: DST, source: "Lesson 604.3, Validation Rules",
+      q: "How does a custom validation rule block a save?",
+      opts: ["When the formula evaluates to TRUE, an error shows and the record can't be saved", "When the formula evaluates to FALSE, the save is blocked", "It always blocks the save until an admin approves", "It only runs on deleted records"],
+      notes: ["Correct, TRUE means an error was found.", "FALSE means the data is fine and the save goes through.", "That describes an approval process, not a validation rule.", "Validation rules run on create and update."],
+      correct: 0,
+      why: "You write a validation rule formula for what you want to prevent. TRUE means a mistake was found, so Salesforce blocks the save and shows the error message." },
+
+    { domain: DST, source: "Lesson 604.3, System vs Custom Validation Rules",
+      q: "A user types 'john.doe_website.com' into a standard Email field and the save is blocked. No admin created a rule. What blocked it?",
+      opts: ["A system validation rule", "A custom validation rule", "A duplicate rule", "An escalation rule"],
+      notes: ["Correct, system validation checks built-in formats like email automatically.", "No admin created a rule, so it isn't custom.", "Duplicate rules look for matching records.", "Escalation rules are for Cases that sit too long."],
+      correct: 0,
+      why: "System validation rules are built in. They check required fields, data types, and formats, like an email needing an @ symbol, with no setup." },
+
+    { domain: DST, source: "Lesson 604.3, Assignment Rules",
+      q: "A new web lead from California should automatically go to the West Coast Sales queue. What should the admin use?",
+      opts: ["Lead assignment rule", "Auto-response rule", "Escalation rule", "Validation rule"],
+      notes: ["Correct, assignment rules route new Leads or Cases to users or queues by criteria.", "Auto-response rules send an email receipt.", "Escalation rules are for Cases that aren't resolved in time.", "Validation rules block bad data."],
+      correct: 0,
+      why: "Assignment rules hand off ownership of new Leads or Cases to specific users or queues based on criteria like State." },
+
+    { domain: DST, source: "Lesson 604.3, Auto-Response Rules",
+      q: "A customer submits a Case on the website and should immediately get an email confirming it was received. What should the admin use?",
+      opts: ["Case auto-response rule", "Case assignment rule", "Escalation rule", "Approval process"],
+      notes: ["Correct, auto-response rules email the submitter right away.", "Assignment rules route ownership, they don't email the customer.", "Escalation rules act on Cases that sit too long.", "Approval processes are for sign-off."],
+      correct: 0,
+      why: "Auto-response rules send an automatic email to the person who submitted a Lead or Case, using different templates based on the submission." },
+
+    { domain: DST, source: "Lesson 604.3, Escalation Rules",
+      q: "If a Case is still 'New' after 4 hours, it should be reassigned to the Support Manager and set to Critical. What should the admin use?",
+      opts: ["Escalation rule", "Assignment rule", "Auto-response rule", "Duplicate rule"],
+      notes: ["Correct, escalation rules act on Cases that aren't handled in time.", "Assignment rules route new Cases, not time-based ones.", "Auto-response rules send email receipts.", "Duplicate rules look for duplicates."],
+      correct: 0,
+      why: "Escalation rules make sure Cases don't sit unaddressed. If a Case isn't resolved in a set time, it gets reassigned or leadership is alerted." },
+
+    { domain: APR, source: "Lesson 604.3, Approvals",
+      q: "What is the purpose of an approval process?",
+      opts: ["To route a record to the right people to approve or reject it before the business process moves forward", "To block saves with a formula", "To find duplicate records", "To send a receipt email to customers"],
+      notes: ["Correct, approvals get sign-off before moving forward.", "That's a validation rule.", "That's a matching and duplicate rule.", "That's an auto-response rule."],
+      correct: 0,
+      why: "Approval processes automate how records like discounts, expenses, or contracts get reviewed, approved, or rejected by the right people." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Entry Criteria",
+      q: "What happens if a record doesn't meet the entry criteria for an approval process?",
+      opts: ["It can't be submitted for approval", "It's automatically rejected", "It's deleted", "It bypasses approval and is marked approved"],
+      notes: ["Correct, records that fail entry criteria can't enter the process.", "It never enters, so it isn't rejected.", "Records aren't deleted.", "It isn't approved either."],
+      correct: 0,
+      why: "Entry criteria decide which records can enter. If a record doesn't match, the user gets an error saying no applicable approval process was found." },
+
+    { domain: APR, source: "Lesson 604.3, Approval Actions",
+      q: "Which four action types can an approval process perform? Select 4.",
+      type: "multi",
+      opts: ["Task", "Email Alert", "Field Update", "Outbound Message", "Create Chatter Group"],
+      notes: ["Correct, assign a follow-up task.", "Correct, send an email template.", "Correct, change a field automatically.", "Correct, send an API message to an external system.", "This isn't an approval action."],
+      correct: [0, 1, 2, 3],
+      why: "Approval actions are Tasks, Email Alerts, Field Updates, and Outbound Messages (TEFO)." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Final Approval Actions",
+      q: "What actions can happen after a record is finally approved? Select 2.",
+      type: "multi",
+      opts: ["Update a field", "Send an email notification", "Create a Chatter group", "Delete the record"],
+      notes: ["Correct, a field update can set Status to Approved.", "Correct, an email alert can notify the submitter.", "Creating Chatter groups isn't an approval action.", "Approval actions don't delete records."],
+      correct: [0, 1],
+      why: "Final approval actions can include field updates, email alerts, tasks, outbound messages, and unlocking the record." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Record Locking",
+      q: "What does locking a record in an approval process do?",
+      opts: ["Prevents editing", "Hides the record", "Deletes the record", "Archives the record"],
+      notes: ["Correct, a locked record can't be edited while it's pending.", "The record is still visible.", "Locking doesn't delete.", "Locking doesn't archive."],
+      correct: 0,
+      why: "Initial submission actions usually lock the record so the submitter can't change details while it's waiting for approval." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Record Editability",
+      q: "The VP of Sales asks if the approver can edit an Opportunity that's been submitted for approval. What should the admin say?",
+      opts: ["Yes, the approval process can be set to let the approver edit the record", "No, once submitted, nobody can ever edit it", "Only the admin can ever edit it", "The admin has to unlock it every time"],
+      notes: ["Correct, the record editability setting can allow admins or the current approver to edit.", "The approval process can allow the approver to edit.", "The current approver can be allowed to edit too.", "Unlocking manually isn't required for the approver."],
+      correct: 0,
+      why: "Record editability properties can be set to 'Administrators OR the currently assigned approver can edit records during the approval process.'" },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Who Can Approve?",
+      q: "Who can approve or reject a record in an approval process?",
+      opts: ["Only the assigned approvers", "Any user", "Only System Administrators", "Only the record owner"],
+      notes: ["Correct, only the approvers assigned to that step (or their delegates) can act.", "Not just anyone can approve.", "Admins aren't the only approvers.", "The owner usually submits, not approves."],
+      correct: 0,
+      why: "Each approval step has assigned approvers, like the submitter's manager, a specific user, or a queue. Only they (or their delegated approver) can approve or reject." },
+
+    { domain: APR, source: "Lesson 604.3, Who Can Approve?",
+      q: "An approval should automatically go to the submitter's own manager. What should the approver setting use?",
+      opts: ["The Manager field on the submitter's user record", "A specific user hard-coded in the step", "A public group", "The record owner"],
+      notes: ["Correct, the Manager field routes dynamically to each submitter's manager.", "A hard-coded user would send every request to the same person.", "Public groups aren't an approver option.", "The owner is usually the submitter."],
+      correct: 0,
+      why: "Using the Manager field routes each request to whoever is listed as the submitter's manager, so it works for every team without hard-coding." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Delegated Approver",
+      q: "What can a delegated approver do?",
+      opts: ["Approve on behalf of another approver", "Create approval processes", "Submit any record for approval", "Unlock any locked record"],
+      notes: ["Correct, a delegate steps in when the main approver is out.", "Only admins create approval processes.", "Submitting isn't the delegate's role.", "Delegates don't get unlock powers."],
+      correct: 0,
+      why: "A delegated approver is set on the approver's user record and can approve or reject requests for them, like when they're out of the office." },
+
+    { domain: APR, source: "Lesson 604.3, Who Can Approve?",
+      q: "Finance approvals should go to a shared team so whoever is free can handle them. What should the approval step be assigned to?",
+      opts: ["A queue", "The submitter's manager", "The record owner", "A report folder"],
+      notes: ["Correct, queues let any member of the team handle the request.", "That sends it to one person.", "The owner is the submitter.", "Report folders store reports."],
+      correct: 0,
+      why: "Approval steps can be assigned to a user or a queue. Queues work well for shared teams like 'Finance Approvers'." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Unanimous Approval",
+      q: "In a step with multiple approvers, what does 'Require unanimous approval' mean?",
+      opts: ["All assigned approvers must approve before moving forward", "The first approver's decision finalizes the step", "A majority of approvers must approve", "Any approver can approve alone"],
+      notes: ["Correct, everyone must approve, and one rejection rejects it.", "That's the 'first response' setting.", "There's no majority option.", "That's closer to first response."],
+      correct: 0,
+      why: "With unanimous approval, every approver must say yes. If even one rejects, the record is rejected. The other option is to go with the first response." },
+
+    { domain: APR, source: "Lesson 604.3, Multi-User Approval Logic",
+      q: "A step is assigned to three approvers set to 'Approve or reject based on the FIRST response.' What happens?",
+      opts: ["Whoever responds first decides for the whole group", "All three must approve", "Two out of three must approve", "The step is skipped"],
+      notes: ["Correct, the first response finalizes the step.", "That's unanimous approval.", "There's no majority setting.", "The step still runs."],
+      correct: 0,
+      why: "With first response, the first approver to approve or reject decides the outcome for everyone on that step." },
+
+    { domain: APR, source: "Lesson 604.3, Approval Steps",
+      q: "A discount should be approved by a manager, then also by a VP if it's greater than 20%. How is this built?",
+      opts: ["One approval process with multiple approval steps", "Two separate validation rules", "A schedule-triggered flow", "Two record types"],
+      notes: ["Correct, one process can have multiple steps, each with its own criteria and approver.", "Validation rules can't route approvals.", "Scheduled flows don't handle approvals step by step.", "Record types don't route approvals."],
+      correct: 0,
+      why: "A single approval process can have multiple steps, like Step 1: Manager, then Step 2: VP only when the discount is over 20%." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Entry Criteria",
+      q: "A campaign should be approved automatically if the budget is under $5,000 but routed for approval if it's over. How can this be handled?",
+      opts: ["One approval process with entry criteria", "Two separate approval processes", "A validation rule", "A custom formula field"],
+      notes: ["Correct, entry criteria and step settings decide which records need approval.", "Two processes aren't needed.", "Validation rules only block saves.", "A formula field can't approve anything."],
+      correct: 0,
+      why: "One approval process can use entry criteria (and step criteria with auto-approve) to decide which campaigns need review and which go through." },
+
+    { domain: APR, source: "Lesson 604.3, Approval Steps: Recall",
+      q: "A submitter pulls back their pending approval request. What is this called, and what runs?",
+      opts: ["Recall, and the recall actions run", "Rejection, and the rejection actions run", "Escalation, and the escalation rules run", "Deletion, and the record is removed"],
+      notes: ["Correct, recalling a request triggers recall actions (like unlocking).", "Rejection is done by the approver.", "Escalation rules are for Cases.", "The record isn't deleted."],
+      correct: 0,
+      why: "Approval processes have Final Approval, Final Rejection, and Recall actions. Recall actions run when the submitter withdraws the request." },
+
+    { domain: APR, source: "Lesson 604.3 Knowledge Check, Starting an Approval",
+      q: "What can start an approval process? Select 2.",
+      type: "multi",
+      opts: ["The Submit for Approval button", "Automation when a record is created, like a flow", "A report subscription", "A dashboard filter"],
+      notes: ["Correct, users can submit manually with the button.", "Correct, a flow can submit a record automatically.", "Report subscriptions just email results.", "Dashboard filters only change the view."],
+      correct: [0, 1],
+      why: "Records enter an approval process when a user clicks Submit for Approval, or automatically when automation like a flow submits them." },
+
+    { domain: APR, source: "Lesson 604.3, Initial Submission Actions",
+      q: "What happens the moment a user clicks Submit for Approval?",
+      opts: ["The initial submission actions run, usually locking the record", "The final approval actions run", "The record is automatically approved", "The record is deleted"],
+      notes: ["Correct, initial submission actions run first, and the record is locked by default.", "Final actions only run after the last decision.", "It still needs the approver's decision.", "Nothing is deleted."],
+      correct: 0,
+      why: "Initial submission actions run on submit. By default the record is locked so details can't change while it's pending." }
+
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      const isMulti = orig.type === 'multi';
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        multi: isMulti,
+        selectCount: isMulti ? orig.correct.length : 1,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: isMulti ? null : order.indexOf(orig.correct),
+        correctIndices: isMulti ? orig.correct.map(c => order.indexOf(c)).sort((a, b) => a - b) : null
+      };
+    });
+    answers = questions.map(item => item.multi ? [] : null);
+    current = 0;
+  }
+
+  function isAnswered(item, ans) {
+    if (item.multi) return Array.isArray(ans) && ans.length === item.selectCount;
+    return ans !== null;
+  }
+
+  function isCorrectAnswer(item, ans) {
+    if (item.multi) {
+      if (!Array.isArray(ans) || ans.length !== item.correctIndices.length) return false;
+      const sorted = ans.slice().sort((a, b) => a - b);
+      return sorted.every((v, i) => v === item.correctIndices[i]);
+    }
+    return ans === item.correctIndex;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    const qHint = document.getElementById('q-hint');
+    if (item.multi) {
+      qHint.textContent = 'Select ' + item.selectCount + ' answers';
+      qHint.classList.remove('hidden');
+    } else {
+      qHint.classList.add('hidden');
+    }
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      const ans = answers[current];
+      const isSelected = item.multi ? (Array.isArray(ans) && ans.includes(idx)) : (ans === idx);
+      if (isSelected) btn.classList.add('selected');
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        if (item.multi) {
+          const cur = Array.isArray(answers[current]) ? answers[current].slice() : [];
+          const pos = cur.indexOf(idx);
+          if (pos >= 0) {
+            cur.splice(pos, 1);
+          } else if (cur.length < item.selectCount) {
+            cur.push(idx);
+          }
+          answers[current] = cur;
+        } else {
+          answers[current] = idx;
+        }
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = !isAnswered(item, answers[current]);
+    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = isCorrectAnswer(item, answers[i]);
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Shell yeah! You're crushing it.";
+      scoreEmoji.textContent = "🐢💨";
+      launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🐢";
+      launchFireworks();
+    } else {
+      verdict.textContent = "Slow and steady, review below and try again.";
+      scoreEmoji.textContent = "🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = isCorrectAnswer(item, userAns);
+      const div = document.createElement('div');
+      div.className = 'review-item';
+
+      function labelFor(idx) { return String.fromCharCode(65 + idx) + '. ' + item.displayOpts[idx]; }
+
+      let userLabel, correctLabel, userNote;
+      if (item.multi) {
+        const ansArr = Array.isArray(userAns) ? userAns.slice().sort((a, b) => a - b) : [];
+        userLabel = ansArr.length ? ansArr.map(labelFor).join('; ') : 'No answer';
+        correctLabel = item.correctIndices.map(labelFor).join('; ');
+        const wrongNotes = ansArr.filter(idx => !item.correctIndices.includes(idx)).map(idx => item.displayNotes[idx]).filter(Boolean);
+        userNote = (!isCorrect && wrongNotes.length) ? '<div class="review-note">' + wrongNotes.join(' ') + '</div>' : '';
+      } else {
+        userLabel = userAns === null ? 'No answer' : labelFor(userAns);
+        correctLabel = labelFor(item.correctIndex);
+        userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+      }
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+</body>
+</html>
