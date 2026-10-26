@@ -6,204 +6,631 @@
 <title>🎃 KBA Mock Exams</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+  /* The campfire scene is a night scene, so both light and dark use the same night palette */
   :root {
-    --ink: #14201A;
-    --ink-soft: #5B6F62;
-    --bg: #F5F7EE;
-    --panel: #FFFFFF;
-    --border: #DCE6D2;
-    --accent: #2F8F4E;
-    --accent-2: #7CB518;
-    --accent-soft: #E8F3E1;
-    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
-    --mono: 'JetBrains Mono', 'Courier New', monospace;
-    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
-  }
-  :root:not([data-theme="light"]) {
-    @media (prefers-color-scheme: dark) {
-      --ink: #E9F1E6;
-      --ink-soft: #93A895;
-      --bg: #0E1712;
-      --panel: #16211A;
-      --border: #253326;
-      --accent: #6BC17E;
-      --accent-2: #A3D65C;
-      --accent-soft: #1C2C1F;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
-    }
-  }
-  :root[data-theme="dark"] {
-    --ink: #E9F1E6;
-    --ink-soft: #93A895;
-    --bg: #0E1712;
-    --panel: #16211A;
-    --border: #253326;
-    --accent: #6BC17E;
-    --accent-2: #A3D65C;
-    --accent-soft: #1C2C1F;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { width: 100%; max-width: 480px; padding: 28px 20px 40px; }
-  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px; box-shadow: var(--shadow); text-align: center; }
-  .icon { font-size: 40px; margin-bottom: 10px; }
-  h1 { font-weight: 800; font-size: 24px; letter-spacing: -0.01em; margin: 0 0 6px; }
-  .sub { color: var(--ink-soft); font-size: 14px; margin: 0 0 30px; }
-  .lesson-links { display: flex; flex-direction: column; gap: 14px; }
-  a.lesson-btn {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    background: var(--accent-soft); border: 1.5px solid var(--border);
-    color: var(--ink); text-decoration: none; font-weight: 700; font-size: 16px;
-    padding: 18px 22px; border-radius: 16px;
-    transition: border-color 0.12s ease, transform 0.12s ease, background 0.12s ease;
-  }
-  a.lesson-btn:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--panel); }
-  a.lesson-btn .label { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
-  a.lesson-btn .label small { font-weight: 500; font-size: 12px; color: var(--ink-soft); }
-  a.lesson-btn .arrow { font-family: var(--mono); color: var(--accent); font-size: 18px; }
-  .credit { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 28px; opacity: 0.8; }
-  .credit span { font-weight: 600; }
-  @media (max-width: 420px) {
-    .card { padding: 28px 22px; border-radius: 16px; }
-    h1 { font-size: 21px; }
-  }
-
-  /* ===== Halloween theme ===== */
-  :root {
-    --ink: #2A1636;
-    --ink-soft: #6E5A78;
-    --bg: #FBF3E6;
-    --panel: #FFFFFF;
-    --border: #EAD9C4;
-    --accent: #C2510A;
-    --accent-2: #7B3FC4;
-    --accent-soft: #FCE7D3;
-    --good: #2F8A3E;
-    --good-bg: #E6F4E3;
-    --bad: #B3261E;
-    --bad-bg: #FBE4E1;
-    --on-accent: #FFFFFF;
-    --glow: rgba(194,81,10,0.30);
-    --moon: rgba(255,214,140,0.55);
-    --spooky: 'Creepster', 'Manrope', cursive;
-    --shadow: 0 1px 2px rgba(42,22,54,0.06), 0 8px 24px rgba(42,22,54,0.10);
+    --ink: #F5EDE0;
+    --ink-soft: #B5A3C4;
+    --bg: #0B0814;
+    --box: rgba(14, 9, 24, 0.86);
+    --box-border: #F5EDE0;
+    --accent: #FF8A1F;
+    --accent-2: #A86BFF;
+    --gold: #FFD23F;
+    --shadow-txt: #6A2A00;
+    --pixel: 'Press Start 2P', 'Courier New', monospace;
   }
   :root:not([data-theme="light"]) {
     @media (prefers-color-scheme: dark) {
       --ink: #F5EDE0;
-      --ink-soft: #B5A3C4;
-      --bg: #120C1A;
-      --panel: #1D1428;
-      --border: #34264A;
-      --accent: #FF8A1F;
-      --accent-2: #A86BFF;
-      --accent-soft: #2E1E2A;
-      --good: #7FDB5A;
-      --good-bg: #18291A;
-      --bad: #FF6B6B;
-      --bad-bg: #3A1620;
-      --on-accent: #1A0F05;
-      --glow: rgba(255,138,31,0.35);
-      --moon: rgba(255,214,140,0.22);
-      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+      --bg: #0B0814;
     }
   }
-  :root[data-theme="dark"] {
-    --ink: #F5EDE0;
-    --ink-soft: #B5A3C4;
-    --bg: #120C1A;
-    --panel: #1D1428;
-    --border: #34264A;
-    --accent: #FF8A1F;
-    --accent-2: #A86BFF;
-    --accent-soft: #2E1E2A;
-    --good: #7FDB5A;
-    --good-bg: #18291A;
-    --bad: #FF6B6B;
-    --bad-bg: #3A1620;
-    --on-accent: #1A0F05;
-    --glow: rgba(255,138,31,0.35);
-    --moon: rgba(255,214,140,0.22);
-    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  :root[data-theme="dark"] { --ink: #F5EDE0; --bg: #0B0814; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); overflow: hidden; }
+  body { font-family: var(--pixel); -webkit-font-smoothing: none; }
+
+  #scene {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    image-rendering: pixelated; image-rendering: crisp-edges;
+    display: block; z-index: 0;
   }
-  body {
-    background:
-      radial-gradient(circle at 88% 6%, var(--moon) 0, transparent 160px),
-      radial-gradient(ellipse at 50% 110%, var(--glow) 0, transparent 60%),
-      var(--bg);
-    background-attachment: fixed;
+
+  .ui {
+    position: fixed; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom));
+    pointer-events: none;
   }
-  .btn-primary { color: var(--on-accent) !important; box-shadow: 0 4px 14px var(--glow) !important; }
-  .btn-primary:hover { box-shadow: 0 6px 18px var(--glow) !important; }
-  .opt.selected .tag { color: var(--on-accent) !important; }
-  h1, .brand, .score-num { font-family: var(--spooky); font-weight: 400; letter-spacing: 0.03em; }
-  h1 { font-size: 34px; color: var(--accent); }
-  .brand { font-size: 21px; color: var(--accent); white-space: nowrap; }
-  .brand small { white-space: normal; }
-  .brand small { font-family: var(--sans); letter-spacing: 0; }
-  .score-num { color: var(--accent); }
-  .wrap { position: relative; z-index: 1; }
-  .bats { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .bats span { position: absolute; font-size: 22px; opacity: 0.55; animation: flap 14s ease-in-out infinite; }
-  .bats span:nth-child(1) { top: 8%; left: 6%; animation-duration: 16s; }
-  .bats span:nth-child(2) { top: 18%; left: 78%; font-size: 16px; animation-delay: -4s; }
-  .bats span:nth-child(3) { top: 62%; left: 4%; font-size: 18px; animation-delay: -8s; }
-  .bats span:nth-child(4) { top: 82%; left: 86%; animation-duration: 18s; animation-delay: -2s; }
-  .bats span:nth-child(5) { top: 40%; left: 92%; font-size: 14px; animation-delay: -11s; }
-  @keyframes flap {
-    0%, 100% { transform: translate(0, 0) rotate(-6deg); }
-    50% { transform: translate(18px, -22px) rotate(6deg); }
+  .ui > * { pointer-events: auto; }
+
+  /* ---------- loading ---------- */
+  #loading {
+    position: fixed; inset: 0; z-index: 5; background: #05030A;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+    transition: opacity 0.5s ease; cursor: pointer; padding: 16px; text-align: center;
   }
-  @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
+  #loading.done { opacity: 0; pointer-events: none; }
+  .load-title { font-size: 14px; letter-spacing: 2px; color: var(--accent); }
+  .load-bar { width: min(320px, 80vw); height: 18px; border: 3px solid var(--ink); padding: 3px; }
+  .load-fill { height: 100%; width: 0%; background: repeating-linear-gradient(90deg, var(--accent) 0 10px, var(--gold) 10px 12px); }
+  .load-tip { font-size: 9px; line-height: 1.9; color: var(--ink-soft); max-width: 420px; min-height: 36px; }
+
+  /* ---------- title ---------- */
+  .title-wrap { text-align: center; margin-top: 5vh; }
+  .title {
+    margin: 0; font-size: clamp(22px, 6vw, 46px); line-height: 1.3; color: var(--accent);
+    text-shadow: 3px 3px 0 var(--shadow-txt), 6px 6px 0 rgba(0,0,0,0.55);
+    letter-spacing: 2px;
+  }
+  .subtitle { margin: 14px 0 0; font-size: clamp(8px, 2vw, 12px); color: var(--ink); text-shadow: 2px 2px 0 #000; line-height: 1.8; }
+  .subtitle .edition { color: var(--accent-2); }
+
+  .press {
+    margin-top: 6vh; background: none; border: none; color: var(--gold); cursor: pointer;
+    font-family: var(--pixel); font-size: clamp(11px, 2.6vw, 16px); text-shadow: 2px 2px 0 #000;
+    padding: 12px 18px; animation: blink 1.2s linear infinite;
+  }
+  .press:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+  @keyframes blink { 0%, 62% { opacity: 1; } 63%, 100% { opacity: 0.12; } }
+
+  /* ---------- menu ---------- */
+  .menu {
+    margin-top: 3vh; width: min(520px, 100%);
+    background: var(--box); border: 4px solid var(--box-border);
+    box-shadow: 0 0 0 4px #000, inset 0 0 0 3px #000, 8px 8px 0 rgba(0,0,0,0.5);
+    padding: 18px 16px 14px;
+  }
+  .menu-head { font-size: 12px; color: var(--accent); margin: 0 0 6px; letter-spacing: 1px; }
+  .menu-flavor { font-size: 8px; line-height: 1.9; color: var(--ink-soft); margin: 0 0 14px; }
+  .quest-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .quest {
+    display: grid; grid-template-columns: 18px 1fr; gap: 6px; align-items: start;
+    color: var(--ink); text-decoration: none; padding: 9px 6px; border: 2px solid transparent;
+  }
+  .quest .cursor { color: var(--gold); visibility: hidden; font-size: 11px; line-height: 1.5; }
+  .quest .name { font-size: 11px; line-height: 1.5; display: block; }
+  .quest .desc { font-size: 8px; line-height: 1.8; color: var(--ink-soft); display: block; margin-top: 4px; }
+  .quest.active { border-color: var(--accent); background: rgba(255,138,31,0.12); }
+  .quest.active .cursor { visibility: visible; animation: nudge 0.6s steps(2) infinite; }
+  .quest.active .name { color: var(--gold); }
+  .quest:focus-visible { outline: none; }
+  @keyframes nudge { 50% { transform: translateX(3px); } }
+  .menu-keys { font-size: 7px; color: var(--ink-soft); margin: 12px 0 0; text-align: right; line-height: 1.8; }
+
+  /* ---------- tip + credit ---------- */
+  .bottom { margin-top: auto; width: min(620px, 100%); display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .tipbox {
+    width: 100%; background: var(--box); border: 3px solid var(--box-border); box-shadow: 0 0 0 3px #000;
+    padding: 10px 12px; font-size: 8px; line-height: 1.9; min-height: 52px;
+  }
+  .tipbox b { color: var(--gold); font-weight: 400; }
+  .credit { font-size: 7px; line-height: 1.8; color: var(--ink-soft); text-align: center; text-shadow: 1px 1px 0 #000; }
+  .credit span { color: var(--ink); }
+
+  .hidden { display: none !important; }
+  @media (orientation: landscape) and (max-height: 900px) {
+    body.menu-open .title-wrap { display: none; }
+    body.menu-open .menu { margin-top: 1vh; }
+    .menu { padding: 14px 16px 10px; }
+    .quest { padding: 6px; }
+    .quest .desc { margin-top: 2px; }
+  }
+
+  @media (max-width: 520px) {
+    .menu { padding: 14px 12px 10px; margin-top: 2vh; }
+    .menu-flavor { margin-bottom: 8px; }
+    .quest { padding: 7px 4px; }
+    .quest .desc { display: none; }
+    .menu-keys { display: none; }
+    .title-wrap { margin-top: 2vh; }
+  }
+  @media (max-height: 640px) {
+    .title-wrap { margin-top: 2vh; }
+    .press { margin-top: 3vh; }
+    .quest { padding: 6px; }
+    .quest .desc { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .press, .quest.active .cursor { animation: none; }
+  }
 </style>
 </head>
 <body>
-<div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
-<div class="wrap">
-  <div class="card">
-    <div class="icon">🎃🐢👻</div>
-    <h1>KBA Mock Exams</h1>
-    <p class="sub">Salesforce Admin Bootcamp &middot; pick a lesson set to practice &middot; spooky season edition 🕸️</p>
 
-    <div class="lesson-links">
-      <a class="lesson-btn" href="lesson1-5.html">
-        <span class="label">Lesson 1-5<small>Configuration, Object Manager, Sales & Marketing</small></span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="lesson-btn" href="lesson6.html">
-        <span class="label">Lesson 6<small>Data Security & User Management (602.1 / 602.2)</small></span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="lesson-btn" href="lesson7-9.html">
-        <span class="label">Lesson 7-9<small>Object Manager & App Builder, Productivity & Collaboration</small></span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="lesson-btn" href="lesson603.html">
-        <span class="label">Lesson 603<small>Reports, Dashboards & Forecasting, Data Management</small></span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="lesson-btn" href="lesson604.html">
-        <span class="label">Lesson 604<small>Flows, Order of Execution & Approval Processes</small></span>
-        <span class="arrow">→</span>
-      </a>
-    </div>
-  </div>
-  <div class="credit">Built with 🧡 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<div id="loading" role="status" aria-live="polite">
+  <div class="load-title">LOADING...</div>
+  <div class="load-bar"><div class="load-fill" id="load-fill"></div></div>
+  <div class="load-tip" id="load-tip"></div>
 </div>
+
+<main class="ui">
+  <div class="title-wrap">
+    <h1 class="title">KBA MOCK<br>EXAMS</h1>
+    <p class="subtitle">SALESFORCE ADMIN BOOTCAMP<br><span class="edition">🎃 SPOOKY SEASON EDITION 🎃</span></p>
+  </div>
+
+  <button class="press" id="press" type="button">▶ PRESS START</button>
+
+  <nav class="menu hidden" id="menu" aria-label="Choose a lesson">
+    <p class="menu-head">🔥 SAVE POINT REACHED</p>
+    <p class="menu-flavor">You rest by the campfire. Focus restored.<br>Select your quest:</p>
+    <ul class="quest-list" id="quest-list">
+      <li><a class="quest" href="lesson1-5.html"><span class="cursor">▶</span><span><span class="name">LESSON 1-5</span><span class="desc">Configuration, Object Manager, Sales &amp; Marketing</span></span></a></li>
+      <li><a class="quest" href="lesson6.html"><span class="cursor">▶</span><span><span class="name">LESSON 6</span><span class="desc">Data Security &amp; User Management (602.1 / 602.2)</span></span></a></li>
+      <li><a class="quest" href="lesson7-9.html"><span class="cursor">▶</span><span><span class="name">LESSON 7-9</span><span class="desc">Object Manager &amp; App Builder, Productivity &amp; Collaboration</span></span></a></li>
+      <li><a class="quest" href="lesson603.html"><span class="cursor">▶</span><span><span class="name">LESSON 603</span><span class="desc">Reports, Dashboards &amp; Forecasting, Data Management</span></span></a></li>
+      <li><a class="quest" href="lesson604.html"><span class="cursor">▶</span><span><span class="name">LESSON 604</span><span class="desc">Flows, Order of Execution &amp; Approval Processes</span></span></a></li>
+    </ul>
+    <p class="menu-keys">↑ ↓ MOVE &nbsp; ENTER SELECT &nbsp; ESC BACK</p>
+  </nav>
+
+  <div class="bottom">
+    <div class="tipbox" aria-live="polite"><b>TIP:</b> <span id="tip"></span></div>
+    <div class="credit">BUILT WITH 🧡 BY <span>CLARRENT NGUYEN</span><br>FOR TURTLE STRIKER FORCE 🐢 · CLASS 2026-2027</div>
+  </div>
+</main>
+
+<script>
+(function () {
+  // ====================================================================
+  //  Tips (shown on the loading screen and in the tip box)
+  // ====================================================================
+  const TIPS = [
+    "Validation rules block the save when the formula is TRUE.",
+    "Order of execution: Very Determined Admins Are Wanting Exciting Projects.",
+    "Usernames must be unique across ALL Salesforce orgs, not just yours.",
+    "Users can't be deleted. Freeze to block login now, deactivate to free the license.",
+    "Reports allow 20 filters. Dashboards allow 3.",
+    "Row-level formulas: 1 per report. Summary formulas: 5. Bucket columns: 5.",
+    "Data Import Wizard handles up to 50,000 records. Bigger jobs? Data Loader.",
+    "Joined reports can only be exported as a formatted Excel file.",
+    "Dynamic dashboards run as the person viewing them.",
+    "Sharing rules can only open up access, never take it away.",
+    "A custom report type can link up to 4 objects.",
+    "Before-save flows are the fastest way to update the record being saved.",
+    "Approval actions: Task, Email Alert, Field Update, Outbound Message.",
+    "Every user has exactly one profile, but can have many permission sets.",
+    "Screen flows are the only flow type with screens.",
+    "Locale controls date and number formats. Language controls the words."
+  ];
+  const tipEl = document.getElementById('tip');
+  let tipIdx = Math.floor(Math.random() * TIPS.length);
+  let typeTimer = null;
+  function typeTip(text) {
+    clearInterval(typeTimer);
+    let i = 0;
+    tipEl.textContent = '';
+    typeTimer = setInterval(() => {
+      i++;
+      tipEl.textContent = text.slice(0, i);
+      if (i >= text.length) clearInterval(typeTimer);
+    }, reduceMotion ? 0 : 28);
+  }
+  function nextTip() { tipIdx = (tipIdx + 1) % TIPS.length; typeTip(TIPS[tipIdx]); }
+
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ====================================================================
+  //  Loading screen
+  // ====================================================================
+  const loading = document.getElementById('loading');
+  const loadFill = document.getElementById('load-fill');
+  document.getElementById('load-tip').textContent = 'TIP: ' + TIPS[tipIdx];
+  let seen = false;
+  try { seen = sessionStorage.getItem('kbaLoaded') === '1'; } catch (e) {}
+  function finishLoading() {
+    loading.classList.add('done');
+    try { sessionStorage.setItem('kbaLoaded', '1'); } catch (e) {}
+    typeTip(TIPS[tipIdx]);
+    document.getElementById('press').focus({ preventScroll: true });
+  }
+  if (seen || reduceMotion) {
+    loading.classList.add('done');
+    typeTip(TIPS[tipIdx]);
+  } else {
+    let pct = 0;
+    const lt = setInterval(() => {
+      pct = Math.min(100, pct + 4 + Math.random() * 9);
+      loadFill.style.width = pct + '%';
+      if (pct >= 100) { clearInterval(lt); setTimeout(finishLoading, 250); }
+    }, 70);
+    loading.addEventListener('click', () => { clearInterval(lt); finishLoading(); });
+  }
+  setInterval(nextTip, 7000);
+
+  // ====================================================================
+  //  Title -> menu
+  // ====================================================================
+  const press = document.getElementById('press');
+  const menu = document.getElementById('menu');
+  const quests = Array.from(document.querySelectorAll('.quest'));
+  let sel = 0;
+  function setActive(i) {
+    sel = (i + quests.length) % quests.length;
+    quests.forEach((q, n) => q.classList.toggle('active', n === sel));
+    quests[sel].focus({ preventScroll: true });
+  }
+  function openMenu() {
+    press.classList.add('hidden');
+    menu.classList.remove('hidden');
+    document.body.classList.add('menu-open');
+    setActive(sel);
+  }
+  function closeMenu() {
+    menu.classList.add('hidden');
+    document.body.classList.remove('menu-open');
+    press.classList.remove('hidden');
+    press.focus({ preventScroll: true });
+  }
+  press.addEventListener('click', openMenu);
+  quests.forEach((q, n) => {
+    q.addEventListener('mouseenter', () => setActive(n));
+    q.addEventListener('focus', () => { if (sel !== n) setActive(n); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!loading.classList.contains('done')) { if (e.key === 'Enter' || e.key === ' ') finishLoading(); return; }
+    if (menu.classList.contains('hidden')) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(); }
+      return;
+    }
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(sel + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(sel - 1); }
+    else if (e.key === 'Escape') { closeMenu(); }
+  });
+
+  // ====================================================================
+  //  Pixel art scene (all drawn in code, original art)
+  // ====================================================================
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, S = 3, portrait = false;          // low-res size and pixel scale
+  let bg = null;                     // pre-rendered static layer
+  let groundY = 0, fireX = 0, fireY = 0;
+
+  // seeded random so the static art looks the same every time
+  let seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+  function px(c, x, y, color) { c.fillStyle = color; c.fillRect(x | 0, y | 0, 1, 1); }
+  function rect(c, x, y, w, h, color) { c.fillStyle = color; c.fillRect(x | 0, y | 0, w | 0, h | 0); }
+
+  // sprite helper: build a small canvas from a function, with an automatic dark outline
+  function makeSprite(w, h, fn, outline) {
+    const cv = document.createElement('canvas');
+    cv.width = w + 2; cv.height = h + 2;
+    const c = cv.getContext('2d');
+    const grid = [];
+    for (let y = 0; y < h; y++) { grid[y] = []; for (let x = 0; x < w; x++) grid[y][x] = fn(x, y); }
+    if (outline) {
+      for (let y = -1; y <= h; y++) for (let x = -1; x <= w; x++) {
+        const filled = grid[y] && grid[y][x];
+        if (filled) continue;
+        const near = [[1,0],[-1,0],[0,1],[0,-1]].some(([dx, dy]) => grid[y + dy] && grid[y + dy][x + dx]);
+        if (near) px(c, x + 1, y + 1, outline);
+      }
+    }
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (grid[y][x]) px(c, x + 1, y + 1, grid[y][x]);
+    return cv;
+  }
+
+  // ---- turtle (resting, facing the fire, orange bandana) ----
+  function turtleSprite(blink) {
+    return makeSprite(26, 14, (x, y) => {
+      // shell dome
+      const dx = (x - 11) / 10, dy = (y - 8) / 7.2;
+      if (y <= 8 && dx * dx + dy * dy <= 1) {
+        if (y === 8) return '#D9B36A';
+        const hex = ((x + (Math.floor(y / 3) % 2) * 2) % 5 === 0) || (y % 3 === 0 && y > 1);
+        if (y <= 2 && x > 6 && x < 13) return '#8FD27E';
+        return hex ? '#2C5E33' : '#4E9A4C';
+      }
+      // head
+      const hx = (x - 21.5) / 3.4, hy = (y - 7.2) / 3.0;
+      if (hx * hx + hy * hy <= 1 && x >= 18) {
+        if (y === 5 && x >= 19 && x <= 24) return '#FF8A1F';
+        if (blink && y === 7 && (x === 22 || x === 23)) return '#1B2B17';
+        if (!blink && y === 7 && x === 23) return '#1B2B17';
+        if (y >= 9) return '#6FB052';
+        return '#8FCF6A';
+      }
+      if ((x === 18 || x === 17) && (y === 4 || y === 3)) return '#FF8A1F'; // bandana tails
+      // legs
+      if (y >= 9 && y <= 11 && ((x >= 3 && x <= 6) || (x >= 13 && x <= 16))) return y === 11 ? '#6FB052' : '#8FCF6A';
+      if (y === 9 && x >= 0 && x <= 2) return '#8FCF6A'; // tail
+      return null;
+    }, '#0E1A10');
+  }
+
+  // ---- jack-o-lantern ----
+  function pumpkinSprite(glow) {
+    const face = glow > 0.6 ? '#FFF3A0' : '#FFD23F';
+    return makeSprite(11, 9, (x, y) => {
+      if (y <= 1) return (x === 5 || (x === 6 && y === 0)) ? '#5A7A2A' : null;
+      const dx = (x - 5) / 5.4, dy = (y - 5) / 3.7;
+      if (dx * dx + dy * dy > 1) return null;
+      if ((y === 4 && (x === 3 || x === 7)) || (y === 3 && (x === 3 || x === 7))) return face; // eyes
+      if (y === 6 && x >= 3 && x <= 7 && x !== 5) return face;                                  // mouth
+      if (y === 7 && x >= 4 && x <= 6) return face;
+      if (x === 2 || x === 5 || x === 8) return '#C2510A';
+      return '#F07A1A';
+    }, '#2A1206');
+  }
+
+  // ---- bat (2 frames) ----
+  function batSprite(up) {
+    const rows = up
+      ? ['K.......K', 'KK.KKK.KK', '.KKKKKKK.', '...K.K...']
+      : ['...KKK...', '.KKKKKKK.', 'KK.K.K.KK', 'K.......K'];
+    return makeSprite(9, 4, (x, y) => rows[y][x] === 'K' ? '#140A1E' : null, null);
+  }
+
+  // ---- ghost ----
+  const ghost = makeSprite(9, 10, (x, y) => {
+    const dx = (x - 4) / 4.5, dy = (y - 4) / 4.5;
+    const body = (y <= 4 && dx * dx + dy * dy <= 1) || (y > 4 && y < 9) || (y === 9 && x % 3 !== 1);
+    if (!body) return null;
+    if ((y === 4 && (x === 2 || x === 6)) || (y === 6 && x >= 3 && x <= 5 && y === 6 && x === 4)) return '#2A1636';
+    return '#EDE7FF';
+  }, null);
+
+  const sprites = {
+    turtle: turtleSprite(true), turtleOpen: turtleSprite(false),
+    batA: batSprite(true), batB: batSprite(false)
+  };
+
+  // ---- static background ----
+  function buildBackground() {
+    seed = 7;
+    bg = document.createElement('canvas');
+    bg.width = W; bg.height = H;
+    const c = bg.getContext('2d');
+
+    // sky bands (stepped like old games)
+    const bands = ['#0A0716', '#0E0A20', '#120E2A', '#171236', '#1D1640', '#24194A', '#2C1B4E'];
+    for (let y = 0; y < groundY; y++) {
+      const t = y / groundY;
+      let b = Math.min(bands.length - 1, Math.floor(t * bands.length));
+      if ((y % 2 === 0) && rnd() < 0.08) b = Math.max(0, b - 1);
+      rect(c, 0, y, W, 1, bands[b]);
+    }
+
+    // moon
+    const mx = Math.floor(W * (portrait ? 0.82 : 0.16)), my = Math.floor(groundY * (portrait ? 0.5 : 0.2)), mr = 8;
+    for (let y = -mr - 6; y <= mr + 6; y++) for (let x = -mr - 6; x <= mr + 6; x++) {
+      const d = Math.sqrt(x * x + y * y);
+      if (d <= mr) px(c, mx + x, my + y, (x + y > 4 && d > mr - 3) ? '#E8D9A8' : '#FFF4CF');
+      else if (d <= mr + 3 && (x + y) % 2 === 0) px(c, mx + x, my + y, 'rgba(255,240,200,0.18)');
+    }
+    [[-3, -2], [2, 3], [3, -3]].forEach(([x, y]) => px(c, mx + x, my + y, '#E0CF98'));
+
+    // far pine trees
+    function pines(baseY, minH, maxH, color, step) {
+      for (let x = -4; x < W + 4; x += step + Math.floor(rnd() * step)) {
+        const h = minH + Math.floor(rnd() * (maxH - minH));
+        for (let i = 0; i < h; i++) {
+          const half = Math.floor((i / h) * (h * 0.38)) + 1;
+          rect(c, x - half, baseY - h + i, half * 2 + 1, 1, color);
+        }
+        rect(c, x, baseY - 1, 1, 2, color);
+      }
+    }
+    pines(groundY - 2, 14, 26, '#0F1430', 5);
+    pines(groundY, 12, 22, '#0C1A1E', 6);
+
+    // stone tower (right of fire)
+    const tx = fireX + 26, tw = 30, ttop = groundY - 58;
+    for (let y = ttop; y < groundY; y += 4) {
+      const off = ((y - ttop) / 4) % 2 ? 3 : 0;
+      for (let x = tx - off; x < tx + tw; x += 6) {
+        const shade = ['#3B3448', '#433B52', '#4B425A', '#362F42'][Math.floor(rnd() * 4)];
+        const x0 = Math.max(x, tx), x1 = Math.min(x + 5, tx + tw);
+        if (x1 > x0) rect(c, x0, y, x1 - x0, 3, shade);
+      }
+    }
+    for (let x = tx; x < tx + tw; x += 6) rect(c, x, ttop - 4, 4, 4, '#433B52');   // battlements
+    rect(c, tx + tw, ttop, 1, groundY - ttop, '#221C2C');
+    // window frame (light drawn each frame)
+    rect(c, tx + 11, ttop + 13, 7, 10, '#221C2C');
+
+    // low ruined wall behind the fire
+    const wx0 = fireX - 30, wx1 = tx;
+    for (let row = 0; row < 3; row++) {
+      const y = groundY - 4 - row * 4;
+      const len = (wx1 - wx0) - row * 9;
+      for (let x = wx1 - len; x < wx1; x += 7) {
+        const shade = ['#4A3B36', '#54443D', '#3E322E'][Math.floor(rnd() * 3)];
+        rect(c, x + (row % 2) * 3, y, 6, 3, shade);
+      }
+    }
+
+    // ground
+    for (let y = groundY; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const n = rnd();
+        const depth = (y - groundY) / (H - groundY);
+        const base = depth < 0.35 ? ['#1F3A22', '#23432A', '#1B331F'] : ['#16291A', '#1A2F1D', '#132416'];
+        px(c, x, y, base[n < 0.5 ? 0 : n < 0.8 ? 1 : 2]);
+      }
+    }
+    // grass blades and tiny flowers
+    for (let x = 0; x < W; x++) {
+      if (rnd() < 0.55) rect(c, x, groundY - 1, 1, 1, '#2D5530');
+      if (rnd() < 0.18) rect(c, x, groundY - 2, 1, 1, '#35663A');
+    }
+    for (let i = 0; i < W / 4; i++) {
+      const x = Math.floor(rnd() * W), y = groundY + 3 + Math.floor(rnd() * (H - groundY - 4));
+      if (Math.abs(x - fireX) < 10 && Math.abs(y - fireY) < 6) continue;
+      px(c, x, y, ['#E8D9A8', '#C77DFF', '#FF9E4A'][Math.floor(rnd() * 3)]);
+    }
+
+    // fire pit stones and logs
+    for (let i = -7; i <= 7; i++) {
+      const sy = fireY + 2 + (Math.abs(i) > 5 ? -1 : 0);
+      rect(c, fireX + i, sy, 1, 2, (i % 2) ? '#6B6370' : '#857C8C');
+    }
+    rect(c, fireX - 6, fireY, 12, 2, '#5C3A1E');
+    rect(c, fireX - 5, fireY - 1, 4, 1, '#7A4E28');
+    rect(c, fireX + 1, fireY - 1, 4, 1, '#7A4E28');
+  }
+
+  // ---- dynamic elements ----
+  let stars = [], embers = [], smoke = [], bats = [];
+  function initDynamic() {
+    seed = 99;
+    stars = [];
+    const count = Math.floor((W * groundY) / 150);
+    for (let i = 0; i < count; i++) {
+      stars.push({ x: Math.floor(rnd() * W), y: Math.floor(rnd() * groundY * 0.75), p: rnd() * 6.28, s: 0.5 + rnd() * 2, big: rnd() < 0.1 });
+    }
+    bats = [0, 1, 2].map(i => ({ x: rnd() * W, y: 10 + rnd() * groundY * 0.4, v: 0.18 + rnd() * 0.2, ph: rnd() * 6, dir: i % 2 ? -1 : 1 }));
+    embers = []; smoke = [];
+  }
+
+  function resize() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    portrait = vh > vw;
+    S = Math.max(2, Math.round(portrait ? vw / 105 : Math.min(vw / 170, vh / 105)));
+    W = Math.ceil(vw / S); H = Math.ceil(vh / S);
+    canvas.width = W; canvas.height = H;
+    groundY = Math.floor(H * (portrait ? 0.72 : 0.66));
+    fireX = Math.floor(W / 2);
+    fireY = groundY + Math.floor((H - groundY) * 0.32);
+    buildBackground();
+    initDynamic();
+  }
+
+  let t = 0;
+  function frame() {
+    t++;
+    ctx.drawImage(bg, 0, 0);
+
+    // stars twinkle
+    stars.forEach(s => {
+      const b = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 0.05 * s.s + s.p));
+      ctx.globalAlpha = b;
+      px(ctx, s.x, s.y, s.big ? '#FFF4CF' : '#C9C2E8');
+      if (s.big && b > 0.85) { px(ctx, s.x - 1, s.y, '#8E86B8'); px(ctx, s.x + 1, s.y, '#8E86B8'); px(ctx, s.x, s.y - 1, '#8E86B8'); px(ctx, s.x, s.y + 1, '#8E86B8'); }
+    });
+    ctx.globalAlpha = 1;
+
+    // shooting star now and then
+    const ss = t % 900;
+    if (ss < 26) {
+      const sx = W * 0.45 + ss * 2.2, sy = groundY * 0.12 + ss * 0.9;
+      for (let k = 0; k < 6; k++) { ctx.globalAlpha = 1 - k / 6; px(ctx, sx - k * 2, sy - k * 0.9, '#FFF4CF'); }
+      ctx.globalAlpha = 1;
+    }
+
+    // bats
+    bats.forEach(b => {
+      b.x += b.v * b.dir;
+      if (b.x > W + 12) b.x = -12; if (b.x < -12) b.x = W + 12;
+      const y = b.y + Math.sin(t * 0.06 + b.ph) * 3;
+      ctx.drawImage(Math.floor(t / 6 + b.ph) % 2 ? sprites.batA : sprites.batB, Math.round(b.x), Math.round(y));
+    });
+
+    // tower window flicker
+    const tx = fireX + 26, ttop = groundY - 58;
+    const wf = 0.75 + 0.25 * Math.sin(t * 0.21) * Math.sin(t * 0.07);
+    rect(ctx, tx + 12, ttop + 14, 5, 8, wf > 0.8 ? '#FFC24A' : '#F2A13A');
+    rect(ctx, tx + 14, ttop + 14, 1, 8, '#7A4A1A');
+    rect(ctx, tx + 12, ttop + 17, 5, 1, '#7A4A1A');
+    ctx.globalAlpha = 0.12 * wf;
+    rect(ctx, tx + 9, ttop + 11, 11, 14, '#FFC24A');
+    ctx.globalAlpha = 1;
+
+    // ghost drifting by the tower
+    const gp = (t % 1200) / 1200;
+    const ga = Math.sin(gp * Math.PI);
+    if (ga > 0.05) {
+      ctx.globalAlpha = 0.55 * ga;
+      ctx.drawImage(ghost, Math.round(tx - 14 + gp * 12), Math.round(groundY - 32 + Math.sin(t * 0.05) * 3));
+      ctx.globalAlpha = 1;
+    }
+
+    // fire light on the ground (banded glow)
+    const flick = 0.85 + 0.15 * Math.sin(t * 0.33) * Math.sin(t * 0.17 + 1);
+    const rings = [[30, 0.05], [22, 0.07], [15, 0.09], [9, 0.11]];
+    rings.forEach(([r, a]) => {
+      ctx.globalAlpha = a * flick;
+      ctx.fillStyle = '#FF8A1F';
+      const rr = Math.round(r * (0.96 + 0.04 * flick));
+      ctx.beginPath(); ctx.ellipse(fireX, fireY - 2, rr, rr * 0.55, 0, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // jack-o-lanterns
+    const g1 = 0.5 + 0.5 * Math.sin(t * 0.27), g2 = 0.5 + 0.5 * Math.sin(t * 0.23 + 2);
+    ctx.drawImage(pumpkinSprite(g1), fireX + 13, groundY - 1);
+    ctx.drawImage(pumpkinSprite(g2), fireX + 19, groundY + 4);
+    ctx.drawImage(pumpkinSprite(g2), fireX - 47, groundY + 3);
+
+    // turtle resting by the fire (breathes, blinks, snores)
+    const breathe = Math.floor(t / 40) % 2;
+    const blink = !(t % 260 > 250 && t % 260 < 258) ? true : false;
+    ctx.drawImage(blink ? sprites.turtle : sprites.turtleOpen, fireX - 34, fireY - 13 + breathe);
+    const zt = t % 150;
+    if (zt < 110) {
+      ctx.globalAlpha = 1 - zt / 110;
+      ctx.fillStyle = '#C9C2E8';
+      const zx = fireX - 10 + Math.floor(zt / 18), zy = fireY - 16 - Math.floor(zt / 7);
+      // tiny pixel "z"
+      rect(ctx, zx, zy, 4, 1, '#C9C2E8'); px(ctx, zx + 2, zy + 1, '#C9C2E8'); px(ctx, zx + 1, zy + 2, '#C9C2E8'); rect(ctx, zx, zy + 3, 4, 1, '#C9C2E8');
+      ctx.globalAlpha = 1;
+    }
+
+    // flames
+    for (let dx = -5; dx <= 5; dx++) {
+      const base = 8 - Math.abs(dx) * 1.15;
+      const h = Math.max(1, Math.round(base + Math.sin(t * 0.45 + dx * 1.7) * 1.6 + Math.sin(t * 0.9 + dx) * 1.1 + (Math.random() - 0.5) * 1.4));
+      for (let dy = 0; dy < h; dy++) {
+        const f = dy / h;
+        if (f > 0.75 && Math.random() < 0.35) continue;
+        let col = f < 0.25 ? '#FFF6C8' : f < 0.5 ? '#FFD23F' : f < 0.78 ? '#FF8A1F' : '#D43D1A';
+        if (Math.abs(dx) >= 4) col = f < 0.5 ? '#FF8A1F' : '#D43D1A';
+        px(ctx, fireX + dx, fireY - 1 - dy, col);
+      }
+    }
+
+    // embers
+    if (Math.random() < 0.35) embers.push({ x: fireX + (Math.random() - 0.5) * 8, y: fireY - 6, vy: -(0.15 + Math.random() * 0.3), ph: Math.random() * 6, life: 60 + Math.random() * 70, age: 0 });
+    embers = embers.filter(e => e.age < e.life);
+    embers.forEach(e => {
+      e.age++; e.y += e.vy; e.x += Math.sin(e.age * 0.08 + e.ph) * 0.15;
+      ctx.globalAlpha = 1 - e.age / e.life;
+      px(ctx, e.x, e.y, e.age < e.life * 0.4 ? '#FFD23F' : '#FF8A1F');
+    });
+    ctx.globalAlpha = 1;
+
+    // smoke
+    if (t % 5 === 0) smoke.push({ x: fireX + (Math.random() - 0.5) * 3, y: fireY - 10, age: 0, life: 120 });
+    smoke = smoke.filter(s => s.age < s.life);
+    smoke.forEach(s => {
+      s.age++; s.y -= 0.12; s.x += Math.sin(s.age * 0.05) * 0.12 + 0.03;
+      ctx.globalAlpha = 0.22 * (1 - s.age / s.life);
+      rect(ctx, s.x, s.y, s.age > 50 ? 2 : 1, s.age > 50 ? 2 : 1, '#8E86A8');
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  let last = 0;
+  const FPS = reduceMotion ? 4 : 20;
+  function loop(now) {
+    if (now - last >= 1000 / FPS) { last = now; frame(); }
+    requestAnimationFrame(loop);
+  }
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 120); });
+  resize();
+  requestAnimationFrame(loop);
+})();
+</script>
 </body>
 </html>
