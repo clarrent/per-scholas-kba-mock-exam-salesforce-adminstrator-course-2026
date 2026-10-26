@@ -237,16 +237,6 @@
         date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       };
     }
-    function captionFor(r) {
-      if (r.pct >= 70) {
-        return 'Putting in the reps for my Salesforce Admin KBA. Scored ' + r.pct + '% (' + r.correct + '/' + r.total + ') on the ' +
-          r.lesson + ' practice exam covering ' + r.topics + '. On to the next one! 🐢\n\nPractice here: ' + SITE +
-          '\n\n#Salesforce #Trailblazer #SalesforceAdmin';
-      }
-      return 'Back at the campfire, sharpening up for my Salesforce Admin KBA. Just practiced ' + r.lesson + ' (' + r.topics +
-        ') and scored ' + r.pct + '%. Every attempt counts! 🔥\n\nPractice here: ' + SITE + '\n\n#Salesforce #Trailblazer #SalesforceAdmin';
-    }
-
     var shareModal = null, shareFile = null, shareBlobUrl = null;
     function buildShareModal() {
       shareModal = document.createElement('div');
@@ -260,19 +250,14 @@
           '<label class="share-label" for="share-name">Your name (optional)</label>' +
           '<input id="share-name" class="share-name" type="text" maxlength="32" autocomplete="name" placeholder="Type your name">' +
           '<canvas class="share-preview" aria-label="Preview of your score card"></canvas>' +
-          '<label class="share-label" for="share-caption">Caption (edit if you like)</label>' +
-          '<textarea id="share-caption" class="share-caption" rows="5"></textarea>' +
           '<div class="share-actions">' +
-            '<button type="button" class="key-yes share-go">📤 SHARE IMAGE</button>' +
-            '<button type="button" class="key-cancel share-save">⬇ SAVE IMAGE</button>' +
-            '<button type="button" class="key-cancel share-copy">📋 COPY CAPTION</button>' +
+            '<button type="button" class="key-yes share-go">\uD83D\uDCBE SAVE PNG</button>' +
           '</div>' +
           '<p class="share-note" aria-live="polite"></p>' +
           '<button type="button" class="share-close">CLOSE</button>' +
         '</div>';
       document.body.appendChild(shareModal);
       var nameIn = shareModal.querySelector('#share-name');
-      var cap = shareModal.querySelector('#share-caption');
       var note = shareModal.querySelector('.share-note');
       var close = function () { shareModal.classList.add('hidden'); var b = document.getElementById('btn-share'); if (b) b.focus(); };
       shareModal.querySelector('.share-close').addEventListener('click', close);
@@ -289,25 +274,15 @@
         a.href = shareBlobUrl; a.download = 'kba-practice-' + page + '.png';
         document.body.appendChild(a); a.click(); a.remove();
       }
-      shareModal.querySelector('.share-save').addEventListener('click', function () { download(); note.textContent = 'Image saved. Post it with the caption above.'; });
+      // phones: opens the share menu (Save Image, Instagram, LinkedIn, Slack, Teams...); computers: downloads the PNG
       shareModal.querySelector('.share-go').addEventListener('click', function () {
-        var data = { files: shareFile ? [shareFile] : [], text: cap.value, title: 'My KBA practice score' };
         if (shareFile && navigator.canShare && navigator.canShare({ files: [shareFile] })) {
-          navigator.share(data).catch(function () {});
-          // some apps drop the text, so keep the caption handy too
-          copyText(cap.value, true);
+          navigator.share({ files: [shareFile] }).catch(function () {});
         } else {
-          download(); copyText(cap.value, true);
-          note.textContent = 'Image saved and caption copied. Upload the image to LinkedIn, Instagram, Slack or Teams and paste the caption.';
+          download();
+          note.textContent = 'Saved! Post it anywhere you like.';
         }
       });
-      shareModal.querySelector('.share-copy').addEventListener('click', function () { copyText(cap.value, false); });
-      function copyText(text, quiet) {
-        var done = function () { if (!quiet) note.textContent = 'Caption copied.'; };
-        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallback(); });
-        else fallback();
-        function fallback() { cap.select(); try { document.execCommand('copy'); done(); } catch (e) {} }
-      }
     }
 
     var cardCanvas = null, bannerSnap = null;
@@ -336,7 +311,6 @@
       if (live) bannerSnap.getContext('2d').drawImage(live, 0, 0);
       var nameIn = shareModal.querySelector('#share-name');
       try { nameIn.value = localStorage.getItem('kbaShareName') || ''; } catch (e) {}
-      shareModal.querySelector('#share-caption').value = captionFor(readResults());
       shareModal.querySelector('.share-note').textContent = '';
       shareModal.classList.remove('hidden');
       var go = function () { renderCard(); nameIn.focus(); };

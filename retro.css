@@ -271,8 +271,8 @@ body.answer-key .btn-share { display: none !important; }
 .share-name:focus, .share-caption:focus { border-color: var(--gold); }
 .share-caption { font-size: 18px; line-height: 1.1; resize: vertical; }
 .share-preview { display: block; width: 100%; height: auto; margin: 2px 0 14px; border: 3px solid var(--ink); box-shadow: 0 0 0 3px #000; }
-.share-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.share-actions .share-go { grid-column: 1 / -1; }
+.share-actions { display: block; }
+.share-actions .share-go { width: 100%; }
 .share-actions button { font-size: 10px !important; padding: 13px 8px !important; border: 3px solid var(--ink) !important; box-shadow: 3px 3px 0 #000 !important; cursor: pointer; }
 .share-actions .share-go { border-color: #000 !important; }
 .share-note { font-family: var(--read); font-size: 19px; line-height: 1.1; color: var(--good); min-height: 20px; margin: 12px 0 6px; text-align: center; }
