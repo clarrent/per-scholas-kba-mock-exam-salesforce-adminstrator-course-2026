@@ -122,6 +122,9 @@
   }
 
   @media (max-width: 520px) {
+    .bottom { gap: 6px; }
+    .tipbox { background: rgba(14, 9, 24, 0.55); border-width: 2px; box-shadow: 0 0 0 2px rgba(0,0,0,0.6); padding: 7px 9px; font-size: 7px; line-height: 1.8; min-height: 0; }
+    .credit { font-size: 6px; }
     .menu { padding: 14px 12px 10px; margin-top: 2vh; }
     .menu-flavor { margin-bottom: 8px; }
     .quest { padding: 7px 4px; }
@@ -402,7 +405,7 @@
     }
 
     // moon
-    const mx = Math.floor(W * (portrait ? 0.82 : 0.16)), my = Math.floor(groundY * (portrait ? 0.5 : 0.2)), mr = 8;
+    const mx = Math.floor(W * (portrait ? 0.18 : 0.16)), my = Math.floor(groundY * (portrait ? 0.56 : 0.2)), mr = 8;
     for (let y = -mr - 6; y <= mr + 6; y++) for (let x = -mr - 6; x <= mr + 6; x++) {
       const d = Math.sqrt(x * x + y * y);
       if (d <= mr) px(c, mx + x, my + y, (x + y > 4 && d > mr - 3) ? '#E8D9A8' : '#FFF4CF');
@@ -499,7 +502,7 @@
     S = Math.max(2, Math.round(portrait ? vw / 105 : Math.min(vw / 170, vh / 105)));
     W = Math.ceil(vw / S); H = Math.ceil(vh / S);
     canvas.width = W; canvas.height = H;
-    groundY = Math.floor(H * (portrait ? 0.72 : 0.66));
+    groundY = Math.floor(H * (portrait ? 0.62 : 0.66));
     fireX = Math.floor(W / 2);
     fireY = groundY + Math.floor((H - groundY) * 0.32);
     buildBackground();
@@ -633,6 +636,6 @@
   requestAnimationFrame(loop);
 })();
 </script>
-<script src="music.js?v=4" data-pos="top"></script>
+<script src="music.js?v=5" data-pos="top"></script>
 </body>
 </html>
