@@ -251,3 +251,30 @@ button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !impor
 .stage-title.key { color: var(--gold); }
 body.answer-key .score-pct, body.answer-key .breakdown, body.answer-key .helper-summary { display: none !important; }
 body.answer-key .score-num { font-size: 22px !important; }
+
+/* ---------- share my results ---------- */
+.btn-share {
+  display: block; width: 100%; margin-top: 12px; background: #0A66C2 !important; color: #fff !important;
+  font-size: 11px !important; letter-spacing: 1px; padding: 14px 10px !important; border: 3px solid #000 !important;
+  box-shadow: inset -4px -4px 0 rgba(0,0,0,0.3), inset 4px 4px 0 rgba(255,255,255,0.25), 4px 4px 0 #000 !important; cursor: pointer;
+}
+.btn-share:hover { background: #1A7AD8 !important; }
+body.answer-key .btn-share { display: none !important; }
+.share-modal { align-items: flex-start; overflow-y: auto; }
+.share-box { width: min(460px, 100%); margin: 16px auto; text-align: left; }
+.share-box .key-title { text-align: center; }
+.share-label { display: block; font-family: var(--pixel); font-size: 8px; color: var(--ink-soft); margin: 0 0 6px; letter-spacing: 1px; }
+.share-name, .share-caption {
+  width: 100%; background: #000; color: var(--ink); border: 3px solid var(--ink); border-radius: 0; padding: 9px 10px;
+  font-family: var(--read); font-size: 21px; margin-bottom: 12px; outline: none;
+}
+.share-name:focus, .share-caption:focus { border-color: var(--gold); }
+.share-caption { font-size: 18px; line-height: 1.1; resize: vertical; }
+.share-preview { display: block; width: 100%; height: auto; margin: 2px 0 14px; border: 3px solid var(--ink); box-shadow: 0 0 0 3px #000; }
+.share-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.share-actions .share-go { grid-column: 1 / -1; }
+.share-actions button { font-size: 10px !important; padding: 13px 8px !important; border: 3px solid var(--ink) !important; box-shadow: 3px 3px 0 #000 !important; cursor: pointer; }
+.share-actions .share-go { border-color: #000 !important; }
+.share-note { font-family: var(--read); font-size: 19px; line-height: 1.1; color: var(--good); min-height: 20px; margin: 12px 0 6px; text-align: center; }
+.share-close { display: block; margin: 0 auto; background: none !important; color: var(--ink-soft) !important; font-size: 9px !important; padding: 10px !important; letter-spacing: 1px; cursor: pointer; }
+.share-close:hover { color: var(--gold) !important; }

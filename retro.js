@@ -109,9 +109,251 @@
       if (mood === 'key') applyKeyMode();
       cv.insertAdjacentElement('afterend', title);
       addCredits(mood);
+      addShareButton();
 
       running = true;
       animate(cv.getContext('2d'), mood);
+    }
+
+    // ---------- share my results (score card image) ----------
+    var LESSONS = {
+      'lesson1-5': ['Lessons 1-5', 'Configuration, Object Manager, Sales & Marketing'],
+      'lesson6': ['Lesson 6', 'Data Security & User Management'],
+      'lesson7-9': ['Lessons 7-9', 'Object Manager & App Builder, Productivity & Collaboration'],
+      'lesson603': ['Lesson 603', 'Reports, Dashboards & Forecasting, Data Management'],
+      'lesson604': ['Lesson 604', 'Flows, Order of Execution & Approval Processes']
+    };
+    var SITE = 'https://clarrent.github.io/per-scholas-kba-mock-exam-salesforce-adminstrator-course-2026/';
+    var page = (location.pathname.split('/').pop() || '').replace('.html', '');
+    var lessonInfo = LESSONS[page] || ['KBA Practice', 'Salesforce Admin'];
+
+/* Score card image (1080x1350) for sharing on LinkedIn / Instagram.
+       drawScoreCard(canvas, data, bannerImage) -> draws the card. */
+    function drawScoreCard(cv, d, banner) {
+      var W = 1080, H = 1350;
+      cv.width = W; cv.height = H;
+      var c = cv.getContext('2d');
+      c.imageSmoothingEnabled = false;
+      var PIX = '"Press Start 2P", monospace', SANS = 'Manrope, "Segoe UI", sans-serif';
+      var ink = '#F5EDE0', soft = '#B9A8C8', gold = '#FFD23F', orange = '#FF8A1F', purple = '#A86BFF', green = '#7FDB5A', red = '#FF6B6B';
+    
+      // background
+      var g = c.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#0A0716'); g.addColorStop(1, '#1D1640');
+      c.fillStyle = g; c.fillRect(0, 0, W, H);
+      // pixel frame
+      c.fillStyle = '#000'; c.fillRect(36, 36, W - 72, H - 72);
+      c.fillStyle = ink; c.fillRect(42, 42, W - 84, H - 84);
+      c.fillStyle = '#0E0918'; c.fillRect(50, 50, W - 100, H - 100);
+    
+      // campfire banner (pixel art, scaled up crisply)
+      var bx = 50, by = 50, bw = W - 100, bh = Math.round(bw * 56 / 160);
+      if (banner) c.drawImage(banner, bx, by, bw, bh);
+      c.fillStyle = ink; c.fillRect(bx, by + bh, bw, 6);
+    
+      var y = by + bh + 70;
+      c.textAlign = 'center';
+      // label
+      c.fillStyle = purple; c.font = '22px ' + PIX;
+      c.fillText('PRACTICE EXAM RESULT', W / 2, y);
+      // score
+      y += 130;
+      c.font = '110px ' + PIX;
+      c.fillStyle = '#6A2A00'; c.fillText(d.pct + '%', W / 2 + 8, y + 8);
+      c.fillStyle = d.pct >= 70 ? gold : orange; c.fillText(d.pct + '%', W / 2, y);
+      y += 60;
+      c.fillStyle = ink; c.font = '700 34px ' + SANS;
+      c.fillText(d.correct + ' of ' + d.total + ' correct' + (d.pct >= 70 ? '  ·  Passed' : ''), W / 2, y);
+    
+      // name (optional)
+      if (d.name) {
+        y += 70;
+        c.fillStyle = orange; c.font = '26px ' + PIX;
+        c.fillText(d.name.toUpperCase(), W / 2, y);
+      }
+    
+      // lesson + topics
+      y += 80;
+      c.fillStyle = ink; c.font = '800 38px ' + SANS;
+      c.fillText(d.lesson, W / 2, y);
+      y += 46;
+      c.fillStyle = soft; c.font = '600 28px ' + SANS;
+      wrap(c, d.topics, W / 2, y, W - 220, 36).forEach(function (line, i) { c.fillText(line, W / 2, y + i * 36); });
+      y += 36 * wrap(c, d.topics, W / 2, y, W - 220, 36).length;
+    
+      // topic bars
+      y += 30;
+      c.textAlign = 'left';
+      var left = 140, barW = W - 280;
+      d.domains.forEach(function (dm) {
+        c.fillStyle = ink; c.font = '600 26px ' + SANS;
+        c.fillText(dm.name, left, y);
+        c.textAlign = 'right'; c.font = '20px ' + PIX; c.fillStyle = soft;
+        c.fillText(dm.right + '/' + dm.total, left + barW, y);
+        c.textAlign = 'left';
+        y += 16;
+        c.fillStyle = '#000'; c.fillRect(left, y, barW, 22);
+        c.fillStyle = '#4A3A63'; c.fillRect(left, y, barW, 3);
+        var p = dm.right / dm.total, col = p >= 0.8 ? green : p >= 0.6 ? orange : red;
+        var segs = Math.round(p * 40);
+        for (var i = 0; i < segs; i++) { c.fillStyle = col; c.fillRect(left + 4 + i * (barW - 8) / 40, y + 5, (barW - 8) / 40 - 4, 13); }
+        y += 58;
+      });
+    
+      // footer
+      c.textAlign = 'center';
+      var fy = H - 150;
+      c.fillStyle = '#4A3A63'; c.fillRect(140, fy - 50, W - 280, 3);
+      c.fillStyle = ink; c.font = '700 28px ' + SANS;
+      c.fillText('Salesforce Admin Bootcamp Training', W / 2, fy);
+      c.fillStyle = soft; c.font = '600 24px ' + SANS;
+      c.fillText(d.date + '  ·  Practice exam, not an official KBA score', W / 2, fy + 40);
+      c.fillStyle = orange; c.font = '16px ' + PIX;
+      c.fillText('PRACTICE AT CLARRENT.GITHUB.IO', W / 2, fy + 84);
+    
+      function wrap(ctx, text, x, yy, maxW) {
+        var words = text.split(' '), lines = [], line = '';
+        words.forEach(function (w) {
+          var t = line ? line + ' ' + w : w;
+          if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+        });
+        if (line) lines.push(line);
+        return lines;
+      }
+    }
+
+    function readResults() {
+      var nums = (document.getElementById('score-num').textContent.match(/\d+/g) || [0, 20]).map(Number);
+      var pct = parseInt(document.getElementById('score-pct').textContent, 10) || 0;
+      var domains = Array.prototype.map.call(document.querySelectorAll('#breakdown-rows .bd-row'), function (row) {
+        var nameEl = row.querySelector('.name');
+        var name = nameEl ? nameEl.childNodes[0].textContent.replace(/\s*\(.*?\)\s*$/, '').trim() : '';
+        var f = (row.querySelector('.frac').textContent.match(/\d+/g) || [0, 1]).map(Number);
+        return { name: name, right: f[0], total: f[1] };
+      });
+      var d = new Date();
+      return {
+        pct: pct, correct: nums[0], total: nums[1] || 20, lesson: lessonInfo[0], topics: lessonInfo[1], domains: domains,
+        date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      };
+    }
+    function captionFor(r) {
+      if (r.pct >= 70) {
+        return 'Putting in the reps for my Salesforce Admin KBA. Scored ' + r.pct + '% (' + r.correct + '/' + r.total + ') on the ' +
+          r.lesson + ' practice exam covering ' + r.topics + '. On to the next one! 🐢\n\nPractice here: ' + SITE +
+          '\n\n#Salesforce #Trailblazer #SalesforceAdmin';
+      }
+      return 'Back at the campfire, sharpening up for my Salesforce Admin KBA. Just practiced ' + r.lesson + ' (' + r.topics +
+        ') and scored ' + r.pct + '%. Every attempt counts! 🔥\n\nPractice here: ' + SITE + '\n\n#Salesforce #Trailblazer #SalesforceAdmin';
+    }
+
+    var shareModal = null, shareFile = null, shareBlobUrl = null;
+    function buildShareModal() {
+      shareModal = document.createElement('div');
+      shareModal.className = 'key-modal share-modal hidden';
+      shareModal.setAttribute('role', 'dialog');
+      shareModal.setAttribute('aria-modal', 'true');
+      shareModal.setAttribute('aria-labelledby', 'share-title');
+      shareModal.innerHTML =
+        '<div class="key-box share-box">' +
+          '<p class="key-title" id="share-title">📸 SHARE MY RESULTS</p>' +
+          '<label class="share-label" for="share-name">Your name (optional)</label>' +
+          '<input id="share-name" class="share-name" type="text" maxlength="32" autocomplete="name" placeholder="Type your name">' +
+          '<canvas class="share-preview" aria-label="Preview of your score card"></canvas>' +
+          '<label class="share-label" for="share-caption">Caption (edit if you like)</label>' +
+          '<textarea id="share-caption" class="share-caption" rows="5"></textarea>' +
+          '<div class="share-actions">' +
+            '<button type="button" class="key-yes share-go">📤 SHARE IMAGE</button>' +
+            '<button type="button" class="key-cancel share-save">⬇ SAVE IMAGE</button>' +
+            '<button type="button" class="key-cancel share-copy">📋 COPY CAPTION</button>' +
+          '</div>' +
+          '<p class="share-note" aria-live="polite"></p>' +
+          '<button type="button" class="share-close">CLOSE</button>' +
+        '</div>';
+      document.body.appendChild(shareModal);
+      var nameIn = shareModal.querySelector('#share-name');
+      var cap = shareModal.querySelector('#share-caption');
+      var note = shareModal.querySelector('.share-note');
+      var close = function () { shareModal.classList.add('hidden'); var b = document.getElementById('btn-share'); if (b) b.focus(); };
+      shareModal.querySelector('.share-close').addEventListener('click', close);
+      shareModal.addEventListener('click', function (e) { if (e.target === shareModal) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !shareModal.classList.contains('hidden')) close(); });
+      var timer = null;
+      nameIn.addEventListener('input', function () {
+        try { localStorage.setItem('kbaShareName', nameIn.value.trim()); } catch (e) {}
+        clearTimeout(timer); timer = setTimeout(renderCard, 150);
+      });
+      function download() {
+        if (!shareBlobUrl) return;
+        var a = document.createElement('a');
+        a.href = shareBlobUrl; a.download = 'kba-practice-' + page + '.png';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      shareModal.querySelector('.share-save').addEventListener('click', function () { download(); note.textContent = 'Image saved. Post it with the caption above.'; });
+      shareModal.querySelector('.share-go').addEventListener('click', function () {
+        var data = { files: shareFile ? [shareFile] : [], text: cap.value, title: 'My KBA practice score' };
+        if (shareFile && navigator.canShare && navigator.canShare({ files: [shareFile] })) {
+          navigator.share(data).catch(function () {});
+          // some apps drop the text, so keep the caption handy too
+          copyText(cap.value, true);
+        } else {
+          download(); copyText(cap.value, true);
+          note.textContent = 'Image saved and caption copied. Upload the image to LinkedIn, Instagram, Slack or Teams and paste the caption.';
+        }
+      });
+      shareModal.querySelector('.share-copy').addEventListener('click', function () { copyText(cap.value, false); });
+      function copyText(text, quiet) {
+        var done = function () { if (!quiet) note.textContent = 'Caption copied.'; };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+        else fallback();
+        function fallback() { cap.select(); try { document.execCommand('copy'); done(); } catch (e) {} }
+      }
+    }
+
+    var cardCanvas = null, bannerSnap = null;
+    function renderCard() {
+      var data = readResults();
+      var nameIn = shareModal.querySelector('#share-name');
+      data.name = nameIn.value.trim();
+      if (!cardCanvas) cardCanvas = document.createElement('canvas');
+      drawScoreCard(cardCanvas, data, bannerSnap);
+      var prev = shareModal.querySelector('.share-preview');
+      prev.width = cardCanvas.width; prev.height = cardCanvas.height;
+      prev.getContext('2d').drawImage(cardCanvas, 0, 0);
+      cardCanvas.toBlob(function (blob) {
+        if (!blob) return;
+        if (shareBlobUrl) URL.revokeObjectURL(shareBlobUrl);
+        shareBlobUrl = URL.createObjectURL(blob);
+        try { shareFile = new File([blob], 'kba-practice-' + page + '.png', { type: 'image/png' }); } catch (e) { shareFile = null; }
+      }, 'image/png');
+    }
+
+    function openShare() {
+      if (!shareModal) buildShareModal();
+      // freeze the current frame of the campfire banner for the card
+      var live = document.querySelector('.result-banner');
+      bannerSnap = document.createElement('canvas'); bannerSnap.width = 160; bannerSnap.height = 56;
+      if (live) bannerSnap.getContext('2d').drawImage(live, 0, 0);
+      var nameIn = shareModal.querySelector('#share-name');
+      try { nameIn.value = localStorage.getItem('kbaShareName') || ''; } catch (e) {}
+      shareModal.querySelector('#share-caption').value = captionFor(readResults());
+      shareModal.querySelector('.share-note').textContent = '';
+      shareModal.classList.remove('hidden');
+      var go = function () { renderCard(); nameIn.focus(); };
+      if (document.fonts && document.fonts.load) {
+        Promise.all([document.fonts.load('22px "Press Start 2P"'), document.fonts.load('700 28px Manrope'), document.fonts.load('600 24px Manrope')]).then(go, go);
+      } else go();
+    }
+
+    function addShareButton() {
+      if (document.getElementById('btn-share')) return;
+      var row = results.querySelector('.btn-row');
+      if (!row) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.id = 'btn-share'; b.className = 'btn-share';
+      b.textContent = '📸 SHARE MY RESULTS';
+      b.addEventListener('click', openShare);
+      row.insertAdjacentElement('afterend', b);
     }
 
     // ---------- credits card ----------
