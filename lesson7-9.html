@@ -276,7 +276,7 @@
   @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="retro.css?v=6">
+<link rel="stylesheet" href="retro.css?v=7">
 </head>
 <body>
 <div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
@@ -798,11 +798,11 @@
     if (pct >= 85) {
       verdict.textContent = "Spooktacular! You're crushing it.";
       scoreEmoji.textContent = "🎃🐢💨";
-      launchFireworks();
+      if (!window.kbaKeyMode) launchFireworks();
     } else if (pct >= 70) {
       verdict.textContent = "Fang-tastic pace! Review the misses below to pick up speed.";
       scoreEmoji.textContent = "🦇🐢";
-      launchFireworks();
+      if (!window.kbaKeyMode) launchFireworks();
     } else {
       verdict.textContent = "No need to be scared, review below and try again.";
       scoreEmoji.textContent = "👻🐢";
@@ -900,10 +900,25 @@
     clockEl.classList.remove('low');
   });
 
+
+  // Answer key mode: fill every question with the correct answer and jump to the end
+  window.kbaAnswerKey = function () {
+    window.kbaKeyMode = true;
+    buildQuestionSet();
+    questions.forEach((item, i) => {
+      answers[i] = item.multi ? item.correctIndices.slice() : item.correctIndex;
+    });
+    clearInterval(timer);
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.add('hidden');
+    finishTest();
+    document.getElementById('review-list').classList.remove('hidden');
+  };
+
   clockEl.textContent = formatClock(TIME_LIMIT);
 })();
 </script>
-<script src="retro.js?v=6"></script>
-<script src="music.js?v=6" data-pos="header"></script>
+<script src="retro.js?v=7"></script>
+<script src="music.js?v=7" data-pos="header"></script>
 </body>
 </html>

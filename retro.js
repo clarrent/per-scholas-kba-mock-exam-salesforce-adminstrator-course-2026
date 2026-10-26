@@ -18,6 +18,64 @@
       wrap.insertBefore(a, strip);
     }
 
+    // ---------- answer key button + confirm pop-up ----------
+    var startScreen = document.getElementById('screen-start');
+    var reshuffle = document.getElementById('btn-reshuffle');
+    if (startScreen && reshuffle && typeof window.kbaAnswerKey === 'function' && !document.getElementById('btn-answer-key')) {
+      var keyBtn = document.createElement('button');
+      keyBtn.type = 'button';
+      keyBtn.id = 'btn-answer-key';
+      keyBtn.className = 'btn-key';
+      keyBtn.textContent = '🔑 SHOW ALL ANSWERS';
+      reshuffle.insertAdjacentElement('afterend', keyBtn);
+
+      var modal = document.createElement('div');
+      modal.className = 'key-modal hidden';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'key-modal-title');
+      modal.innerHTML =
+        '<div class="key-box">' +
+          '<p class="key-title" id="key-modal-title">🔑 SHOW ALL ANSWERS?</p>' +
+          '<p class="key-text">This will complete the quiz and show you all the answers, then take you to the end. It won\'t count as a real score.</p>' +
+          '<div class="key-actions">' +
+            '<button type="button" class="key-cancel">CANCEL</button>' +
+            '<button type="button" class="key-yes">YES, SHOW ME</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(modal);
+      var yes = modal.querySelector('.key-yes'), no = modal.querySelector('.key-cancel');
+      var openModal = function () { modal.classList.remove('hidden'); no.focus(); };
+      var closeModal = function () { modal.classList.add('hidden'); keyBtn.focus(); };
+      keyBtn.addEventListener('click', openModal);
+      no.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) {
+        if (modal.classList.contains('hidden')) return;
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Tab') { e.preventDefault(); (document.activeElement === no ? yes : no).focus(); }
+      });
+      yes.addEventListener('click', function () {
+        modal.classList.add('hidden');
+        window.kbaAnswerKey();
+        window.scrollTo(0, 0);
+      });
+    }
+
+    // leaving answer key mode when they retake
+    var retake = document.getElementById('btn-retake');
+    if (retake) retake.addEventListener('click', function () {
+      window.kbaKeyMode = false;
+      document.body.classList.remove('answer-key');
+    });
+
+    function applyKeyMode() {
+      document.body.classList.add('answer-key');
+      var n = document.getElementById('score-num'); if (n) n.textContent = 'ANSWER KEY';
+      var v = document.getElementById('score-verdict'); if (v) v.textContent = 'All 20 answers and explanations are below. Study them, then retake the quiz for a real score.';
+      var rb = document.getElementById('btn-retake'); if (rb) rb.textContent = '▶ NOW TRY FOR REAL';
+    }
+
     // ---------- results banner ----------
     var results = document.getElementById('screen-results');
     var scoreWrap = results && results.querySelector('.score-wrap');
@@ -32,7 +90,8 @@
     function showBanner() {
       var pctEl = document.getElementById('score-pct');
       var pct = parseInt((pctEl && pctEl.textContent) || '0', 10) || 0;
-      var mood = pct >= 70 ? 'pass' : pct >= 50 ? 'mid' : 'fail';
+      var rbtn = document.getElementById('btn-retake'); if (rbtn && !window.kbaKeyMode) rbtn.textContent = '\uD83D\uDD01 CONTINUE? RETAKE';
+      var mood = window.kbaKeyMode ? 'key' : pct >= 70 ? 'pass' : pct >= 50 ? 'mid' : 'fail';
 
       var old = scoreWrap.querySelector('.result-banner'); if (old) old.remove();
       var oldT = scoreWrap.querySelector('.stage-title'); if (oldT) oldT.remove();
@@ -46,7 +105,8 @@
 
       var title = document.createElement('p');
       title.className = 'stage-title ' + mood;
-      title.textContent = mood === 'pass' ? '★ STAGE CLEAR ★' : mood === 'mid' ? 'CHECKPOINT REACHED' : 'GAME OVER... CONTINUE?';
+      title.textContent = mood === 'key' ? '\uD83D\uDD11 ANSWER KEY MODE' : mood === 'pass' ? '★ STAGE CLEAR ★' : mood === 'mid' ? 'CHECKPOINT REACHED' : 'GAME OVER... CONTINUE?';
+      if (mood === 'key') applyKeyMode();
       cv.insertAdjacentElement('afterend', title);
       addCredits(mood);
 
@@ -185,7 +245,7 @@
     var FONT = {
       A: ['.#.', '#.#', '###', '#.#', '#.#'], C: ['.##', '#..', '#..', '#..', '.##'], D: ['##.', '#.#', '#.#', '#.#', '##.'],
       E: ['###', '#..', '##.', '#..', '###'], G: ['.##', '#..', '#.#', '#.#', '.##'], H: ['#.#', '#.#', '###', '#.#', '#.#'],
-      I: ['###', '.#.', '.#.', '.#.', '###'], L: ['#..', '#..', '#..', '#..', '###'], N: ['##.', '#.#', '#.#', '#.#', '#.#'], R: ['##.', '#.#', '##.', '#.#', '#.#'],
+      I: ['###', '.#.', '.#.', '.#.', '###'], L: ['#..', '#..', '#..', '#..', '###'], N: ['##.', '#.#', '#.#', '#.#', '#.#'], R: ['##.', '#.#', '##.', '#.#', '#.#'], P: ['##.', '#.#', '##.', '#..', '#..'],
       O: ['.#.', '#.#', '#.#', '#.#', '.#.'], S: ['.##', '#..', '.#.', '..#', '##.'], T: ['###', '.#.', '.#.', '.#.', '.#.'],
       U: ['#.#', '#.#', '#.#', '#.#', '.#.'], Y: ['#.#', '#.#', '.#.', '.#.', '.#.'], '!': ['.#.', '.#.', '.#.', '...', '.#.'],
       ' ': ['...', '...', '...', '...', '...']
@@ -223,6 +283,8 @@
         img = Math.floor(t / 6) % 2 ? waveA : waveB;
         var fw = Math.floor(t / 6) % 2;
         c.drawImage(fw ? flagA : flagB, x + 13 + fw, y - 12);
+      } else if (variant === 'study') {
+        img = Math.floor(t / 8) % 2 ? waveA : waveB;
       } else {
         // rooting them on: fist pumps
         img = Math.floor(t / 7) % 2 ? cheerA : waveA;
@@ -230,13 +292,13 @@
       }
       c.drawImage(img, x, y);
       var cheers = mood === 'mid' ? ['SO CLOSE!', 'NICE TRY!', 'TRY AGAIN!'] : ['YOU GOT THIS!', 'TRY AGAIN!', 'NICE TRY!'];
-      var line = mood === 'pass' ? LINES[variant] : cheers[Math.floor(t / 70) % cheers.length];
+      var line = mood === 'key' ? ['STUDY UP!', 'THEN RETRY!'][Math.floor(t / 70) % 2] : mood === 'pass' ? LINES[variant] : cheers[Math.floor(t / 70) % cheers.length];
       if (t % 70 < 58) bubble(c, line, x + 9, variant === 'trophy' ? y - 10 : Math.min(y, base) - 1);
     }
 
     var PASS_MOVES = ['cheer', 'trophy', 'dance', 'flag'];
     function animate(c, mood) {
-      var variant = mood === 'pass' ? PASS_MOVES[Math.floor(Math.random() * PASS_MOVES.length)] : 'root';
+      var variant = mood === 'pass' ? PASS_MOVES[Math.floor(Math.random() * PASS_MOVES.length)] : mood === 'key' ? 'study' : 'root';
       var W = 160, H = 56, gy = 42, fx = 84, fy = 50, t = 0;
       var seed = 11; function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
       var stars = []; for (var i = 0; i < 40; i++) stars.push({ x: rnd() * W | 0, y: rnd() * (gy - 6) | 0, p: rnd() * 6 });
@@ -296,7 +358,7 @@
             for (var q = 0; q < 10; q++) { var an = q / 10 * Math.PI * 2; px(c, b.x + Math.cos(an) * r, b.y + Math.sin(an) * r + b.a * 0.05, b.col); }
             c.globalAlpha = 1;
           });
-        } else if (mood === 'mid') {
+        } else if (mood === 'mid' || mood === 'key') {
           // turtle resting by the fire
           c.drawImage(Math.floor(t / 120) % 6 === 0 ? tAwake : tSleep, fx - 36, fy - 13 + (Math.floor(t / 30) % 2));
         } else {
