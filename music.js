@@ -11,8 +11,9 @@
     { title: 'MAMACITA',      src: 'mamacita.mp3',      len: 25.043469, gain: 0.83 },
     { title: 'GO TO WASTE',   src: 'go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
   ];
-  var VER = '3';
-  var VOLUME = 0.5;            // 50%
+  var VER = '4';
+  var VOLUME = 0.3;            // 30%
+  var SILENT = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
   var KEY = 'kbaMusic';
   var pos = (document.currentScript && document.currentScript.getAttribute('data-pos')) || 'bottom';
 
@@ -133,24 +134,43 @@
     if (ctx.state === 'suspended') ctx.resume().then(go, go); else go();
   }
 
+  // ---------- phones ----------
+  // iPhones mute web audio when the ring/silent switch is on. Playing a silent
+  // looping <audio> clip inside the tap switches the phone to media playback,
+  // so the music is heard like a video would be. Must run inside a tap.
+  var keepAlive = null;
+  function unlockMobile() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    try {
+      if (!keepAlive) {
+        keepAlive = new Audio(SILENT);
+        keepAlive.loop = true;
+        keepAlive.setAttribute('playsinline', '');
+      }
+      var p = keepAlive.play(); if (p && p.catch) p.catch(function () {});
+    } catch (e) {}
+    if (ensureCtx() && ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
+  }
+  function sleepMobile() { if (keepAlive) { try { keepAlive.pause(); } catch (e) {} } }
+
   // ---------- controls ----------
   function toggleSpeaker() {
     state.on = !state.on;
-    if (state.on) { state.playing = true; play(currentOffset()); }
-    else { state.offset = currentOffset(); stopSource(); }
+    if (state.on) { unlockMobile(); state.playing = true; play(currentOffset()); }
+    else { state.offset = currentOffset(); stopSource(); sleepMobile(); }
     save(); render();
   }
   function togglePlay() {
     if (!state.on) { toggleSpeaker(); return; }
     state.playing = !state.playing;
-    if (state.playing) play(state.offset);
-    else { state.offset = currentOffset(); stopSource(); }
+    if (state.playing) { unlockMobile(); play(state.offset); }
+    else { state.offset = currentOffset(); stopSource(); sleepMobile(); }
     save(); render();
   }
   function skip(dir) {
     state.track = (state.track + dir + TRACKS.length) % TRACKS.length;
     state.offset = 0;
-    if (state.on && state.playing) play(0);
+    if (state.on && state.playing) { unlockMobile(); play(0); }
     save(); render();
   }
 
@@ -194,6 +214,19 @@
     '.kba-player.on.playing .kba-eq i:nth-child(3){animation-delay:-0.55s}' +
     '@keyframes kbaEq{0%{height:2px}25%{height:8px}50%{height:4px}75%{height:6px}100%{height:2px}}' +
     '@media (max-width:420px){.kba-player .ttl{width:70px}.kba-player button{width:30px}}' +
+    '.kba-hdr{position:relative;display:flex;align-items:center;gap:8px;flex-shrink:0;}' +
+    '.kba-mini{position:relative;width:40px;height:40px;background:#000;border:3px solid #F5EDE0;color:#F5EDE0;' +
+    'cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:"Press Start 2P","Courier New",monospace;font-size:13px;line-height:1;border-radius:0;}' +
+    '.kba-mini:hover,.kba-mini[aria-expanded="true"]{border-color:#FF8A1F;color:#FFD23F;}' +
+    '.kba-mini:focus-visible{outline:2px solid #FFD23F;outline-offset:2px;}' +
+    '.kba-mini.off{opacity:0.55;}' +
+    '.kba-mini .kba-eq{position:absolute;bottom:3px;right:3px;margin:0;height:6px;}' +
+    '.kba-mini .dot{position:absolute;top:-5px;right:-5px;width:8px;height:8px;background:#FF8A1F;border:2px solid #000;animation:kbaBlink 1s linear infinite;}' +
+    '.kba-player.pos-header{position:absolute;top:calc(100% + 8px);right:0;display:none;z-index:60;}' +
+    '.kba-player.pos-header.open{display:flex;}' +
+    '.kba-mini.on.playing .kba-eq i{animation:kbaEq 0.8s steps(4) infinite;}' +
+    '.kba-mini.on.playing .kba-eq i:nth-child(2){animation-delay:-0.3s}' +
+    '.kba-mini.on.playing .kba-eq i:nth-child(3){animation-delay:-0.55s}' +
     '@media (prefers-reduced-motion:reduce){.kba-player *{animation:none!important}}';
   var styleEl = document.createElement('style');
   styleEl.textContent = css;
@@ -213,6 +246,17 @@
   var statusText = '';
   function setStatus(s) { statusText = s; render(); }
 
+  var mini = null;
+  function renderMini(isPlaying, waitingTap) {
+    if (!mini) return;
+    mini.classList.toggle('off', !state.on);
+    mini.classList.toggle('on', state.on);
+    mini.classList.toggle('playing', isPlaying);
+    mini.innerHTML = (state.on ? '&#9835;' : '&#128263;') +
+      (isPlaying && !waitingTap ? '<span class="kba-eq"><i></i><i></i><i></i></span>' : '') +
+      (waitingTap ? '<span class="dot"></span>' : '');
+    mini.setAttribute('aria-label', 'Music: ' + (state.on ? (isPlaying ? 'playing ' + TRACKS[state.track].title : 'paused') : 'off') + '. Open music controls');
+  }
   function render() {
     var spk = el.querySelector('[data-act="spk"]');
     var pl = el.querySelector('[data-act="play"]');
@@ -236,6 +280,7 @@
       sp.textContent = txt;
       sp.className = txt.length > 10 ? 'long' : '';
     }
+    renderMini(isPlaying, waitingTap);
   }
 
   el.addEventListener('click', function (e) {
@@ -251,18 +296,39 @@
   el.addEventListener('keydown', function (e) { e.stopPropagation(); });
 
   function mount() {
-    document.body.appendChild(el);
-    if (pos === 'bottom') document.body.style.paddingBottom = '72px';
+    var clock = pos === 'header' && document.querySelector('.top-strip .clock');
+    if (clock) {
+      // tucked into the page header next to the timer, controls open on tap
+      var hdr = document.createElement('div');
+      hdr.className = 'kba-hdr';
+      clock.parentNode.insertBefore(hdr, clock);
+      mini = document.createElement('button');
+      mini.type = 'button';
+      mini.className = 'kba-mini';
+      mini.setAttribute('aria-expanded', 'false');
+      hdr.appendChild(mini);
+      hdr.appendChild(clock);
+      hdr.appendChild(el);
+      var setOpen = function (open) { el.classList.toggle('open', open); mini.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+      mini.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!el.classList.contains('open')); });
+      document.addEventListener('click', function (e) { if (!hdr.contains(e.target)) setOpen(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    } else {
+      if (pos === 'header') pos = 'bottom';
+      el.className = 'kba-player pos-' + pos;
+      document.body.appendChild(el);
+      if (pos === 'bottom') document.body.style.paddingBottom = '72px';
+    }
     render();
     // music was on when they left the last page: resume on the first tap or key
     if (state.on && state.playing) {
+      var EVENTS = ['pointerdown', 'touchend', 'click', 'keydown'];
       var resume = function () {
-        document.removeEventListener('pointerdown', resume, true);
-        document.removeEventListener('keydown', resume, true);
+        EVENTS.forEach(function (ev) { document.removeEventListener(ev, resume, true); });
+        unlockMobile();
         if (!source && !mediaEl) play(state.offset);
       };
-      document.addEventListener('pointerdown', resume, true);
-      document.addEventListener('keydown', resume, true);
+      EVENTS.forEach(function (ev) { document.addEventListener(ev, resume, true); });
       // some browsers allow it right away (returning visitors)
       if (ensureCtx() && ctx.state === 'running') play(state.offset);
       else if (ctx) ctx.resume().then(function () { if (ctx.state === 'running' && !source) play(state.offset); render(); }).catch(function () {});
