@@ -1,0 +1,208 @@
+/* KBA Mock Exams: 8-bit game style for the lesson pages.
+   Loaded after each page's own styles, so these rules win. */
+
+/* Night-time palette in both light and dark mode, to match the campfire screen */
+:root, :root:not([data-theme="light"]), :root[data-theme="dark"], :root[data-theme="light"] {
+  --ink: #F5EDE0 !important;
+  --ink-soft: #B9A8C8 !important;
+  --bg: #0B0814 !important;
+  --panel: rgba(14, 9, 24, 0.9) !important;
+  --border: #4A3A63 !important;
+  --accent: #FF8A1F !important;
+  --accent-2: #A86BFF !important;
+  --accent-soft: rgba(255, 138, 31, 0.14) !important;
+  --good: #7FDB5A !important;
+  --good-bg: rgba(127, 219, 90, 0.14) !important;
+  --bad: #FF6B6B !important;
+  --bad-bg: rgba(255, 107, 107, 0.14) !important;
+  --on-accent: #1A0F05 !important;
+  --gold: #FFD23F;
+  --pixel: 'Press Start 2P', 'Courier New', monospace;
+  --read: 'VT323', 'Courier New', monospace;
+  --sans: var(--read) !important;
+  --mono: var(--pixel) !important;
+  --shadow: none !important;
+}
+
+/* quiet static starry sky (no animation on test screens) */
+html {
+  background-color: #0B0814;
+  background-image:
+    radial-gradient(2px 2px at 30px 40px, #C9C2E8 50%, transparent 51%),
+    radial-gradient(2px 2px at 140px 90px, #8E86B8 50%, transparent 51%),
+    radial-gradient(2px 2px at 220px 20px, #FFF4CF 50%, transparent 51%),
+    radial-gradient(2px 2px at 90px 170px, #8E86B8 50%, transparent 51%),
+    radial-gradient(2px 2px at 260px 210px, #C9C2E8 50%, transparent 51%),
+    radial-gradient(2px 2px at 180px 250px, #8E86B8 50%, transparent 51%),
+    linear-gradient(180deg, #0A0716 0%, #120E2A 45%, #24194A 100%);
+  background-size: 300px 280px, 300px 280px, 300px 280px, 300px 280px, 300px 280px, 300px 280px, 100% 100%;
+  background-attachment: fixed;
+  min-height: 100%;
+}
+body {
+  background: transparent !important;
+  font-family: var(--read) !important;
+  -webkit-font-smoothing: none;
+  font-size: 20px;
+}
+.bats { display: none !important; }
+/* results banner (the only art on the lesson pages) */
+.result-banner {
+  display: block; width: calc(100% + 44px); margin: -26px -22px 18px; height: auto;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  border-bottom: 3px solid var(--ink);
+}
+.stage-title { font-family: var(--pixel); font-size: 15px; line-height: 1.6; letter-spacing: 2px; margin: 0 0 4px; text-shadow: 3px 3px 0 #000; }
+.stage-title.pass { color: var(--gold); }
+.stage-title.mid { color: var(--accent); }
+.stage-title.fail { color: var(--accent-2); }
+.wrap { z-index: 1; }
+
+/* ---------- pixel boxes ---------- */
+.card, .review-item, .breakdown, .meta-cell, .hint-box {
+  background: var(--panel) !important;
+  border: 3px solid var(--ink) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 3px #000, 6px 6px 0 rgba(0, 0, 0, 0.55) !important;
+}
+.card { padding: 26px 22px !important; }
+.meta-cell { box-shadow: 0 0 0 2px #000 !important; border-width: 2px !important; }
+.breakdown, .hint-box { border-width: 2px !important; box-shadow: 0 0 0 2px #000 !important; }
+
+/* ---------- header ---------- */
+.back-camp {
+  display: inline-block; margin-bottom: 14px; font-family: var(--pixel); font-size: 9px;
+  color: var(--ink-soft); text-decoration: none; letter-spacing: 1px;
+}
+.back-camp:hover, .back-camp:focus-visible { color: var(--gold); outline: none; }
+.top-strip { border-bottom: 3px dashed var(--border); gap: 12px; align-items: flex-start !important; }
+.brand {
+  font-family: var(--pixel) !important; font-size: 13px !important; line-height: 1.5 !important;
+  color: var(--accent) !important; letter-spacing: 1px !important; white-space: normal !important;
+  text-shadow: 2px 2px 0 #6A2A00; display: block !important; text-transform: uppercase;
+}
+.brand small {
+  font-family: var(--read) !important; font-size: 18px !important; letter-spacing: 0 !important;
+  color: var(--ink-soft) !important; text-shadow: none; margin-top: 6px !important; line-height: 1.1; text-transform: none;
+}
+.clock {
+  font-family: var(--pixel) !important; font-size: 13px !important; color: var(--gold) !important;
+  background: #000 !important; border: 3px solid var(--ink); border-radius: 0 !important; padding: 9px 10px !important;
+}
+.clock.low { color: var(--bad) !important; animation: retroBlink 1s linear infinite; }
+
+/* ---------- start screen ---------- */
+.meta-cell .num { font-family: var(--pixel) !important; font-size: 14px !important; color: var(--gold) !important; }
+.meta-cell .lbl { font-family: var(--read) !important; font-size: 18px !important; text-transform: uppercase; }
+.domains li { font-size: 20px !important; line-height: 1.15 !important; color: var(--ink) !important; padding-left: 24px !important; }
+.domains li::before { content: "\25B6" !important; font-size: 14px; top: 2px; color: var(--gold) !important; }
+.helper-summary { font-family: var(--read) !important; font-size: 19px !important; color: var(--ink-soft) !important; }
+
+/* ---------- buttons ---------- */
+button { font-family: var(--pixel) !important; border-radius: 0 !important; }
+.btn-primary {
+  background: var(--accent) !important; color: var(--on-accent) !important;
+  font-size: 13px !important; letter-spacing: 1px; padding: 16px 20px !important;
+  border: 3px solid #000 !important;
+  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.28), inset 4px 4px 0 rgba(255, 255, 255, 0.3), 4px 4px 0 #000 !important;
+}
+.btn-primary:hover { transform: none !important; background: #FFA040 !important; }
+.btn-primary:active, .btn-next:active, .btn-secondary:active { transform: translate(2px, 2px) !important; }
+.btn-ghost { font-size: 9px !important; color: var(--ink-soft) !important; letter-spacing: 1px; margin-top: 14px !important; }
+.btn-ghost:hover { color: var(--gold) !important; }
+.btn-secondary, .btn-next {
+  font-size: 10px !important; padding: 13px 16px !important; letter-spacing: 1px;
+  border: 3px solid var(--ink) !important; box-shadow: 3px 3px 0 #000 !important;
+}
+.btn-secondary { background: #000 !important; color: var(--ink) !important; }
+.btn-secondary:hover:not(:disabled) { color: var(--gold) !important; border-color: var(--gold) !important; }
+.btn-next { background: var(--ink) !important; color: #0B0814 !important; }
+.btn-next:hover:not(:disabled) { background: var(--gold) !important; opacity: 1 !important; }
+.btn-secondary:disabled, .btn-next:disabled { opacity: 0.3 !important; }
+.btn-row button { line-height: 1.6; }
+button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !important; outline-offset: 3px !important; }
+
+/* ---------- quiz screen ---------- */
+.progress-track {
+  height: 18px !important; border-radius: 0 !important; background: #000 !important;
+  border: 2px solid var(--ink-soft); padding: 3px; box-shadow: 0 0 0 2px #000;
+}
+.progress-fill {
+  border-radius: 0 !important;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 10px) !important;
+}
+.q-meta { font-family: var(--pixel) !important; font-size: 8px !important; line-height: 1.8 !important; color: var(--accent-2) !important; letter-spacing: 1px !important; }
+.q-text { font-family: var(--read) !important; font-size: 30px !important; font-weight: 400 !important; line-height: 1.05 !important; letter-spacing: 0 !important; color: var(--ink) !important; }
+.q-hint {
+  font-family: var(--pixel) !important; font-size: 8px !important; border-radius: 0 !important;
+  background: #000 !important; color: var(--gold) !important; border: 2px solid var(--gold); padding: 6px 8px !important;
+}
+.opt {
+  font-family: var(--read) !important; font-size: 23px !important; line-height: 1.05 !important;
+  background: rgba(0, 0, 0, 0.55) !important; border: 3px solid var(--border) !important; border-radius: 0 !important;
+  padding: 12px 14px !important; align-items: center !important; transform: none !important;
+}
+.opt:hover { border-color: var(--ink) !important; }
+.opt .tag {
+  font-family: var(--pixel) !important; font-size: 10px !important; border-radius: 0 !important;
+  width: 26px !important; height: 26px !important; background: #000 !important; border: 2px solid var(--border);
+  color: var(--ink-soft) !important;
+}
+.opt.selected { border-color: var(--accent) !important; background: rgba(255, 138, 31, 0.16) !important; color: var(--gold) !important; }
+.opt.selected .tag { background: var(--accent) !important; color: var(--on-accent) !important; border-color: #000; }
+.opt.removed { text-decoration: line-through; opacity: 0.25 !important; }
+
+/* hint and 50/50 */
+.btn-helper {
+  font-family: var(--pixel) !important; font-size: 9px !important; border-radius: 0 !important;
+  border: 2px solid var(--ink) !important; background: #000 !important; color: var(--ink) !important; padding: 9px 10px !important;
+  box-shadow: 2px 2px 0 #000;
+}
+.btn-helper:hover:not(:disabled) { color: var(--gold) !important; border-color: var(--gold) !important; }
+.btn-helper .left { font-family: var(--pixel) !important; font-size: 7px !important; color: var(--ink-soft) !important; }
+.hint-box { font-family: var(--read) !important; font-size: 21px !important; line-height: 1.1 !important; border-left: 6px solid var(--gold) !important; }
+.hint-box b { font-family: var(--pixel); font-size: 9px; font-weight: 400; color: var(--gold) !important; }
+
+/* ---------- results ---------- */
+.score-num { font-family: var(--pixel) !important; font-size: 34px !important; color: var(--gold) !important; letter-spacing: 2px !important; text-shadow: 3px 3px 0 #6A2A00; margin: 10px 0 12px !important; }
+.score-pct { font-family: var(--pixel) !important; font-size: 12px !important; color: var(--ink) !important; }
+.score-verdict { font-family: var(--read) !important; font-size: 24px !important; color: var(--ink) !important; line-height: 1.1 !important; }
+.score-wrap .q-meta { font-size: 11px !important; color: var(--accent) !important; }
+.breakdown-title { font-family: var(--pixel) !important; font-size: 9px !important; color: var(--gold) !important; }
+.bd-head { font-size: 20px !important; }
+.bd-head .name { font-weight: 400 !important; }
+.bd-head .frac { font-family: var(--pixel) !important; font-size: 10px !important; }
+.bd-tag { font-family: var(--pixel) !important; font-size: 7px !important; border-radius: 0 !important; padding: 4px 6px !important; letter-spacing: 1px !important; }
+.bd-bar-track { height: 12px !important; border-radius: 0 !important; background: #000 !important; border: 2px solid var(--border); }
+.bd-bar-fill { border-radius: 0 !important; background-image: repeating-linear-gradient(90deg, transparent 0 6px, rgba(0, 0, 0, 0.5) 6px 8px); }
+
+/* review */
+.review-num { font-family: var(--pixel) !important; font-size: 9px !important; color: var(--gold) !important; }
+.review-status { font-family: var(--pixel) !important; font-size: 8px !important; letter-spacing: 1px !important; }
+.review-domain { font-size: 17px !important; }
+.review-q { font-family: var(--read) !important; font-weight: 400 !important; font-size: 24px !important; line-height: 1.05 !important; }
+.review-line { font-size: 20px !important; line-height: 1.1 !important; margin: 6px 0 !important; }
+.review-note { font-size: 19px !important; line-height: 1.1 !important; }
+.review-why { font-size: 20px !important; line-height: 1.15 !important; color: var(--ink) !important; border-top: 2px dashed var(--border) !important; }
+.review-source { font-family: var(--pixel) !important; font-size: 8px !important; line-height: 1.8; font-weight: 400 !important; color: var(--accent-2) !important; }
+.review-tag { font-family: var(--pixel) !important; font-size: 7px !important; border-radius: 0 !important; }
+
+.credit { font-family: var(--pixel) !important; font-size: 7px !important; line-height: 1.9 !important; opacity: 1 !important; color: var(--ink-soft) !important; }
+.credit span { color: var(--ink); font-weight: 400 !important; }
+
+@keyframes retroBlink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.25; } }
+
+@media (max-width: 480px) {
+  .brand { font-size: 11px !important; }
+  .brand small { font-size: 16px !important; }
+  .clock { font-size: 11px !important; padding: 7px 8px !important; }
+  .q-text { font-size: 26px !important; }
+  .opt { font-size: 21px !important; }
+  .card { padding: 20px 16px !important; }
+  .result-banner { width: calc(100% + 32px); margin: -20px -16px 16px; }
+  .stage-title { font-size: 12px; }
+  .score-num { font-size: 26px !important; }
+  .btn-secondary, .btn-next { font-size: 9px !important; padding: 12px 10px !important; }
+  .meta-cell .num { font-size: 12px !important; }
+}
+@media (prefers-reduced-motion: reduce) { .clock.low { animation: none; } }

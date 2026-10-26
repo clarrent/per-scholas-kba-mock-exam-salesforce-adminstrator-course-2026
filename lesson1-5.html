@@ -274,6 +274,8 @@
   }
   @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retro.css">
 </head>
 <body>
 <div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
@@ -298,8 +300,8 @@
       <li>Sales and Marketing Applications: leads, opportunities, Path, campaigns</li>
     </ul>
 
-    <button class="btn-primary" id="btn-start">Start test 🎃</button>
-    <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
+    <button class="btn-primary" id="btn-start">▶ START QUEST</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 SHUFFLE NEW SET</button>
   </div>
 
   <div id="screen-quiz" class="hidden">
@@ -308,15 +310,15 @@
     <h2 class="q-text" id="q-text"></h2>
     <div class="opt-list" id="opt-list"></div>
     <div class="nav-row">
-      <button class="btn-secondary" id="btn-prev">← Back</button>
-      <button class="btn-next" id="btn-next" disabled>Next</button>
+      <button class="btn-secondary" id="btn-prev">◀ BACK</button>
+      <button class="btn-next" id="btn-next" disabled>NEXT ▶</button>
     </div>
   </div>
 
   <div id="screen-results" class="hidden">
     <div class="card score-wrap">
       <div class="score-emoji" id="score-emoji">🎃</div>
-      <div class="q-meta" style="text-align:center;">Results</div>
+      <div class="q-meta" style="text-align:center;">RESULTS</div>
       <div class="score-num" id="score-num">0 / 20</div>
       <div class="score-pct" id="score-pct">0%</div>
       <div class="score-verdict" id="score-verdict"></div>
@@ -327,8 +329,8 @@
       </div>
 
       <div class="btn-row">
-        <button class="btn-secondary" id="btn-review">📖 Review answers</button>
-        <button class="btn-next" id="btn-retake">🔁 Retake, new shuffle</button>
+        <button class="btn-secondary" id="btn-review">📖 REVIEW</button>
+        <button class="btn-next" id="btn-retake">🔁 CONTINUE? RETAKE</button>
       </div>
     </div>
     <div id="review-list" class="review-list"></div>
@@ -801,7 +803,7 @@
 
     btnPrev.disabled = current === 0;
     btnNext.disabled = answers[current] === null;
-    btnNext.textContent = current === questions.length - 1 ? 'Finish test' : 'Next';
+    btnNext.textContent = current === questions.length - 1 ? 'FINISH ▶' : 'NEXT ▶';
   }
 
   function finishTest() {
@@ -1004,5 +1006,7 @@
   clockEl.textContent = formatClock(TIME_LIMIT);
 })();
 </script>
+<script src="retro.js"></script>
+<script src="music.js" data-pos="bottom"></script>
 </body>
 </html>

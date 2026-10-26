@@ -112,6 +112,7 @@
   .credit span { color: var(--ink); }
 
   .hidden { display: none !important; }
+  @media (max-width: 760px) { .ui { padding-top: calc(max(16px, env(safe-area-inset-top)) + 58px); } }
   @media (orientation: landscape) and (max-height: 900px) {
     body.menu-open .title-wrap { display: none; }
     body.menu-open .menu { margin-top: 1vh; }
@@ -632,5 +633,6 @@
   requestAnimationFrame(loop);
 })();
 </script>
+<script src="music.js" data-pos="top"></script>
 </body>
 </html>
