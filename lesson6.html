@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>🎓 KBA Lesson 6 Mock Exam</title>
+<title>🎃 KBA Lesson 6 Mock Exam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #14201A;
@@ -185,14 +185,103 @@
     .card { padding: 22px; border-radius: 16px; }
     .score-num { font-size: 42px; }
   }
+
+  /* ===== Halloween theme ===== */
+  :root {
+    --ink: #2A1636;
+    --ink-soft: #6E5A78;
+    --bg: #FBF3E6;
+    --panel: #FFFFFF;
+    --border: #EAD9C4;
+    --accent: #C2510A;
+    --accent-2: #7B3FC4;
+    --accent-soft: #FCE7D3;
+    --good: #2F8A3E;
+    --good-bg: #E6F4E3;
+    --bad: #B3261E;
+    --bad-bg: #FBE4E1;
+    --on-accent: #FFFFFF;
+    --glow: rgba(194,81,10,0.30);
+    --moon: rgba(255,214,140,0.55);
+    --spooky: 'Creepster', 'Manrope', cursive;
+    --shadow: 0 1px 2px rgba(42,22,54,0.06), 0 8px 24px rgba(42,22,54,0.10);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #F5EDE0;
+      --ink-soft: #B5A3C4;
+      --bg: #120C1A;
+      --panel: #1D1428;
+      --border: #34264A;
+      --accent: #FF8A1F;
+      --accent-2: #A86BFF;
+      --accent-soft: #2E1E2A;
+      --good: #7FDB5A;
+      --good-bg: #18291A;
+      --bad: #FF6B6B;
+      --bad-bg: #3A1620;
+      --on-accent: #1A0F05;
+      --glow: rgba(255,138,31,0.35);
+      --moon: rgba(255,214,140,0.22);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F5EDE0;
+    --ink-soft: #B5A3C4;
+    --bg: #120C1A;
+    --panel: #1D1428;
+    --border: #34264A;
+    --accent: #FF8A1F;
+    --accent-2: #A86BFF;
+    --accent-soft: #2E1E2A;
+    --good: #7FDB5A;
+    --good-bg: #18291A;
+    --bad: #FF6B6B;
+    --bad-bg: #3A1620;
+    --on-accent: #1A0F05;
+    --glow: rgba(255,138,31,0.35);
+    --moon: rgba(255,214,140,0.22);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  }
+  body {
+    background:
+      radial-gradient(circle at 88% 6%, var(--moon) 0, transparent 160px),
+      radial-gradient(ellipse at 50% 110%, var(--glow) 0, transparent 60%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  .btn-primary { color: var(--on-accent) !important; box-shadow: 0 4px 14px var(--glow) !important; }
+  .btn-primary:hover { box-shadow: 0 6px 18px var(--glow) !important; }
+  .opt.selected .tag { color: var(--on-accent) !important; }
+  h1, .brand, .score-num { font-family: var(--spooky); font-weight: 400; letter-spacing: 0.03em; }
+  h1 { font-size: 34px; color: var(--accent); }
+  .brand { font-size: 21px; color: var(--accent); white-space: nowrap; }
+  .brand small { white-space: normal; }
+  .brand small { font-family: var(--sans); letter-spacing: 0; }
+  .score-num { color: var(--accent); }
+  .wrap { position: relative; z-index: 1; }
+  .bats { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .bats span { position: absolute; font-size: 22px; opacity: 0.55; animation: flap 14s ease-in-out infinite; }
+  .bats span:nth-child(1) { top: 8%; left: 6%; animation-duration: 16s; }
+  .bats span:nth-child(2) { top: 18%; left: 78%; font-size: 16px; animation-delay: -4s; }
+  .bats span:nth-child(3) { top: 62%; left: 4%; font-size: 18px; animation-delay: -8s; }
+  .bats span:nth-child(4) { top: 82%; left: 86%; animation-duration: 18s; animation-delay: -2s; }
+  .bats span:nth-child(5) { top: 40%; left: 92%; font-size: 14px; animation-delay: -11s; }
+  @keyframes flap {
+    0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+    50% { transform: translate(18px, -22px) rotate(6deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
 </style>
 </head>
 <body>
+<div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
 <canvas id="fx-canvas"></canvas>
 <div class="wrap">
 
   <div class="top-strip">
-    <div class="brand">🎓 KBA MOCK EXAM<small>Lesson 6 (602.1 / 602.2) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="brand">🎃 KBA Mock Exam<small>Lesson 6 (602.1 / 602.2) &middot; Salesforce Admin Bootcamp</small></div>
     <div class="clock" id="clock">45:00</div>
   </div>
 
@@ -208,7 +297,7 @@
       <li>User Management and Authentication (Lesson 602.2): user setup and licensing, freeze/deactivate, My Domain, SSO, MFA, password policies, setup audit trail, login hours, session settings</li>
     </ul>
 
-    <button class="btn-primary" id="btn-start">Start test 🚀</button>
+    <button class="btn-primary" id="btn-start">Start test 🎃</button>
     <button class="btn-ghost" id="btn-reshuffle">🔀 Shuffle a new random set</button>
   </div>
 
@@ -225,7 +314,7 @@
 
   <div id="screen-results" class="hidden">
     <div class="card score-wrap">
-      <div class="score-emoji" id="score-emoji">🐢</div>
+      <div class="score-emoji" id="score-emoji">🎃</div>
       <div class="q-meta" style="text-align:center;">Results</div>
       <div class="score-num" id="score-num">0 / 20</div>
       <div class="score-pct" id="score-pct">0%</div>
@@ -244,7 +333,7 @@
     <div id="review-list" class="review-list"></div>
   </div>
 
-  <div class="credit">Built with 💚 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+  <div class="credit">Built with 🧡 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
 
 </div>
 
@@ -545,7 +634,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const colors = ['#2F8F4E', '#7CB518', '#A3D65C', '#3D9970', '#C9A227', '#5B8C5A'];
+    const colors = ['#FF8A1F', '#FFB347', '#A86BFF', '#7FDB5A', '#FFD23F', '#E0457B'];
     let particles = [];
 
     function spawnBurst(x, y) {
@@ -629,16 +718,16 @@
     const scoreEmoji = document.getElementById('score-emoji');
     const verdict = document.getElementById('score-verdict');
     if (pct >= 85) {
-      verdict.textContent = "Shell yeah! You're crushing it.";
-      scoreEmoji.textContent = "🐢💨";
+      verdict.textContent = "Spooktacular! You're crushing it.";
+      scoreEmoji.textContent = "🎃🐢💨";
       launchFireworks();
     } else if (pct >= 70) {
-      verdict.textContent = "Nice pace! Review the misses below to pick up speed.";
-      scoreEmoji.textContent = "🐢";
+      verdict.textContent = "Fang-tastic pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🦇🐢";
       launchFireworks();
     } else {
-      verdict.textContent = "Slow and steady, review below and try again.";
-      scoreEmoji.textContent = "🐢";
+      verdict.textContent = "No need to be scared, review below and try again.";
+      scoreEmoji.textContent = "👻🐢";
     }
 
     const bdRows = document.getElementById('breakdown-rows');
