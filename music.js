@@ -11,6 +11,7 @@
     { title: 'MAMACITA',      src: 'mamacita.mp3',      len: 25.043469, gain: 0.83 },
     { title: 'GO TO WASTE',   src: 'go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
   ];
+  var VER = '3';
   var VOLUME = 0.5;            // 50%
   var KEY = 'kbaMusic';
   var pos = (document.currentScript && document.currentScript.getAttribute('data-pos')) || 'bottom';
@@ -30,7 +31,7 @@
   } catch (e) {}
 
   // ---------- audio engine (Web Audio gives seamless loops) ----------
-  var ctx = null, master = null, trackGain = null, source = null;
+  var ctx = null, master = null, trackGain = null, source = null, mediaEl = null;
   var buffers = {}, loading = {};
   var startedAt = 0, loopStart = 0, loopLen = 1;
 
@@ -47,8 +48,8 @@
   function load(i) {
     if (buffers[i]) return Promise.resolve(buffers[i]);
     if (loading[i]) return loading[i];
-    loading[i] = fetch(TRACKS[i].src)
-      .then(function (r) { return r.arrayBuffer(); })
+    loading[i] = fetch(TRACKS[i].src + '?v=' + VER)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + TRACKS[i].src); return r.arrayBuffer(); })
       .then(function (ab) {
         return new Promise(function (res, rej) { ctx.decodeAudioData(ab, res, rej); });
       })
@@ -64,12 +65,14 @@
   }
 
   function currentOffset() {
+    if (mediaEl) return mediaEl.currentTime || 0;
     if (!source || !ctx) return state.offset;
     var el = ctx.currentTime - startedAt;
     return ((el % loopLen) + loopLen) % loopLen;
   }
 
   function stopSource() {
+    if (mediaEl) { try { mediaEl.pause(); } catch (e) {} mediaEl = null; }
     if (source) { try { source.onended = null; source.stop(); } catch (e) {} source.disconnect(); source = null; }
   }
 
@@ -98,11 +101,34 @@
       render();
       // preload the next track so Next is instant
       load((i + 1) % TRACKS.length).catch(function () {});
-    }).catch(function () { setStatus('ERROR'); });
+    }).catch(function (err) {
+      if (token !== playToken) return;
+      if (window.console) console.warn('[music] Web Audio failed, using backup player:', err);
+      playWithElement(i, offset);
+    });
+  }
+
+  // backup: plain <audio> element (small gap at the loop point, but works everywhere)
+  function playWithElement(i, offset) {
+    stopSource();
+    var t = TRACKS[i];
+    var a = new Audio(t.src + '?v=' + VER);
+    a.loop = true;
+    a.volume = Math.min(1, VOLUME * t.gain);
+    a.addEventListener('loadedmetadata', function () { try { a.currentTime = (offset || 0) % (a.duration || t.len); } catch (e) {} });
+    mediaEl = a;
+    var p = a.play();
+    var ok = function () { setStatus(''); render(); };
+    var fail = function (err) {
+      if (window.console) console.warn('[music] could not play', t.src, err);
+      setStatus(err && err.name === 'NotAllowedError' ? '' : 'ERROR');
+      render();
+    };
+    if (p && p.then) p.then(ok, fail); else ok();
   }
 
   function play(fromOffset) {
-    if (!ensureCtx()) return;
+    if (!ensureCtx()) { playWithElement(state.track, fromOffset); return; }
     var go = function () { startTrack(fromOffset); };
     if (ctx.state === 'suspended') ctx.resume().then(go, go); else go();
   }
@@ -132,14 +158,14 @@
     try {
       localStorage.setItem(KEY, JSON.stringify({
         on: state.on, playing: state.playing, track: state.track,
-        offset: (state.on && state.playing && source) ? currentOffset() : state.offset,
+        offset: (state.on && state.playing && (source || mediaEl)) ? currentOffset() : state.offset,
         savedAt: Date.now()
       }));
     } catch (e) {}
   }
   window.addEventListener('pagehide', save);
   document.addEventListener('visibilitychange', function () { if (document.hidden) save(); });
-  setInterval(function () { if (source) save(); }, 2000);
+  setInterval(function () { if (source || mediaEl) save(); }, 2000);
 
   // ---------- player UI ----------
   var css = '' +
@@ -199,7 +225,7 @@
     el.classList.toggle('on', state.on);
     el.classList.toggle('playing', state.playing);
     var b = el.querySelector('.ttl b'), sp = el.querySelector('.ttl span');
-    var waitingTap = isPlaying && (!ctx || ctx.state !== 'running');
+    var waitingTap = isPlaying && !mediaEl && (!ctx || ctx.state !== 'running');
     if (waitingTap) {
       b.innerHTML = 'TRACK ' + (state.track + 1) + '/' + TRACKS.length;
       sp.className = 'tap'; sp.textContent = 'TAP TO PLAY';
@@ -233,7 +259,7 @@
       var resume = function () {
         document.removeEventListener('pointerdown', resume, true);
         document.removeEventListener('keydown', resume, true);
-        if (!source) play(state.offset);
+        if (!source && !mediaEl) play(state.offset);
       };
       document.addEventListener('pointerdown', resume, true);
       document.addEventListener('keydown', resume, true);
