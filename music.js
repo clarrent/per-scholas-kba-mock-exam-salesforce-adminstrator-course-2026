@@ -6,10 +6,10 @@
      new page the music resumes on the first tap or key press. */
 (function () {
   var TRACKS = [
-    { title: 'COZY BOTANICA', src: 'music/cozy-botanica.mp3', len: 13.241383, gain: 0.92 },
-    { title: 'SKYLINE',       src: 'music/skyline.mp3',       len: 29.090930, gain: 1.0 },
-    { title: 'MAMACITA',      src: 'music/mamacita.mp3',      len: 25.043469, gain: 0.83 },
-    { title: 'GO TO WASTE',   src: 'music/go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
+    { title: 'COZY BOTANICA', src: 'cozy-botanica.mp3', len: 13.241383, gain: 0.92 },
+    { title: 'SKYLINE',       src: 'skyline.mp3',       len: 29.090930, gain: 1.0 },
+    { title: 'MAMACITA',      src: 'mamacita.mp3',      len: 25.043469, gain: 0.83 },
+    { title: 'GO TO WASTE',   src: 'go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
   ];
   var VOLUME = 0.5;            // 50%
   var KEY = 'kbaMusic';
