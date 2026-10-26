@@ -11,7 +11,7 @@
     { title: 'MAMACITA',      src: 'mamacita.mp3',      len: 25.043469, gain: 0.83 },
     { title: 'GO TO WASTE',   src: 'go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
   ];
-  var VER = '4';
+  var VER = '6';
   var VOLUME = 0.3;            // 30%
   var SILENT = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
   var KEY = 'kbaMusic';
@@ -34,6 +34,7 @@
   // ---------- audio engine (Web Audio gives seamless loops) ----------
   var ctx = null, master = null, trackGain = null, source = null, mediaEl = null;
   var buffers = {}, loading = {};
+  var allSources = [], allEls = [];
   var startedAt = 0, loopStart = 0, loopLen = 1;
 
   function ensureCtx() {
@@ -72,12 +73,17 @@
     return ((el % loopLen) + loopLen) % loopLen;
   }
 
+  // stop EVERY sound this page started (not just the current one)
   function stopSource() {
-    if (mediaEl) { try { mediaEl.pause(); } catch (e) {} mediaEl = null; }
+    allSources.forEach(function (s) { try { s.onended = null; s.stop(); } catch (e) {} try { s.disconnect(); } catch (e) {} });
+    allSources = [];
+    allEls.forEach(function (a) { try { a.pause(); a.removeAttribute('src'); a.load(); } catch (e) {} });
+    allEls = [];
+    mediaEl = null; source = null;
     if (source) { try { source.onended = null; source.stop(); } catch (e) {} source.disconnect(); source = null; }
   }
 
-  var playToken = 0;
+  var playToken = 0, pendingOffset = 0;
   function startTrack(offset) {
     if (!ensureCtx()) return;
     var token = ++playToken, i = state.track;
@@ -90,6 +96,7 @@
       loopLen = Math.min(t.len, buf.duration - loopStart);
       var off = ((offset || 0) % loopLen + loopLen) % loopLen;
       source = ctx.createBufferSource();
+      allSources.push(source);
       source.buffer = buf;
       source.loop = true;
       source.loopStart = loopStart;
@@ -105,15 +112,17 @@
     }).catch(function (err) {
       if (token !== playToken) return;
       if (window.console) console.warn('[music] Web Audio failed, using backup player:', err);
-      playWithElement(i, offset);
+      playWithElement(i, offset, token);
     });
   }
 
   // backup: plain <audio> element (small gap at the loop point, but works everywhere)
-  function playWithElement(i, offset) {
+  function playWithElement(i, offset, token) {
+    if (token !== undefined && token !== playToken) return;
     stopSource();
     var t = TRACKS[i];
     var a = new Audio(t.src + '?v=' + VER);
+    allEls.push(a);
     a.loop = true;
     a.volume = Math.min(1, VOLUME * t.gain);
     a.addEventListener('loadedmetadata', function () { try { a.currentTime = (offset || 0) % (a.duration || t.len); } catch (e) {} });
@@ -130,7 +139,9 @@
 
   function play(fromOffset) {
     if (!ensureCtx()) { playWithElement(state.track, fromOffset); return; }
-    var go = function () { startTrack(fromOffset); };
+    var myToken = playToken + 1;
+    pendingOffset = fromOffset;
+    var go = function () { if (playToken < myToken) startTrack(pendingOffset); };
     if (ctx.state === 'suspended') ctx.resume().then(go, go); else go();
   }
 
@@ -162,6 +173,8 @@
   }
   function togglePlay() {
     if (!state.on) { toggleSpeaker(); return; }
+    // music was waiting for a tap to resume: start it instead of pausing
+    if (state.playing && !source && !mediaEl) { unlockMobile(); play(state.offset); save(); render(); return; }
     state.playing = !state.playing;
     if (state.playing) { unlockMobile(); play(state.offset); }
     else { state.offset = currentOffset(); stopSource(); sleepMobile(); }
@@ -183,7 +196,17 @@
       }));
     } catch (e) {}
   }
-  window.addEventListener('pagehide', save);
+  window.addEventListener('pagehide', function () {
+    save();
+    playToken++;            // cancel anything still loading
+    stopSource();
+    sleepMobile();
+    if (ctx) { try { ctx.suspend(); } catch (e) {} }
+  });
+  // coming back with the browser Back button: start fresh on the next tap
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted && state.on && state.playing) { armResume(); render(); }
+  });
   document.addEventListener('visibilitychange', function () { if (document.hidden) save(); });
   setInterval(function () { if (source || mediaEl) save(); }, 2000);
 
@@ -295,6 +318,16 @@
   // keep the player's keys from moving menus or answering questions
   el.addEventListener('keydown', function (e) { e.stopPropagation(); });
 
+  var EVENTS = ['pointerdown', 'touchend', 'click', 'keydown'];
+  function onFirstTap(e) {
+    disarmResume();
+    if (!state.on || !state.playing) return;
+    unlockMobile();
+    if (!source && !mediaEl) play(state.offset);
+  }
+  function armResume() { EVENTS.forEach(function (ev) { document.addEventListener(ev, onFirstTap, true); }); }
+  function disarmResume() { EVENTS.forEach(function (ev) { document.removeEventListener(ev, onFirstTap, true); }); }
+
   function mount() {
     var clock = pos === 'header' && document.querySelector('.top-strip .clock');
     if (clock) {
@@ -322,16 +355,9 @@
     render();
     // music was on when they left the last page: resume on the first tap or key
     if (state.on && state.playing) {
-      var EVENTS = ['pointerdown', 'touchend', 'click', 'keydown'];
-      var resume = function () {
-        EVENTS.forEach(function (ev) { document.removeEventListener(ev, resume, true); });
-        unlockMobile();
-        if (!source && !mediaEl) play(state.offset);
-      };
-      EVENTS.forEach(function (ev) { document.addEventListener(ev, resume, true); });
+      armResume();
       // some browsers allow it right away (returning visitors)
-      if (ensureCtx() && ctx.state === 'running') play(state.offset);
-      else if (ctx) ctx.resume().then(function () { if (ctx.state === 'running' && !source) play(state.offset); render(); }).catch(function () {});
+      if (ensureCtx() && ctx.state === 'running') { disarmResume(); play(state.offset); }
     }
   }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);

@@ -206,3 +206,28 @@ button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !impor
   .meta-cell .num { font-size: 12px !important; }
 }
 @media (prefers-reduced-motion: reduce) { .clock.low { animation: none; } }
+
+/* ---------- credits card (results screen) ---------- */
+.credit-card { margin-top: 20px; text-align: left; }
+.cc-head { font-family: var(--pixel); font-size: 11px; color: var(--gold); text-align: center; margin: 0 0 16px; letter-spacing: 2px; }
+.cc-row { display: flex; gap: 16px; align-items: center; }
+.cc-portrait { width: 96px; height: 96px; image-rendering: pixelated; image-rendering: crisp-edges; border: 3px solid var(--ink); box-shadow: 0 0 0 3px #000; flex-shrink: 0; }
+.cc-role { font-family: var(--pixel); font-size: 8px; color: var(--ink-soft); margin: 0 0 6px; letter-spacing: 1px; }
+.cc-name { font-family: var(--pixel); font-size: 12px; color: var(--accent); margin: 0 0 8px; line-height: 1.5; text-shadow: 2px 2px 0 #6A2A00; }
+.cc-body { font-size: 20px; line-height: 1.1; margin: 0; color: var(--ink); }
+.cc-ask { font-size: 20px; line-height: 1.1; margin: 16px 0 12px; color: var(--ink); text-align: center; }
+.cc-btn {
+  display: block; text-align: center; text-decoration: none; font-family: var(--pixel); font-size: 11px; letter-spacing: 1px;
+  background: #0A66C2; color: #fff; padding: 14px 12px; border: 3px solid #000;
+  box-shadow: inset -4px -4px 0 rgba(0,0,0,0.3), inset 4px 4px 0 rgba(255,255,255,0.25), 4px 4px 0 #000;
+}
+.cc-btn:hover { background: #1A7AD8; }
+.cc-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.cc-btn:active { transform: translate(2px, 2px); }
+.cc-tip { font-size: 17px; line-height: 1.1; color: var(--ink-soft); text-align: center; margin: 10px 0 0; }
+.cc-tip b { color: var(--ink); font-weight: 400; }
+@media (max-width: 480px) {
+  .cc-portrait { width: 72px; height: 72px; }
+  .cc-name { font-size: 10px; }
+  .cc-body, .cc-ask { font-size: 18px; }
+}

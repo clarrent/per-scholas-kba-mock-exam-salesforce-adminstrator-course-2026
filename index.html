@@ -383,6 +383,23 @@
     return '#EDE7FF';
   }, null);
 
+  // ---- mini Clarrent, sitting by the fire with a warm mug ----
+  const CLR = { H: '#261A18', h: '#5C4232', f: '#463430', S: '#DEA47A', s: '#BC805C', G: '#100E10', w: '#FAF4EC', E: '#281A14',
+                B: '#36261F', M: '#C88076', J: '#CCC8D0', j: '#9692A0', T: '#484854', t: '#34343E', K: '#1A1012', U: '#FF8A1F', u: '#C2510A' };
+  function clarrentSitting(eyes, sip) {
+    const rows = [
+      '.......H..H.....', '.....HHHHHHH....', '....HHhHHHhHH...', '....fSSSSSSSf...', '....SHHSSHHS....',
+      '...GGGGGGGGGG...', eyes === 'open' ? '....GwEGGwEG....' : '....GSEGGSEG....', '....SSSssSSS....', '....SBBBBBBS....',
+      '.....BMMMMB.....', '......BBBB......', '...JJJTTTTJJJ...', '..JJjJTTTTJjJJ..', '..JJjJTTTTJjJJ..',
+      '...JSSUUSSJJ....', '..ttttuuttttt...', '..tttttttttttt..', '.KKK........KKK.'];
+    if (sip) {                       // mug up at the mouth
+      rows[14] = '...JSJTTTTJJ....'; rows[9] = '.....BMUUMB.....'; rows[10] = '......BuuB......';
+      rows[12] = '..JJjSTTTTJjJJ..'; rows[13] = '..JJjJSTTTJjJJ..';
+    }
+    return makeSprite(16, 18, (x, y) => { const ch = rows[y][x]; return ch === '.' ? null : CLR[ch]; }, '#0E0810');
+  }
+  const sitA = clarrentSitting('half', false), sitBlink = clarrentSitting('open', false), sitSip = clarrentSitting('half', true);
+
   const sprites = {
     turtle: turtleSprite(true), turtleOpen: turtleSprite(false),
     batA: batSprite(true), batB: batSprite(false)
@@ -571,14 +588,32 @@
 
     // jack-o-lanterns
     const g1 = 0.5 + 0.5 * Math.sin(t * 0.27), g2 = 0.5 + 0.5 * Math.sin(t * 0.23 + 2);
-    ctx.drawImage(pumpkinSprite(g1), fireX + 13, groundY - 1);
-    ctx.drawImage(pumpkinSprite(g2), fireX + 19, groundY + 4);
+    ctx.drawImage(pumpkinSprite(g1), fireX + 30, groundY - 1);
+    ctx.drawImage(pumpkinSprite(g2), fireX + 36, groundY + 4);
     ctx.drawImage(pumpkinSprite(g2), fireX - 47, groundY + 3);
 
     // turtle resting by the fire (breathes, blinks, snores)
     const breathe = Math.floor(t / 40) % 2;
     const blink = !(t % 260 > 250 && t % 260 < 258) ? true : false;
     ctx.drawImage(blink ? sprites.turtle : sprites.turtleOpen, fireX - 34, fireY - 13 + breathe);
+    // Clarrent resting on a log: slow breathing, the odd blink, a sip now and then
+    const lx = fireX + 9, ly = fireY - 1;
+    rect(ctx, lx, ly, 19, 3, '#6B4424'); rect(ctx, lx, ly, 19, 1, '#8A5A30'); px(ctx, lx, ly + 1, '#4A2E16'); px(ctx, lx + 18, ly + 1, '#4A2E16');
+    const cyc = t % 300;
+    const sipping = cyc > 220 && cyc < 262;
+    const blinkNow = (t % 170) > 162;
+    const breath = Math.floor(t / 45) % 2;
+    ctx.drawImage(sipping ? sitSip : (blinkNow ? sitBlink : sitA), lx + 1, ly - 18 + breath);
+    // steam from the mug
+    if (!sipping) {
+      for (let k = 0; k < 3; k++) {
+        const st = (t + k * 14) % 42;
+        ctx.globalAlpha = 0.5 * (1 - st / 42);
+        px(ctx, lx + 7 + Math.round(Math.sin((t + k * 14) * 0.15)), ly - 6 + breath - Math.floor(st / 6), '#E8E2F0');
+      }
+      ctx.globalAlpha = 1;
+    }
+
     const zt = t % 150;
     if (zt < 110) {
       ctx.globalAlpha = 1 - zt / 110;
@@ -636,6 +671,6 @@
   requestAnimationFrame(loop);
 })();
 </script>
-<script src="music.js?v=5" data-pos="top"></script>
+<script src="music.js?v=6" data-pos="top"></script>
 </body>
 </html>
