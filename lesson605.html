@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎃 KBA Lesson 605 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 8px; }
+  .q-hint { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .helper-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .btn-helper { background: var(--panel); color: var(--ink); border: 1.5px dashed var(--border); padding: 8px 14px; font-size: 13px; font-weight: 700; border-radius: 999px; cursor: pointer; font-family: var(--sans); }
+  .btn-helper:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .btn-helper:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-helper .left { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-left: 4px; }
+  .hint-box { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent-2); font-size: 14px; line-height: 1.5; }
+  .hint-box b { color: var(--accent); }
+  .opt.removed { opacity: 0.35; text-decoration: line-through; pointer-events: none; }
+  .review-tags { display: inline-flex; gap: 6px; margin-left: auto; }
+  .review-tag { font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--ink-soft); }
+  .helper-summary { text-align: center; font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; margin-top: 14px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+
+  /* ===== Halloween theme ===== */
+  :root {
+    --ink: #2A1636;
+    --ink-soft: #6E5A78;
+    --bg: #FBF3E6;
+    --panel: #FFFFFF;
+    --border: #EAD9C4;
+    --accent: #C2510A;
+    --accent-2: #7B3FC4;
+    --accent-soft: #FCE7D3;
+    --good: #2F8A3E;
+    --good-bg: #E6F4E3;
+    --bad: #B3261E;
+    --bad-bg: #FBE4E1;
+    --on-accent: #FFFFFF;
+    --glow: rgba(194,81,10,0.30);
+    --moon: rgba(255,214,140,0.55);
+    --spooky: 'Creepster', 'Manrope', cursive;
+    --shadow: 0 1px 2px rgba(42,22,54,0.06), 0 8px 24px rgba(42,22,54,0.10);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #F5EDE0;
+      --ink-soft: #B5A3C4;
+      --bg: #120C1A;
+      --panel: #1D1428;
+      --border: #34264A;
+      --accent: #FF8A1F;
+      --accent-2: #A86BFF;
+      --accent-soft: #2E1E2A;
+      --good: #7FDB5A;
+      --good-bg: #18291A;
+      --bad: #FF6B6B;
+      --bad-bg: #3A1620;
+      --on-accent: #1A0F05;
+      --glow: rgba(255,138,31,0.35);
+      --moon: rgba(255,214,140,0.22);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F5EDE0;
+    --ink-soft: #B5A3C4;
+    --bg: #120C1A;
+    --panel: #1D1428;
+    --border: #34264A;
+    --accent: #FF8A1F;
+    --accent-2: #A86BFF;
+    --accent-soft: #2E1E2A;
+    --good: #7FDB5A;
+    --good-bg: #18291A;
+    --bad: #FF6B6B;
+    --bad-bg: #3A1620;
+    --on-accent: #1A0F05;
+    --glow: rgba(255,138,31,0.35);
+    --moon: rgba(255,214,140,0.22);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  }
+  body {
+    background:
+      radial-gradient(circle at 88% 6%, var(--moon) 0, transparent 160px),
+      radial-gradient(ellipse at 50% 110%, var(--glow) 0, transparent 60%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  .btn-primary { color: var(--on-accent) !important; box-shadow: 0 4px 14px var(--glow) !important; }
+  .btn-primary:hover { box-shadow: 0 6px 18px var(--glow) !important; }
+  .opt.selected .tag { color: var(--on-accent) !important; }
+  h1, .brand, .score-num { font-family: var(--spooky); font-weight: 400; letter-spacing: 0.03em; }
+  h1 { font-size: 34px; color: var(--accent); }
+  .brand { font-size: 21px; color: var(--accent); white-space: nowrap; }
+  .brand small { white-space: normal; }
+  .brand small { font-family: var(--sans); letter-spacing: 0; }
+  .score-num { color: var(--accent); }
+  .wrap { position: relative; z-index: 1; }
+  .bats { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .bats span { position: absolute; font-size: 22px; opacity: 0.55; animation: flap 14s ease-in-out infinite; }
+  .bats span:nth-child(1) { top: 8%; left: 6%; animation-duration: 16s; }
+  .bats span:nth-child(2) { top: 18%; left: 78%; font-size: 16px; animation-delay: -4s; }
+  .bats span:nth-child(3) { top: 62%; left: 4%; font-size: 18px; animation-delay: -8s; }
+  .bats span:nth-child(4) { top: 82%; left: 86%; animation-duration: 18s; animation-delay: -2s; }
+  .bats span:nth-child(5) { top: 40%; left: 92%; font-size: 14px; animation-delay: -11s; }
+  @keyframes flap {
+    0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+    50% { transform: translate(18px, -22px) rotate(6deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retro.css?v=9">
+</head>
+<body>
+<div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🎃 KBA Mock Exam<small>Lesson 605 (605.1 / 605.2) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">3</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Object Manager and Lightning App Builder (Lesson 605.1, 15%): Lightning record, home, and app pages, activation and assignment levels, Dynamic Forms, Dynamic Actions, visibility filters, form factor</li>
+      <li>Productivity and Collaboration (Lesson 605.1, 10%): Salesforce mobile app benefits and setup, mobile navigation, compact layouts, global quick actions</li>
+      <li>Sales and Marketing Applications (Lesson 605.2, 10%): sales processes, record types, Sales Path, picklist stages, business processes</li>
+    </ul>
+
+    <p class="helper-summary" style="margin:0 0 14px;">You get 3 💡 hints and 3 ✂️ 50/50 lifelines per test. 50/50 crosses out two wrong answers.</p>
+    <button class="btn-primary" id="btn-start">▶ START QUEST</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 SHUFFLE NEW SET</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Object Manager &amp; Lightning App Builder (605.1)</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="q-hint hidden" id="q-hint"></div>
+    <div class="helper-row">
+      <button class="btn-helper" id="btn-hint" type="button">💡 Hint<span class="left" id="hint-left">3 left</span></button>
+      <button class="btn-helper" id="btn-fifty" type="button">✂️ 50/50<span class="left" id="fifty-left">3 left</span></button>
+    </div>
+    <div class="hint-box hidden" id="hint-box"></div>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">◀ BACK</button>
+      <button class="btn-next" id="btn-next" disabled>NEXT ▶</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🎃</div>
+      <div class="q-meta" style="text-align:center;">RESULTS</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+      <div class="helper-summary" id="helper-summary"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 REVIEW</button>
+        <button class="btn-next" id="btn-retake">🔁 CONTINUE? RETAKE</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 🧡 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const OBJ = "Object Manager & Lightning App Builder (605.1)";
+  const PRD = "Productivity & Collaboration (605.1)";
+  const SAL = "Sales & Marketing Applications (605.2)";
+
+  const BANK = [
+
+
+    { domain: OBJ, source: "Lesson 605.1, Lightning App Builder",
+      q: "A Salesforce Administrator is creating a new Opportunity Record Page. Before activating it, which options can they use to assign the page? Select 3.",
+      hint: "Three levels exist. The most specific one combines app, record type, and profile. Roles are not one of them.",
+      type: "multi",
+      opts: ["Org Default", "App, Record Type, and Roles", "App Default", "App, Record Type, and Profile", "Profile Default"],
+      notes: ["Correct, the org default page shows for the object unless a more specific assignment exists.", "Roles are not a page assignment option.", "Correct, an app default assigns the page to a specific Lightning app.", "Correct, the most specific assignment uses app, record type, and profile together.", "There is no profile default assignment."],
+      correct: [0, 2, 3],
+      why: "Record pages can be assigned at three levels: org default, app default, and app + record type + profile. The most specific assignment wins." },
+
+    { domain: OBJ, source: "Lesson 605.1, Lightning App Builder",
+      q: "An admin wants a Lightning record page to show only for users in the Sales app with the Standard User profile. What should they use?",
+      hint: "Look for the option that matches all three criteria at once.",
+      opts: ["App, Record Type, and Profile assignment", "Org Default assignment", "Compact layout", "Home page assignment"],
+      notes: ["Correct, this assignment matches the app, record type, and profile together.", "The org default applies to everyone and would not limit it to one profile.", "Compact layouts control key fields at the top of a record, not page assignment.", "Home pages are not record pages."],
+      correct: 0,
+      why: "The App, Record Type, and Profile assignment is the most specific option and only displays when all three criteria match." },
+
+    { domain: OBJ, source: "Lesson 605.1, Lightning App Builder",
+      q: "Which Lightning page types can be created in the Lightning App Builder? Select 3.",
+      hint: "The builder makes three kinds of pages: one for a single record, one for a landing page, and one for an app tab.",
+      type: "multi",
+      opts: ["App Page", "Record Page", "Home Page", "Mobile Page"],
+      notes: ["Correct, app pages are standalone pages added as tabs to an app.", "Correct, record pages show detail for one object record.", "Correct, home pages are landing pages for an org or app.", "There is no Mobile Page type."],
+      correct: [0, 1, 2],
+      why: "The three Lightning page types are record pages, home pages, and app pages." },
+
+    { domain: OBJ, source: "Lesson 605.1, Lightning App Builder",
+      q: "Which device views can the Lightning App Builder use to preview a page? Select 3.",
+      hint: "Think about the devices and orientations the builder can preview.",
+      type: "multi",
+      opts: ["Desktop", "Phone", "Tablet - Portrait", "Smartwatch"],
+      notes: ["Correct, desktop is a preview view.", "Correct, phone is a preview view.", "Correct, tablet portrait is a preview view.", "Smartwatch is not a preview option."],
+      correct: [0, 1, 2],
+      why: "The App Builder previews layouts for desktop, phone, tablet portrait, and tablet landscape." },
+
+    { domain: OBJ, source: "Lesson 605.1, Dynamic Forms",
+      q: "Which feature lets an admin place individual fields anywhere on a record page and show or hide them with filters?",
+      hint: "Look for the feature that breaks the record detail into individual fields you can place and filter.",
+      opts: ["Dynamic Forms", "Record Types", "Compact Layouts", "Validation Rules"],
+      notes: ["Correct, Dynamic Forms breaks the record detail block into fields and sections that can be placed and filtered.", "Record types control page layouts and picklist values, not field placement.", "Compact layouts control the key fields at the top of a record.", "Validation rules check data on save."],
+      correct: 0,
+      why: "Dynamic Forms lets admins place fields and sections anywhere on the page and set visibility rules, which reduces the need for multiple page layouts." },
+
+    { domain: OBJ, source: "Lesson 605.1, Dynamic Forms",
+      q: "An admin wants to reduce the number of page layouts needed for different profiles on Opportunities. Which feature helps most?",
+      hint: "The feature that cuts the need for multiple page layouts is the same one that places fields anywhere.",
+      opts: ["Dynamic Forms", "Path", "Quick Actions", "Field Sets"],
+      notes: ["Correct, Dynamic Forms reduces the need for multiple page layouts.", "Path guides stages, not page layout.", "Quick actions are buttons for common tasks.", "Field sets group fields but do not control visibility by profile."],
+      correct: 0,
+      why: "Dynamic Forms lets one page show different fields to different users, so fewer page layouts are needed." },
+
+    { domain: OBJ, source: "Lesson 605.1, Dynamic Forms",
+      q: "Which object does NOT support Dynamic Forms?",
+      hint: "Objects that are not LWC-enabled, such as Campaigns, Products, and Tasks, do not get Dynamic Forms.",
+      opts: ["Account", "Opportunity", "Case", "Campaign"],
+      notes: ["Account supports Dynamic Forms.", "Opportunity supports Dynamic Forms.", "Case supports Dynamic Forms.", "Correct, Campaigns are not LWC-enabled, so they use page layout information instead."],
+      correct: 3,
+      why: "Dynamic Forms supports Accounts, Contacts, Person Accounts, Opportunities, Leads, and Cases. Objects that are not LWC-enabled, such as Campaigns, Products, and Tasks, do not." },
+
+    { domain: OBJ, source: "Lesson 605.1, Dynamic Actions",
+      q: "An admin wants the Delete button to appear on a record page only for users with the System Administrator profile. Which feature should they use?",
+      hint: "Which feature controls which action buttons appear on a record page?",
+      opts: ["Dynamic Actions", "Global Actions", "Compact Layout", "Page Layout Assignment"],
+      notes: ["Correct, Dynamic Actions control which action buttons appear based on profile, role, or field values.", "Global actions are available across objects and do not filter by profile on one page.", "Compact layouts control the key fields at the top of a record.", "Page layout assignment does not hide individual action buttons by profile."],
+      correct: 0,
+      why: "Dynamic Actions let admins show or hide action buttons on a Lightning record page using filters based on user profile, role, device, or record field values." },
+
+    { domain: OBJ, source: "Lesson 605.1, Visibility Filters",
+      q: "Which filter type hides a component based on whether the user is on a desktop or a phone?",
+      hint: "Which filter checks the form factor the user is on?",
+      opts: ["Device filter", "Record field filter", "Advanced filter", "User field filter"],
+      notes: ["Correct, the device filter checks the form factor the user is on.", "Record field filters check values on the record.", "Advanced filters check cross-object fields.", "User field filters check the logged-in user's record, not the device."],
+      correct: 0,
+      why: "The device filter (form factor) lets you show a component only on desktop or only on phone, which keeps the mobile app lighter." },
+
+    { domain: OBJ, source: "Lesson 605.1, Visibility Filters",
+      q: "A Manager Approvals component should only show to users whose Department field on their user record equals Management. Which filter should the admin use?",
+      hint: "The department lives on the user's record, not the record being viewed. Which filter can reach a user field?",
+      opts: ["Advanced filter using User > Department", "Record field filter on the Account Rating", "Device filter set to Desktop", "Compact layout filter"],
+      notes: ["Correct, the advanced filter can reference the logged-in user's field.", "Record field filters look at the record being viewed, not the user.", "Device filters check the screen type, not the user's department.", "Compact layouts do not have filters."],
+      correct: 0,
+      why: "User field filters use the logged-in user's record, so you can tailor a component to who is viewing the page." },
+
+    { domain: OBJ, source: "Lesson 605.1, Home Pages",
+      q: "Which assignment takes highest priority for a home page?",
+      hint: "Which home page assignment is the most specific?",
+      opts: ["Org Default", "App Default", "App and Profile", "Record Type"],
+      notes: ["The org default is the lowest priority fallback.", "The app default overrides the org default but not app and profile.", "Correct, app and profile assignments are the highest priority.", "Home pages do not use record types."],
+      correct: 2,
+      why: "Salesforce checks App and Profile first, then App Default, then Org Default as the baseline fallback." },
+
+    { domain: OBJ, source: "Lesson 605.1, Home Pages",
+      q: "An admin sets a home page as the org default. Which users see it?",
+      hint: "The org default is the baseline. What does it cover unless something more specific overrides it?",
+      opts: ["All users in the org, unless a more specific assignment overrides it", "Only System Administrators", "Only users in the Sales app", "Only mobile users"],
+      notes: ["Correct, the org default applies everywhere unless app or app and profile assignments take over.", "The org default is not limited to one profile.", "App-specific assignments are a different level.", "Org default covers desktop and mobile users alike; device is not the limit."],
+      correct: 0,
+      why: "The org default home page applies to all apps and users, but more specific app or app and profile assignments override it." },
+
+    { domain: OBJ, source: "Lesson 605.1, Home Pages",
+      q: "Which form factor is supported for Home pages?",
+      hint: "Home pages work with only one form factor.",
+      opts: ["Phone only", "Desktop only", "Tablet only", "All three form factors"],
+      notes: ["Phone is not supported for home pages.", "Correct, home pages support only the desktop form factor.", "Tablet is not supported for home pages.", "Only desktop is supported for home pages."],
+      correct: 1,
+      why: "The deck notes that for Home pages only the desktop form factor is supported." },
+
+    { domain: OBJ, source: "Lesson 605.1, Record Detail - Mobile",
+      q: "On a page that supports both desktop and phone, which component shows record fields to mobile users?",
+      hint: "Which component wraps fields only for phone users?",
+      opts: ["Record Detail", "Record Detail - Mobile", "Highlights Panel", "Related List"],
+      notes: ["Record Detail is used for desktop users.", "Correct, Record Detail - Mobile wraps the fields for phone users.", "The highlights panel shows key fields at the top, not the full detail.", "Related lists show related records."],
+      correct: 1,
+      why: "Desktop users see Field Section components, while phone users see the Record Detail - Mobile component." },
+
+    { domain: OBJ, source: "Lesson 605.1, Assignments",
+      q: "Which setting controls whether a page appears on desktop, mobile, or both?",
+      hint: "Think about the setting that decides desktop, mobile, or both.",
+      opts: ["Form Factor", "Compact Layout", "Visibility Filter", "Record Type"],
+      notes: ["Correct, form factor sets whether a page is assigned to desktop, phone, or both.", "Compact layouts control key fields at the top of a record.", "Visibility filters hide components, not whole page assignments.", "Record types control layouts and picklist values."],
+      correct: 0,
+      why: "Form factor is an assignment setting that decides whether the page is shown on desktop view, mobile devices, or both." },
+
+    { domain: PRD, source: "Lesson 605.1, Salesforce Mobile App",
+      q: "Taylor's boss wants the Salesforce Mobile App for the Sales Team. Which statements about the mobile app are true? Select 2.",
+      hint: "Think about cost, offline work, and which platforms the app runs on.",
+      type: "multi",
+      opts: ["It costs extra money to implement", "It can be used offline when there is no internet access", "It cannot be customized for different groups of users", "It can be used on iOS and Android devices"],
+      notes: ["The mobile app is included with every Salesforce license.", "Correct, the mobile app can work offline.", "The mobile app can be customized.", "Correct, the mobile app works on both iOS and Android."],
+      correct: [1, 3],
+      why: "The mobile app is included with every Salesforce license, works on iOS and Android, can work offline, and can be customized." },
+
+    { domain: PRD, source: "Lesson 605.1, Salesforce Mobile App",
+      q: "Which custom pages are supported in the Salesforce Mobile App? Select 2.",
+      hint: "Which page types can be enabled for phone?",
+      type: "multi",
+      opts: ["App Page", "Home Page", "Record Page", "Mobile Page"],
+      notes: ["Correct, app pages can be added to the mobile navigation.", "Home pages support only the desktop form factor.", "Correct, record pages can be enabled for phone and used in the mobile app.", "There is no Mobile Page type."],
+      correct: [0, 2],
+      why: "App pages and record pages can be enabled for phone. Home pages support only desktop." },
+
+    { domain: PRD, source: "Lesson 605.1, Salesforce Mobile App",
+      q: "What controls which objects appear in the Salesforce mobile app for a user?",
+      hint: "Think about what grants a user access to objects.",
+      opts: ["Profile and permission sets", "Mobile App Settings", "Connected Apps", "Record Type"],
+      notes: ["Correct, object access comes from the profile and permission sets.", "There is no separate mobile setting that controls object visibility.", "Connected apps link external apps and do not control object visibility.", "Record types control layouts and picklists, not object access."],
+      correct: 0,
+      why: "Object visibility in the mobile app follows the user's profile and permission sets, the same as in the desktop experience." },
+
+    { domain: PRD, source: "Lesson 605.1, Global Quick Actions",
+      q: "Account Managers keep leaving the record they are viewing to create new Contacts in the Salesforce mobile app. What should the admin add?",
+      hint: "Which feature lets users create a record from the action bar without leaving the record?",
+      opts: ["Global Quick Action", "Global Button", "Global Picklist", "Lightning App Page"],
+      notes: ["Correct, a global quick action lets users create a Contact from the mobile action bar without leaving the record.", "Global buttons are not the mobile action bar option.", "Global picklists store values, not actions.", "A Lightning app page is a standalone page, not a quick action."],
+      correct: 0,
+      why: "Quick actions let users create records like Contacts from the action bar without leaving the current record." },
+
+    { domain: PRD, source: "Lesson 605.1, Global Quick Actions",
+      q: "A quick action should appear in the Salesforce mobile app action bar. What must the admin do?",
+      hint: "Which setting must include the action before it appears in the mobile action bar?",
+      opts: ["Add it to the global publisher layout", "Enable it for Tablet only", "Assign it to a Home page", "Add it to the Utility bar"],
+      notes: ["Correct, an action is not available in the mobile app until it is added to the global publisher layout.", "Tablet-only settings do not make it appear.", "Home pages do not host quick actions for the mobile action bar.", "The utility bar is a desktop feature."],
+      correct: 0,
+      why: "Quick actions must be added to the global publisher layout before they appear in the mobile action bar." },
+
+    { domain: PRD, source: "Lesson 605.1, Compact Layouts",
+      q: "Which setting controls the key fields shown at the top of a record in the mobile app?",
+      hint: "Which layout controls the top of a record?",
+      opts: ["Compact Layout", "Mini Page Layout", "Mobile Settings tab", "Mobile Card Layout"],
+      notes: ["Correct, the compact layout controls the key fields in the highlights header.", "Mini page layout is not the setting name.", "There is no Mobile Settings tab for this.", "Mobile card layout is not the setting name."],
+      correct: 0,
+      why: "Compact layouts control the key information shown at the top of a record so users do not have to scroll." },
+
+    { domain: PRD, source: "Lesson 605.1, Compact Layouts",
+      q: "What determines the fields that appear in the Salesforce mobile highlights panel?",
+      hint: "Which layout sets the header fields in the mobile highlights panel?",
+      opts: ["Compact Layout", "Field Set", "Page Layout", "List View"],
+      notes: ["Correct, the compact layout sets the key fields in the highlights panel.", "Field sets group fields but do not set the highlights panel fields.", "Page layouts control the full record detail, not the highlights header.", "List views control list display, not the record header."],
+      correct: 0,
+      why: "The highlights panel shows the fields set on the object's compact layout." },
+
+    { domain: PRD, source: "Lesson 605.1, Mobile Actions",
+      q: "Which two items can a user see in the mobile action bar on most record pages? Select 2.",
+      hint: "Think about the built-in items in the mobile action bar.",
+      type: "multi",
+      opts: ["Quick actions", "Global actions", "Dashboards", "Approval processes"],
+      notes: ["Correct, quick actions are available in the action bar.", "Correct, global actions are included out of the box.", "Dashboards are a separate feature.", "Approval processes are not action bar items."],
+      correct: [0, 1],
+      why: "The mobile app includes built-in global actions and quick actions in the action bar, and admins can customize them." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Process",
+      q: "What does a Sales Process define in Salesforce?",
+      hint: "A sales process groups stages. For which type of sale?",
+      opts: ["The set of Opportunity stages available for a type of sale", "The fields shown on the Opportunity page", "The validation rules for Opportunities", "The approval steps for an Opportunity"],
+      notes: ["Correct, a sales process defines which stage values an Opportunity can use.", "Fields are set by page layouts and record types.", "Validation rules are separate from sales processes.", "Approval steps are set in approval processes."],
+      correct: 0,
+      why: "Each Sales Process contains the stages an Opportunity follows through its sales cycle, such as Residential or Commercial stages." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Process",
+      q: "An Opportunity team needs stage values like Demo and Renewal Review that the standard stage picklist does not include. What should the admin do first?",
+      hint: "Before a sales process can use a new stage, what must exist first?",
+      opts: ["Add the new values to the Opportunity Stage picklist", "Create a validation rule", "Create a flow", "Create a Path"],
+      notes: ["Correct, the stage values must exist on the picklist before a sales process can use them.", "Validation rules check data, they do not add stages.", "Flows automate steps, they do not add picklist values.", "A Path is built on top of stage values that already exist."],
+      correct: 0,
+      why: "New stage values must be added to the Stage picklist first. Only then can a sales process include them." },
+
+    { domain: SAL, source: "Lesson 605.2, Record Types",
+      q: "Two sales teams sell different products and need different Opportunity stages. What is the best way to support this?",
+      hint: "Stages come from sales processes. Users reach them through record types.",
+      opts: ["Create different sales processes and record types", "Create multiple page layouts only", "Use multiple Opportunity record owners", "Add custom fields for each product line"],
+      notes: ["Correct, sales processes set the stages and record types assign them to the right users.", "Page layouts alone do not change the stage values.", "Record owners do not change stages.", "Custom fields do not change the sales process."],
+      correct: 0,
+      why: "Sales processes control the stages, and record types connect each process to the right Opportunities and users." },
+
+    { domain: SAL, source: "Lesson 605.2, Record Types",
+      q: "Which of the following can be assigned to a record type? Select 2.",
+      hint: "A record type can carry a page layout and a business process.",
+      type: "multi",
+      opts: ["Page Layout", "Validation Rule", "Business Process", "Custom Tab"],
+      notes: ["Correct, record types can have page layouts assigned.", "Validation rules are not assigned to record types.", "Correct, record types can be linked to a business process.", "Custom tabs are not assigned to record types."],
+      correct: [0, 2],
+      why: "A record type can carry a page layout and a business process, which together set the layout and picklist values." },
+
+    { domain: SAL, source: "Lesson 605.2, Record Types",
+      q: "What must be created before creating a record type?",
+      hint: "What must exist before a record type can point to something?",
+      opts: ["Page Layout", "Validation Rule", "Business Process (for Leads, Opportunities, Cases, or Solutions)", "Field Set"],
+      notes: ["A page layout is not required first.", "Validation rules are not required first.", "Correct, a business process must exist before the record type can use it.", "Field sets are not required first."],
+      correct: 2,
+      why: "A business process must be created first when the record type will use one." },
+
+    { domain: SAL, source: "Lesson 605.2, Record Types",
+      q: "Which of the following is needed to assign a record type to a user?",
+      hint: "Which user setting controls which record types they can use?",
+      opts: ["Profile", "Role", "License", "Sharing Rule"],
+      notes: ["Correct, the profile controls which record types a user can use.", "Roles control hierarchy and sharing, not record type access.", "Licenses control feature access, not record types.", "Sharing rules control record access, not record types."],
+      correct: 0,
+      why: "Record types are made available to users through their profile." },
+
+    { domain: SAL, source: "Lesson 605.2, Record Types",
+      q: "What happens when a record type is removed from a user's profile?",
+      hint: "What happens to creating records once the record type is taken away?",
+      opts: ["They can still view records of that type", "They lose the ability to edit records of that type", "They can no longer create records of that type", "They are reassigned to the default record type"],
+      notes: ["They lose access to that record type entirely, not just viewing.", "The loss is broader than editing.", "Correct, removing the record type from the profile stops creation with it.", "They are not automatically reassigned."],
+      correct: 2,
+      why: "Without the record type on their profile, a user cannot create records using that record type." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Path",
+      q: "What is the purpose of a Path in Salesforce?",
+      hint: "A Path is a visual guide for the stages.",
+      opts: ["Help guide users through key steps in a process", "Visualize field dependencies", "Manage automation rules", "Customize validation behavior"],
+      notes: ["Correct, a Path shows the stages and guides reps through key steps.", "Field dependencies are a picklist feature.", "Automation rules are handled by flows and workflow.", "Validation behavior is set by validation rules."],
+      correct: 0,
+      why: "A Path visually guides users through each stage with key fields, tips, and best-practice guidance." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Path",
+      q: "Before creating a custom Path, what must the admin build or modify?",
+      hint: "A Path is tied to a picklist. What must exist before creating one?",
+      opts: ["The picklist used by the Path", "A flow", "An approval process", "A dashboard"],
+      notes: ["Correct, the Path is built on a picklist such as Stage or Status, which must exist and be on the page layout.", "Flows are not required to create a Path.", "Approval processes are not required to create a Path.", "Dashboards are not required to create a Path."],
+      correct: 0,
+      why: "The picklist that drives the Path must be built or modified first and placed on the page layout." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Path",
+      q: "A sales team uses two different sales stages for two product lines. What do you configure to give each team its own stages? Select 2.",
+      hint: "Two items work together: one holds the stages, the other links it to the right Opportunities.",
+      type: "multi",
+      opts: ["Sales Process", "Opportunity Stage field", "Record Type", "Workflow Rule", "List View"],
+      notes: ["Correct, each sales process holds its own stage set.", "The stage field holds all values but is not the per-team setup.", "Correct, the record type connects each team to its sales process.", "Workflow rules are not used for this.", "List views do not control stages."],
+      correct: [0, 2],
+      why: "A sales process holds the stages for each sale type, and a record type connects it to the right Opportunities." },
+
+    { domain: SAL, source: "Lesson 605.2, Sales Path",
+      q: "What must be enabled before a Path can be used?",
+      hint: "Look for the setting that turns Path on.",
+      opts: ["Path Settings", "Kanban only", "Activities", "Chatter"],
+      notes: ["Correct, Path must be enabled in Path Settings first.", "Kanban shows the Path fields but is not the setting that turns Path on.", "Activities are separate from Path.", "Chatter is a collaboration feature, not Path."],
+      correct: 0,
+      why: "Path Settings has an Enable button. Path must be enabled there before admins can create Paths." }
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+  const MAX_HINTS = 3;
+  const MAX_FIFTY = 3;
+  let hintsLeft = MAX_HINTS;
+  let fiftyLeft = MAX_FIFTY;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      const isMulti = orig.type === 'multi';
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        hint: orig.hint || "",
+        multi: isMulti,
+        selectCount: isMulti ? orig.correct.length : 1,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: isMulti ? null : order.indexOf(orig.correct),
+        correctIndices: isMulti ? orig.correct.map(c => order.indexOf(c)).sort((a, b) => a - b) : null
+      };
+    });
+    answers = questions.map(item => item.multi ? [] : null);
+    questions.forEach(item => { item.hintUsed = false; item.removed = []; });
+    hintsLeft = MAX_HINTS;
+    fiftyLeft = MAX_FIFTY;
+    current = 0;
+  }
+
+  function isAnswered(item, ans) {
+    if (item.multi) return Array.isArray(ans) && ans.length === item.selectCount;
+    return ans !== null;
+  }
+
+  function isCorrectAnswer(item, ans) {
+    if (item.multi) {
+      if (!Array.isArray(ans) || ans.length !== item.correctIndices.length) return false;
+      const sorted = ans.slice().sort((a, b) => a - b);
+      return sorted.every((v, i) => v === item.correctIndices[i]);
+    }
+    return ans === item.correctIndex;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function wrongIndices(item) {
+    return item.displayOpts.map((_, i) => i).filter(i =>
+      item.multi ? !item.correctIndices.includes(i) : i !== item.correctIndex);
+  }
+
+  // 50/50 always leaves at least one wrong answer, so it never gives the answer away
+  function fiftyRemoveCount(item) {
+    const wrong = wrongIndices(item).length;
+    return Math.max(0, Math.min(2, wrong - 1));
+  }
+
+  function renderHelpers(item) {
+    const btnHint = document.getElementById('btn-hint');
+    const btnFifty = document.getElementById('btn-fifty');
+    const box = document.getElementById('hint-box');
+    document.getElementById('hint-left').textContent = hintsLeft + ' left';
+    document.getElementById('fifty-left').textContent = fiftyLeft + ' left';
+    btnHint.disabled = item.hintUsed || hintsLeft === 0 || !item.hint;
+    const canFifty = fiftyRemoveCount(item) > 0;
+    btnFifty.disabled = item.removed.length > 0 || fiftyLeft === 0 || !canFifty;
+    btnFifty.title = canFifty ? '' : 'Not available on this question';
+    if (item.hintUsed) {
+      box.innerHTML = '<b>💡 Tip:</b> ' + item.hint;
+      box.classList.remove('hidden');
+    } else {
+      box.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('btn-hint').addEventListener('click', () => {
+    const item = questions[current];
+    if (item.hintUsed || hintsLeft === 0) return;
+    item.hintUsed = true;
+    hintsLeft--;
+    renderQuestion();
+  });
+
+  document.getElementById('btn-fifty').addEventListener('click', () => {
+    const item = questions[current];
+    const n = fiftyRemoveCount(item);
+    if (item.removed.length || fiftyLeft === 0 || n === 0) return;
+    item.removed = shuffle(wrongIndices(item)).slice(0, n);
+    fiftyLeft--;
+    // clear any selection that was just crossed out
+    const ans = answers[current];
+    if (item.multi) answers[current] = ans.filter(i => !item.removed.includes(i));
+    else if (item.removed.includes(ans)) answers[current] = null;
+    renderQuestion();
+  });
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    const qHint = document.getElementById('q-hint');
+    if (item.multi) {
+      qHint.textContent = 'Select ' + item.selectCount + ' answers';
+      qHint.classList.remove('hidden');
+    } else {
+      qHint.classList.add('hidden');
+    }
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      const ans = answers[current];
+      const isSelected = item.multi ? (Array.isArray(ans) && ans.includes(idx)) : (ans === idx);
+      if (isSelected) btn.classList.add('selected');
+      if (item.removed.includes(idx)) { btn.classList.add('removed'); btn.disabled = true; }
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        if (item.multi) {
+          const cur = Array.isArray(answers[current]) ? answers[current].slice() : [];
+          const pos = cur.indexOf(idx);
+          if (pos >= 0) {
+            cur.splice(pos, 1);
+          } else if (cur.length < item.selectCount) {
+            cur.push(idx);
+          }
+          answers[current] = cur;
+        } else {
+          answers[current] = idx;
+        }
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    renderHelpers(item);
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = !isAnswered(item, answers[current]);
+    btnNext.textContent = current === questions.length - 1 ? 'FINISH ▶' : 'NEXT ▶';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#FF8A1F', '#FFB347', '#A86BFF', '#7FDB5A', '#FFD23F', '#E0457B'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = isCorrectAnswer(item, answers[i]);
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Spooktacular! You're crushing it.";
+      scoreEmoji.textContent = "🎃🐢💨";
+      if (!window.kbaKeyMode) launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Fang-tastic pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "🦇🐢";
+      if (!window.kbaKeyMode) launchFireworks();
+    } else {
+      verdict.textContent = "No need to be scared, review below and try again.";
+      scoreEmoji.textContent = "👻🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    document.getElementById('helper-summary').textContent =
+      'Hints used: ' + (MAX_HINTS - hintsLeft) + ' of ' + MAX_HINTS + ' \u00b7 50/50 used: ' + (MAX_FIFTY - fiftyLeft) + ' of ' + MAX_FIFTY;
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = isCorrectAnswer(item, userAns);
+      const div = document.createElement('div');
+      div.className = 'review-item';
+
+      function labelFor(idx) { return String.fromCharCode(65 + idx) + '. ' + item.displayOpts[idx]; }
+
+      let userLabel, correctLabel, userNote;
+      if (item.multi) {
+        const ansArr = Array.isArray(userAns) ? userAns.slice().sort((a, b) => a - b) : [];
+        userLabel = ansArr.length ? ansArr.map(labelFor).join('; ') : 'No answer';
+        correctLabel = item.correctIndices.map(labelFor).join('; ');
+        const wrongNotes = ansArr.filter(idx => !item.correctIndices.includes(idx)).map(idx => item.displayNotes[idx]).filter(Boolean);
+        userNote = (!isCorrect && wrongNotes.length) ? '<div class="review-note">' + wrongNotes.join(' ') + '</div>' : '';
+      } else {
+        userLabel = userAns === null ? 'No answer' : labelFor(userAns);
+        correctLabel = labelFor(item.correctIndex);
+        userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+      }
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+          ((item.hintUsed || item.removed.length) ? '<span class="review-tags">' +
+            (item.hintUsed ? '<span class="review-tag">💡 hint</span>' : '') +
+            (item.removed.length ? '<span class="review-tag">✂️ 50/50</span>' : '') + '</span>' : '') +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+
+  // Answer key mode: fill every question with the correct answer and jump to the end
+  window.kbaAnswerKey = function () {
+    window.kbaKeyMode = true;
+    buildQuestionSet();
+    questions.forEach((item, i) => {
+      answers[i] = item.multi ? item.correctIndices.slice() : item.correctIndex;
+    });
+    clearInterval(timer);
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.add('hidden');
+    finishTest();
+    document.getElementById('review-list').classList.remove('hidden');
+  };
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+<script src="retro.js?v=9"></script>
+<script src="music.js?v=9" data-pos="header"></script>
+</body>
+</html>
