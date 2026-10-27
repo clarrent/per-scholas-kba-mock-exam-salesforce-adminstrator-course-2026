@@ -11,7 +11,7 @@
     { title: 'MAMACITA',      src: 'mamacita.mp3',      len: 25.043469, gain: 0.83 },
     { title: 'GO TO WASTE',   src: 'go-to-waste.mp3',   len: 30.720000, gain: 1.0 }
   ];
-  var VER = '7';
+  var VER = '6';
   var VOLUME = 0.3;            // 30%
   var SILENT = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
   var KEY = 'kbaMusic';
@@ -83,30 +83,14 @@
     if (source) { try { source.onended = null; source.stop(); } catch (e) {} source.disconnect(); source = null; }
   }
 
-  var playToken = 0, pendingOffset = 0, busy = false;
-
-  // ---------- only one tab plays at a time ----------
-  var me = Math.random().toString(36).slice(2);
-  var bc = null;
-  try { bc = new BroadcastChannel('kba-music'); } catch (e) {}
-  function announce() { if (bc) { try { bc.postMessage({ type: 'playing', from: me }); } catch (e) {} } }
-  if (bc) bc.onmessage = function (e) {
-    if (!e.data || e.data.from === me || e.data.type !== 'playing') return;
-    // another tab took over: go quiet here (shown as paused, tap play to take it back)
-    playToken++; busy = false;
-    stopSource(); sleepMobile();
-    if (typeof disarmResume === 'function') disarmResume();
-    render();
-  };
+  var playToken = 0, pendingOffset = 0;
   function startTrack(offset) {
     if (!ensureCtx()) return;
     var token = ++playToken, i = state.track;
-    busy = true;
     setStatus('LOADING');
     load(i).then(function (buf) {
-      if (token !== playToken || !state.on || !state.playing) { if (token === playToken) busy = false; return; }
+      if (token !== playToken || !state.on || !state.playing) return;
       stopSource();
-      busy = false;
       var t = TRACKS[i];
       loopStart = findStart(buf);
       loopLen = Math.min(t.len, buf.duration - loopStart);
@@ -121,14 +105,12 @@
       source.connect(trackGain);
       source.start(0, loopStart + off);
       startedAt = ctx.currentTime - off;
-      announce();
       setStatus('');
       render();
       // preload the next track so Next is instant
       load((i + 1) % TRACKS.length).catch(function () {});
     }).catch(function (err) {
       if (token !== playToken) return;
-      busy = false;
       if (window.console) console.warn('[music] Web Audio failed, using backup player:', err);
       playWithElement(i, offset, token);
     });
@@ -146,7 +128,7 @@
     a.addEventListener('loadedmetadata', function () { try { a.currentTime = (offset || 0) % (a.duration || t.len); } catch (e) {} });
     mediaEl = a;
     var p = a.play();
-    var ok = function () { announce(); setStatus(''); render(); };
+    var ok = function () { setStatus(''); render(); };
     var fail = function (err) {
       if (window.console) console.warn('[music] could not play', t.src, err);
       setStatus(err && err.name === 'NotAllowedError' ? '' : 'ERROR');
@@ -186,16 +168,16 @@
   function toggleSpeaker() {
     state.on = !state.on;
     if (state.on) { unlockMobile(); state.playing = true; play(currentOffset()); }
-    else { state.offset = currentOffset(); playToken++; busy = false; stopSource(); sleepMobile(); }
+    else { state.offset = currentOffset(); stopSource(); sleepMobile(); }
     save(); render();
   }
   function togglePlay() {
     if (!state.on) { toggleSpeaker(); return; }
     // music was waiting for a tap to resume: start it instead of pausing
-    if (state.playing && !source && !mediaEl && !busy) { unlockMobile(); play(state.offset); save(); render(); return; }
+    if (state.playing && !source && !mediaEl) { unlockMobile(); play(state.offset); save(); render(); return; }
     state.playing = !state.playing;
     if (state.playing) { unlockMobile(); play(state.offset); }
-    else { state.offset = currentOffset(); playToken++; busy = false; stopSource(); sleepMobile(); }
+    else { state.offset = currentOffset(); stopSource(); sleepMobile(); }
     save(); render();
   }
   function skip(dir) {
@@ -301,8 +283,7 @@
   function render() {
     var spk = el.querySelector('[data-act="spk"]');
     var pl = el.querySelector('[data-act="play"]');
-    var sounding = !!(source || mediaEl) || busy;
-    var isPlaying = state.on && state.playing && sounding;
+    var isPlaying = state.on && state.playing;
     spk.textContent = state.on ? '🔊' : '🔇';
     spk.classList.toggle('off', !state.on);
     spk.setAttribute('aria-label', state.on ? 'Turn music off' : 'Turn music on');
@@ -311,7 +292,7 @@
     el.classList.toggle('on', state.on);
     el.classList.toggle('playing', state.playing);
     var b = el.querySelector('.ttl b'), sp = el.querySelector('.ttl span');
-    var waitingTap = state.on && state.playing && !sounding;
+    var waitingTap = isPlaying && !mediaEl && (!ctx || ctx.state !== 'running');
     if (waitingTap) {
       b.innerHTML = 'TRACK ' + (state.track + 1) + '/' + TRACKS.length;
       sp.className = 'tap'; sp.textContent = 'TAP TO PLAY';
@@ -339,7 +320,6 @@
 
   var EVENTS = ['pointerdown', 'touchend', 'click', 'keydown'];
   function onFirstTap(e) {
-    if (e && e.target && e.target.closest && e.target.closest('.kba-player, .kba-mini')) { disarmResume(); return; }
     disarmResume();
     if (!state.on || !state.playing) return;
     unlockMobile();
@@ -381,4 +361,33 @@
     }
   }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+  // ---------- button sounds: bling on cursor hover, select on click ----------
+  // Only while the speaker is on, so muting the music mutes these too.
+  var SFX_SEL = 'button, a.quest, [role="button"]';
+  var sfxHover = new Audio('sfx-bling.wav');
+  var sfxClick = new Audio('sfx-select.wav');
+  sfxHover.volume = 0.35; sfxClick.volume = 0.5;
+  var lastHover = 0;
+  function sfxPlay(el) {
+    if (!state.on) return;
+    try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+  }
+  function sfxButton(e) {
+    var t = e.target;
+    if (!t || !t.closest) return null;
+    var b = t.closest(SFX_SEL);
+    return (b && !b.disabled) ? b : null;
+  }
+  document.addEventListener('pointerover', function (e) {
+    if (e.pointerType !== 'mouse') return;               // phones have no hover
+    var b = sfxButton(e);
+    if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return;
+    var now = Date.now();
+    if (now - lastHover < 120) return;                   // stops a rapid buzz when sweeping across buttons
+    lastHover = now;
+    sfxPlay(sfxHover);
+  });
+  document.addEventListener('click', function (e) {
+    if (sfxButton(e)) sfxPlay(sfxClick);
+  });
 })();
