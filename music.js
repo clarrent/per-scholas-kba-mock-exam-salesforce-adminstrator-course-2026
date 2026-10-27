@@ -361,33 +361,38 @@
     }
   }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
-  // ---------- button sounds: bling on cursor hover, select on click ----------
-  // Only while the speaker is on, so muting the music mutes these too.
-  var SFX_SEL = 'button, a.quest, [role="button"]';
+  // ---------- button sounds ----------
+  // Bling on hover: quiz answers and quiz BACK / NEXT.
+  // Select on click: START, BACK and NEXT. Both follow the speaker, so mute silences them.
+  var BLING_SEL = '.opt, #btn-prev, #btn-next';
+  var SELECT_SEL = '#btn-start, #press, #btn-prev, #btn-next';
   var sfxHover = new Audio('sfx-bling.wav');
   var sfxClick = new Audio('sfx-select.wav');
-  sfxHover.volume = 0.35; sfxClick.volume = 0.5;
+  sfxHover.volume = 0.1; sfxClick.volume = 0.1;
   var lastHover = 0;
   function sfxPlay(el) {
     if (!state.on) return;
     try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
-  function sfxButton(e) {
+  function sfxMatch(e, sel) {
     var t = e.target;
-    if (!t || !t.closest) return null;
-    var b = t.closest(SFX_SEL);
-    return (b && !b.disabled) ? b : null;
+    if (!t || !t.closest) return false;
+    var b = t.closest(sel);
+    return !!(b && !b.disabled);
   }
   document.addEventListener('pointerover', function (e) {
     if (e.pointerType !== 'mouse') return;               // phones have no hover
-    var b = sfxButton(e);
-    if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return;
+    if (!sfxMatch(e, BLING_SEL)) return;
+    var b = e.target.closest(BLING_SEL);
+    if (e.relatedTarget && b.contains(e.relatedTarget)) return;
     var now = Date.now();
-    if (now - lastHover < 120) return;                   // stops a rapid buzz when sweeping across buttons
+    if (now - lastHover < 120) return;                   // stops a buzz when sweeping across buttons
     lastHover = now;
     sfxPlay(sfxHover);
   });
-  document.addEventListener('click', function (e) {
-    if (sfxButton(e)) sfxPlay(sfxClick);
+  // on press, not click: NEXT/BACK disable themselves during the click, which would skip the sound
+  document.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;                          // left button only
+    if (sfxMatch(e, SELECT_SEL)) sfxPlay(sfxClick);
   });
 })();
