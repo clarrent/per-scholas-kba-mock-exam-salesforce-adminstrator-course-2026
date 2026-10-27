@@ -362,37 +362,20 @@
   }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
   // ---------- button sounds ----------
-  // Bling on hover: quiz answers and quiz BACK / NEXT.
-  // Select on click: START, BACK and NEXT. Both follow the speaker, so mute silences them.
-  var BLING_SEL = '.opt, #btn-prev, #btn-next';
+  // Select on press: START, BACK and NEXT. Follows the speaker, so mute silences it.
   var SELECT_SEL = '#btn-start, #press, #btn-prev, #btn-next';
-  var sfxHover = new Audio('sfx-bling.wav');
   var sfxClick = new Audio('sfx-select.wav');
-  sfxHover.volume = 0.1; sfxClick.volume = 0.1;
-  var lastHover = 0;
+  sfxClick.volume = 0.1;
   function sfxPlay(el) {
     if (!state.on) return;
     try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
-  function sfxMatch(e, sel) {
-    var t = e.target;
-    if (!t || !t.closest) return false;
-    var b = t.closest(sel);
-    return !!(b && !b.disabled);
-  }
-  document.addEventListener('pointerover', function (e) {
-    if (e.pointerType !== 'mouse') return;               // phones have no hover
-    if (!sfxMatch(e, BLING_SEL)) return;
-    var b = e.target.closest(BLING_SEL);
-    if (e.relatedTarget && b.contains(e.relatedTarget)) return;
-    var now = Date.now();
-    if (now - lastHover < 120) return;                   // stops a buzz when sweeping across buttons
-    lastHover = now;
-    sfxPlay(sfxHover);
-  });
   // on press, not click: NEXT/BACK disable themselves during the click, which would skip the sound
   document.addEventListener('pointerdown', function (e) {
     if (e.button !== 0) return;                          // left button only
-    if (sfxMatch(e, SELECT_SEL)) sfxPlay(sfxClick);
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var b = t.closest(SELECT_SEL);
+    if (b && !b.disabled) sfxPlay(sfxClick);
   });
 })();
