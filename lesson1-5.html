@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>🎃 KBA Lesson 1-5 Mock Exam</title>
+<title>🦃 KBA Lesson 1-5 Mock Exam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #14201A;
@@ -186,7 +186,7 @@
     .score-num { font-size: 42px; }
   }
 
-  /* ===== Halloween theme ===== */
+  /* ===== Winter Thanksgiving theme ===== */
   :root {
     --ink: #2A1636;
     --ink-soft: #6E5A78;
@@ -203,7 +203,7 @@
     --on-accent: #FFFFFF;
     --glow: rgba(194,81,10,0.30);
     --moon: rgba(255,214,140,0.55);
-    --spooky: 'Creepster', 'Manrope', cursive;
+    --spooky: 'Mountains of Christmas', 'Manrope', cursive;
     --shadow: 0 1px 2px rgba(42,22,54,0.06), 0 8px 24px rgba(42,22,54,0.10);
   }
   :root:not([data-theme="light"]) {
@@ -275,15 +275,15 @@
   @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="retro.css?v=10">
+<link rel="stylesheet" href="retro.css?v=11">
 </head>
 <body>
-<div class="bats" aria-hidden="true"><span>🦇</span><span>🦇</span><span>🕸️</span><span>🦇</span><span>👻</span></div>
+<div class="bats" aria-hidden="true"><span>❄️</span><span>❄️</span><span>🍂</span><span>❄️</span><span>⛄</span></div>
 <canvas id="fx-canvas"></canvas>
 <div class="wrap">
 
   <div class="top-strip">
-    <div class="brand">🎃 KBA Mock Exam<small>Lesson 1-5 &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="brand">🦃 KBA Mock Exam<small>Lesson 1-5 &middot; Salesforce Admin Bootcamp</small></div>
     <div class="clock" id="clock">45:00</div>
   </div>
 
@@ -317,7 +317,7 @@
 
   <div id="screen-results" class="hidden">
     <div class="card score-wrap">
-      <div class="score-emoji" id="score-emoji">🎃</div>
+      <div class="score-emoji" id="score-emoji">🦃</div>
       <div class="q-meta" style="text-align:center;">RESULTS</div>
       <div class="score-num" id="score-num">0 / 20</div>
       <div class="score-pct" id="score-pct">0%</div>
@@ -827,7 +827,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const colors = ['#FF8A1F', '#FFB347', '#A86BFF', '#7FDB5A', '#FFD23F', '#E0457B'];
+    const colors = ['#F2A541', '#FFE08A', '#7FB8E0', '#FFFFFF', '#E0646B', '#8ED08F'];
     let particles = [];
 
     function spawnBurst(x, y) {
@@ -911,16 +911,16 @@
     const scoreEmoji = document.getElementById('score-emoji');
     const verdict = document.getElementById('score-verdict');
     if (pct >= 85) {
-      verdict.textContent = "Spooktacular! You're crushing it.";
-      scoreEmoji.textContent = "🎃🐢💨";
+      verdict.textContent = "Gobble-tastic! You're crushing it.";
+      scoreEmoji.textContent = "🦃🐢💨";
       if (!window.kbaKeyMode) launchFireworks();
     } else if (pct >= 70) {
-      verdict.textContent = "Fang-tastic pace! Review the misses below to pick up speed.";
-      scoreEmoji.textContent = "🦇🐢";
+      verdict.textContent = "Turkey-trot pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "❄️🐢";
       if (!window.kbaKeyMode) launchFireworks();
     } else {
-      verdict.textContent = "No need to be scared, review below and try again.";
-      scoreEmoji.textContent = "👻🐢";
+      verdict.textContent = "Don't let the chill get you. Review below and try again.";
+      scoreEmoji.textContent = "⛄🐢";
     }
 
     const bdRows = document.getElementById('breakdown-rows');
@@ -1021,7 +1021,7 @@
   clockEl.textContent = formatClock(TIME_LIMIT);
 })();
 </script>
-<script src="retro.js?v=10"></script>
-<script src="music.js?v=10" data-pos="header"></script>
+<script src="retro.js?v=11"></script>
+<script src="music.js?v=11" data-pos="header"></script>
 </body>
 </html>

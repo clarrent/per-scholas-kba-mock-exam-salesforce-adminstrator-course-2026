@@ -361,21 +361,4 @@
     }
   }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
-  // ---------- button sounds ----------
-  // Select on press: START, BACK and NEXT. Follows the speaker, so mute silences it.
-  var SELECT_SEL = '#btn-start, #press, #btn-prev, #btn-next';
-  var sfxClick = new Audio('sfx-select.wav');
-  sfxClick.volume = 0.1;
-  function sfxPlay(el) {
-    if (!state.on) return;
-    try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
-  }
-  // on press, not click: NEXT/BACK disable themselves during the click, which would skip the sound
-  document.addEventListener('pointerdown', function (e) {
-    if (e.button !== 0) return;                          // left button only
-    var t = e.target;
-    if (!t || !t.closest) return;
-    var b = t.closest(SELECT_SEL);
-    if (b && !b.disabled) sfxPlay(sfxClick);
-  });
 })();

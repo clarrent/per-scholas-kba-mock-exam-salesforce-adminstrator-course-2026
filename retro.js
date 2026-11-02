@@ -135,11 +135,11 @@
       var c = cv.getContext('2d');
       c.imageSmoothingEnabled = false;
       var PIX = '"Press Start 2P", monospace', SANS = 'Manrope, "Segoe UI", sans-serif';
-      var ink = '#F5EDE0', soft = '#B9A8C8', gold = '#FFD23F', orange = '#FF8A1F', purple = '#A86BFF', green = '#7FDB5A', red = '#FF6B6B';
+      var ink = '#EAF2FB', soft = '#A9BCD3', gold = '#FFE08A', orange = '#FF8A1F', purple = '#7FB8E0', green = '#8ED08F', red = '#E0646B';
     
       // background
       var g = c.createLinearGradient(0, 0, 0, H);
-      g.addColorStop(0, '#0A0716'); g.addColorStop(1, '#1D1640');
+      g.addColorStop(0, '#060B1A'); g.addColorStop(1, '#1B2F50');
       c.fillStyle = g; c.fillRect(0, 0, W, H);
       // pixel frame
       c.fillStyle = '#000'; c.fillRect(36, 36, W - 72, H - 72);
@@ -193,7 +193,7 @@
         c.textAlign = 'left';
         y += 16;
         c.fillStyle = '#000'; c.fillRect(left, y, barW, 22);
-        c.fillStyle = '#4A3A63'; c.fillRect(left, y, barW, 3);
+        c.fillStyle = '#34506F'; c.fillRect(left, y, barW, 3);
         var p = dm.right / dm.total, col = p >= 0.8 ? green : p >= 0.6 ? orange : red;
         var segs = Math.round(p * 40);
         for (var i = 0; i < segs; i++) { c.fillStyle = col; c.fillRect(left + 4 + i * (barW - 8) / 40, y + 5, (barW - 8) / 40 - 4, 13); }
@@ -203,7 +203,7 @@
       // footer
       c.textAlign = 'center';
       var fy = H - 150;
-      c.fillStyle = '#4A3A63'; c.fillRect(140, fy - 50, W - 280, 3);
+      c.fillStyle = '#34506F'; c.fillRect(140, fy - 50, W - 280, 3);
       c.fillStyle = ink; c.font = '700 28px ' + SANS;
       c.fillText('Salesforce Admin Bootcamp Training', W / 2, fy);
       c.fillStyle = soft; c.font = '600 24px ' + SANS;
@@ -390,25 +390,31 @@
       }, '#0E1A10');
     }
     var trophy = sprite(9, 10, function (x, y) {
-      if (y <= 4) { if (x >= 1 && x <= 7) return (x === 2 && y < 4) ? '#FFF3A0' : '#FFD23F'; if ((x === 0 || x === 8) && y >= 1 && y <= 2) return '#E0A800'; return null; }
+      if (y <= 4) { if (x >= 1 && x <= 7) return (x === 2 && y < 4) ? '#FFF3A0' : '#FFE08A'; if ((x === 0 || x === 8) && y >= 1 && y <= 2) return '#E0A800'; return null; }
       if (y <= 6 && x >= 3 && x <= 5) return '#E0A800';
-      if (y >= 7 && x >= 2 && x <= 6) return y === 9 ? '#8A5A00' : '#FFD23F';
+      if (y >= 7 && x >= 2 && x <= 6) return y === 9 ? '#8A5A00' : '#FFE08A';
       return null;
     }, '#2A1A00');
     var pumpkin = sprite(9, 7, function (x, y) {
       if (y === 0) return x === 4 ? '#5A7A2A' : null;
       var dx = (x - 4) / 4.5, dy = (y - 4) / 3.1;
       if (dx * dx + dy * dy > 1) return null;
-      if ((y === 3 && (x === 2 || x === 6)) || (y === 5 && x >= 2 && x <= 6 && x !== 4)) return '#FFD23F';
+      if ((y === 3 && (x === 2 || x === 6)) || (y === 5 && x >= 2 && x <= 6 && x !== 4)) return '#FFE08A';
       return (x === 1 || x === 4 || x === 7) ? '#C2510A' : '#F07A1A';
     }, '#2A1206');
-    var ghost = sprite(9, 10, function (x, y) {
-      var dx = (x - 4) / 4.5, dy = (y - 4) / 4.5;
-      var body = (y <= 4 && dx * dx + dy * dy <= 1) || (y > 4 && y < 9) || (y === 9 && x % 3 !== 1);
-      if (!body) return null;
-      if ((y === 4 && (x === 2 || x === 6)) || (y === 6 && x === 4)) return '#2A1636';
-      return '#EDE7FF';
-    }, null);
+    var snowman = sprite(9, 14, function (x, y) {
+      if (y <= 1 && x >= 2 && x <= 6) return '#1B1A24';
+      if (y === 2 && x >= 1 && x <= 7) return '#1B1A24';
+      var hx = (x - 4) / 2.8, hy = (y - 5.5) / 2.8;
+      if (y >= 3 && y <= 8 && hx * hx + hy * hy <= 1) {
+        if (y === 4 && (x === 3 || x === 5)) return '#141218';
+        if (y === 6 && x === 4) return '#F2A541';
+        return '#F4F8FF';
+      }
+      var bx = (x - 4) / 3.6, by = (y - 11) / 2.9;
+      if (y >= 8 && bx * bx + by * by <= 1) return (y === 10 && x === 4) ? '#141218' : '#E9F1FB';
+      return null;
+    }, '#2A3850');
     var tSleep = turtle(false), tAwake = turtle(true);
 
     // mini Clarrent: 16x24 sprite, arms up to cheer or one arm waving
@@ -450,7 +456,7 @@
         if (x === 0) return '#C08040';                     // pole
         var top = (f && x > 4) ? 1 : 0;                    // flag ripples
         if (y >= top && y <= top + 6 && x >= 1 && x <= 10 - Math.floor(Math.abs(y - top - 3) * 1.2)) {
-          return (y - top === 3 && x > 2 && x < 8) ? '#FFD23F' : '#FF8A1F';
+          return (y - top === 3 && x > 2 && x < 8) ? '#FFE08A' : '#FF8A1F';
         }
         return null;
       }, '#0E0810');
@@ -520,11 +526,12 @@
       var stars = []; for (var i = 0; i < 40; i++) stars.push({ x: rnd() * W | 0, y: rnd() * (gy - 6) | 0, p: rnd() * 6 });
       var ground = []; for (var j = 0; j < W * (H - gy); j++) ground.push(rnd());
       var bursts = [], embers = [];
+      var flakes = []; for (var fi = 0; fi < 26; fi++) flakes.push({ x: rnd() * W, y: rnd() * gy, v: 0.2 + rnd() * 0.3, p: rnd() * 6 });
 
       function frame() {
         t++;
         // sky
-        var bands = ['#0A0716', '#0E0A20', '#120E2A', '#171236', '#1D1640', '#24194A'];
+        var bands = ['#060B1A', '#0A1228', '#0F1B36', '#152542', '#1B2F50', '#1E3358'];
         for (var y = 0; y < gy; y++) rect(c, 0, y, W, 1, bands[Math.min(5, Math.floor(y / gy * 6))]);
         stars.forEach(function (s) { c.globalAlpha = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 0.08 + s.p)); px(c, s.x, s.y, '#C9C2E8'); });
         c.globalAlpha = 1;
@@ -533,11 +540,11 @@
         // trees
         for (var tx = 0; tx < W; tx += 9) {
           var th = 8 + ((tx * 7) % 9);
-          for (var k = 0; k < th; k++) { var half = Math.floor(k / th * th * 0.35); rect(c, tx - half, gy - th + k, half * 2 + 1, 1, '#0C1A1E'); }
+          for (var k = 0; k < th; k++) { var half = Math.floor(k / th * th * 0.35); rect(c, tx - half, gy - th + k, half * 2 + 1, 1, '#14264A'); if (k > 3 && k % 3 === 0) { px(c, tx - half, gy - th + k, '#C9DAEE'); px(c, tx + half, gy - th + k, '#C9DAEE'); } }
         }
         // ground
         for (var gy2 = gy, n = 0; gy2 < H; gy2++) for (var gx = 0; gx < W; gx++, n++) {
-          var r = ground[n]; px(c, gx, gy2, r < 0.5 ? '#1F3A22' : r < 0.8 ? '#23432A' : '#1B331F');
+          var r = ground[n]; px(c, gx, gy2, r < 0.5 ? '#DCE7F5' : r < 0.8 ? '#C9D9EC' : '#B4C8E0');
         }
         // fire glow
         var fl = 0.85 + 0.15 * Math.sin(t * 0.33);
@@ -549,12 +556,12 @@
           var h = Math.max(1, Math.round(7 - Math.abs(dx) * 1.3 + Math.sin(t * 0.45 + dx * 1.7) * 1.4 + (Math.random() - 0.5)));
           for (var dy = 0; dy < h; dy++) {
             var f = dy / h; if (f > 0.75 && Math.random() < 0.35) continue;
-            px(c, fx + dx, fy - 1 - dy, f < 0.25 ? '#FFF6C8' : f < 0.5 ? '#FFD23F' : f < 0.78 ? '#FF8A1F' : '#D43D1A');
+            px(c, fx + dx, fy - 1 - dy, f < 0.25 ? '#FFF6C8' : f < 0.5 ? '#FFE08A' : f < 0.78 ? '#FF8A1F' : '#D43D1A');
           }
         }
         if (Math.random() < 0.3) embers.push({ x: fx + (Math.random() - 0.5) * 6, y: fy - 6, a: 0, l: 40 + Math.random() * 30 });
         embers = embers.filter(function (e) { return e.a < e.l; });
-        embers.forEach(function (e) { e.a++; e.y -= 0.3; e.x += Math.sin(e.a * 0.1) * 0.2; c.globalAlpha = 1 - e.a / e.l; px(c, e.x, e.y, '#FFD23F'); });
+        embers.forEach(function (e) { e.a++; e.y -= 0.3; e.x += Math.sin(e.a * 0.1) * 0.2; c.globalAlpha = 1 - e.a / e.l; px(c, e.x, e.y, '#FFE08A'); });
         c.globalAlpha = 1;
         // pumpkins
         c.drawImage(pumpkin, fx + 12, gy + 2);
@@ -566,7 +573,7 @@
           c.drawImage(tAwake, fx - 36, fy - 13 - hop);
           if (variant !== 'trophy') c.drawImage(trophy, fx - 46, fy - 12 + (Math.sin(t * 0.1) > 0 ? 0 : 1));
 
-          if (t % 22 === 1) bursts.push({ x: 50 + Math.random() * 90, y: 8 + Math.random() * 16, a: 0, col: ['#FF8A1F', '#A86BFF', '#7FDB5A', '#FFD23F'][Math.floor(Math.random() * 4)] });
+          if (t % 22 === 1) bursts.push({ x: 50 + Math.random() * 90, y: 8 + Math.random() * 16, a: 0, col: ['#FF8A1F', '#7FB8E0', '#8ED08F', '#FFE08A'][Math.floor(Math.random() * 4)] });
           bursts = bursts.filter(function (b) { return b.a < 26; });
           bursts.forEach(function (b) {
             b.a++; var r = b.a * 0.45;
@@ -578,16 +585,17 @@
           // turtle resting by the fire
           c.drawImage(Math.floor(t / 120) % 6 === 0 ? tAwake : tSleep, fx - 36, fy - 13 + (Math.floor(t / 30) % 2));
         } else {
-          // turtle asleep, a ghost floats by, zzz
+          // turtle asleep by a snowman, zzz
           c.drawImage(tSleep, fx - 36, fy - 13 + (Math.floor(t / 30) % 2));
           var zt = t % 90;
           c.globalAlpha = Math.max(0, 1 - zt / 90);
           var zx = fx - 12 + zt / 15, zy = fy - 16 - zt / 6;
           rect(c, zx, zy, 4, 1, '#C9C2E8'); px(c, zx + 2, zy + 1, '#C9C2E8'); px(c, zx + 1, zy + 2, '#C9C2E8'); rect(c, zx, zy + 3, 4, 1, '#C9C2E8');
-          c.globalAlpha = 0.5 + 0.3 * Math.sin(t * 0.05);
-          c.drawImage(ghost, 140 + Math.sin(t * 0.03) * 5, 14 + Math.sin(t * 0.07) * 3);
+          c.globalAlpha = 1;
+          c.drawImage(snowman, 140, gy - 15);
           c.globalAlpha = 1;
         }
+        flakes.forEach(function (f) { f.y += f.v; f.x += Math.sin(t * 0.05 + f.p) * 0.2; if (f.y > H) { f.y = -1; f.x = Math.random() * W; } px(c, f.x, f.y, '#F4F8FF'); });
         drawClarrent(c, mood, variant, t, fx, fy);
       }
 

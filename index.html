@@ -3,31 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>🎃 KBA Mock Exams</title>
+<title>🦃 KBA Mock Exams</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-  /* The campfire scene is a night scene, so both light and dark use the same night palette */
+  /* The winter cabin scene is a night scene, so both light and dark use the same night palette */
   :root {
-    --ink: #F5EDE0;
-    --ink-soft: #B5A3C4;
-    --bg: #0B0814;
-    --box: rgba(14, 9, 24, 0.86);
-    --box-border: #F5EDE0;
-    --accent: #FF8A1F;
-    --accent-2: #A86BFF;
-    --gold: #FFD23F;
-    --shadow-txt: #6A2A00;
+    --ink: #EAF2FB;
+    --ink-soft: #A9BCD3;
+    --bg: #070B16;
+    --box: rgba(9, 15, 30, 0.86);
+    --box-border: #EAF2FB;
+    --accent: #F2A541;
+    --accent-2: #7FB8E0;
+    --gold: #FFE08A;
+    --shadow-txt: #3A2A10;
     --pixel: 'Press Start 2P', 'Courier New', monospace;
   }
   :root:not([data-theme="light"]) {
     @media (prefers-color-scheme: dark) {
-      --ink: #F5EDE0;
-      --bg: #0B0814;
+      --ink: #EAF2FB;
+      --bg: #070B16;
     }
   }
-  :root[data-theme="dark"] { --ink: #F5EDE0; --bg: #0B0814; }
+  :root[data-theme="dark"] { --ink: #EAF2FB; --bg: #070B16; }
 
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); overflow: hidden; }
@@ -156,14 +156,14 @@
 <main class="ui">
   <div class="title-wrap">
     <h1 class="title">KBA MOCK<br>EXAMS</h1>
-    <p class="subtitle">SALESFORCE ADMIN BOOTCAMP<br><span class="edition">🎃 SPOOKY SEASON EDITION 🎃</span></p>
+    <p class="subtitle">SALESFORCE ADMIN BOOTCAMP<br><span class="edition">🦃 WINTER THANKSGIVING EDITION 🦃</span></p>
   </div>
 
   <button class="press" id="press" type="button">▶ PRESS START</button>
 
   <nav class="menu hidden" id="menu" aria-label="Choose a lesson">
     <p class="menu-head">🔥 SAVE POINT REACHED</p>
-    <p class="menu-flavor">You rest by the campfire. Focus restored.<br>Select your quest:</p>
+    <p class="menu-flavor">You warm up by the cabin fire. Focus restored.<br>Select your quest:</p>
     <ul class="quest-list" id="quest-list">
       <li><a class="quest" href="lesson1-5.html"><span class="cursor">▶</span><span><span class="name">LESSON 1-5</span><span class="desc">Configuration, Object Manager, Sales &amp; Marketing</span></span></a></li>
       <li><a class="quest" href="lesson6.html"><span class="cursor">▶</span><span><span class="name">LESSON 6</span><span class="desc">Data Security &amp; User Management (602.1 / 602.2)</span></span></a></li>
@@ -290,7 +290,7 @@
   });
 
   // ====================================================================
-  //  Pixel art scene (all drawn in code, original art)
+  //  Pixel art scene (all drawn in code, original art): a snowy night at the cabin
   // ====================================================================
   const canvas = document.getElementById('scene');
   const ctx = canvas.getContext('2d');
@@ -338,13 +338,13 @@
       // head
       const hx = (x - 21.5) / 3.4, hy = (y - 7.2) / 3.0;
       if (hx * hx + hy * hy <= 1 && x >= 18) {
-        if (y === 5 && x >= 19 && x <= 24) return '#FF8A1F';
+        if (y === 5 && x >= 19 && x <= 24) return '#C23B4F';
         if (blink && y === 7 && (x === 22 || x === 23)) return '#1B2B17';
         if (!blink && y === 7 && x === 23) return '#1B2B17';
         if (y >= 9) return '#6FB052';
         return '#8FCF6A';
       }
-      if ((x === 18 || x === 17) && (y === 4 || y === 3)) return '#FF8A1F'; // bandana tails
+      if ((x === 18 || x === 17) && (y === 4 || y === 3)) return '#C23B4F'; // bandana tails
       // legs
       if (y >= 9 && y <= 11 && ((x >= 3 && x <= 6) || (x >= 13 && x <= 16))) return y === 11 ? '#6FB052' : '#8FCF6A';
       if (y === 9 && x >= 0 && x <= 2) return '#8FCF6A'; // tail
@@ -354,7 +354,7 @@
 
   // ---- jack-o-lantern ----
   function pumpkinSprite(glow) {
-    const face = glow > 0.6 ? '#FFF3A0' : '#FFD23F';
+    const face = glow > 0.6 ? '#FFF3A0' : '#FFE08A';
     return makeSprite(11, 9, (x, y) => {
       if (y <= 1) return (x === 5 || (x === 6 && y === 0)) ? '#5A7A2A' : null;
       const dx = (x - 5) / 5.4, dy = (y - 5) / 3.7;
@@ -367,26 +367,26 @@
     }, '#2A1206');
   }
 
-  // ---- bat (2 frames) ----
-  function batSprite(up) {
-    const rows = up
-      ? ['K.......K', 'KK.KKK.KK', '.KKKKKKK.', '...K.K...']
-      : ['...KKK...', '.KKKKKKK.', 'KK.K.K.KK', 'K.......K'];
-    return makeSprite(9, 4, (x, y) => rows[y][x] === 'K' ? '#140A1E' : null, null);
+  // ---- snowman (top hat, carrot nose, coal eyes) ----
+  function snowmanSprite() {
+    return makeSprite(9, 14, (x, y) => {
+      if (y <= 1 && x >= 2 && x <= 6) return '#1B1A24';          // top hat
+      if (y === 2 && x >= 1 && x <= 7) return '#1B1A24';         // hat brim
+      const hx = (x - 4) / 2.8, hy = (y - 5.5) / 2.8;
+      if (y >= 3 && y <= 8 && hx * hx + hy * hy <= 1) {          // head
+        if (y === 4 && (x === 3 || x === 5)) return '#141218';   // coal eyes
+        if (y === 6 && x === 4) return '#F2A541';                // carrot nose
+        return '#F4F8FF';
+      }
+      const bx = (x - 4) / 3.6, by = (y - 11) / 2.9;
+      if (y >= 8 && bx * bx + by * by <= 1) return (y === 10 && x === 4) ? '#141218' : '#E9F1FB';  // body
+      return null;
+    }, '#2A3850');
   }
-
-  // ---- ghost ----
-  const ghost = makeSprite(9, 10, (x, y) => {
-    const dx = (x - 4) / 4.5, dy = (y - 4) / 4.5;
-    const body = (y <= 4 && dx * dx + dy * dy <= 1) || (y > 4 && y < 9) || (y === 9 && x % 3 !== 1);
-    if (!body) return null;
-    if ((y === 4 && (x === 2 || x === 6)) || (y === 6 && x >= 3 && x <= 5 && y === 6 && x === 4)) return '#2A1636';
-    return '#EDE7FF';
-  }, null);
 
   // ---- mini Clarrent, sitting by the fire with a warm mug ----
   const CLR = { H: '#261A18', h: '#5C4232', f: '#463430', S: '#DEA47A', s: '#BC805C', G: '#100E10', w: '#FAF4EC', E: '#281A14',
-                B: '#36261F', M: '#C88076', J: '#CCC8D0', j: '#9692A0', T: '#484854', t: '#34343E', K: '#1A1012', U: '#FF8A1F', u: '#C2510A' };
+                B: '#36261F', M: '#C88076', J: '#CCC8D0', j: '#9692A0', T: '#484854', t: '#34343E', K: '#1A1012', U: '#F2A541', u: '#C2510A' };
   function clarrentSitting(eyes, sip) {
     const rows = [
       '.......H..H.....', '.....HHHHHHH....', '....HHhHHHhHH...', '....fSSSSSSSf...', '....SHHSSHHS....',
@@ -402,9 +402,11 @@
   const sitA = clarrentSitting('half', false), sitBlink = clarrentSitting('open', false), sitSip = clarrentSitting('half', true);
 
   const sprites = {
-    turtle: turtleSprite(true), turtleOpen: turtleSprite(false),
-    batA: batSprite(true), batB: batSprite(false)
+    turtle: turtleSprite(true), turtleOpen: turtleSprite(false)
   };
+  const snowman = snowmanSprite();
+
+  const CABIN_W = 30;                 // log cabin width in pixels
 
   // ---- static background ----
   function buildBackground() {
@@ -413,8 +415,8 @@
     bg.width = W; bg.height = H;
     const c = bg.getContext('2d');
 
-    // sky bands (stepped like old games)
-    const bands = ['#0A0716', '#0E0A20', '#120E2A', '#171236', '#1D1640', '#24194A', '#2C1B4E'];
+    // night sky bands, cold blue (stepped like old games)
+    const bands = ['#060B1A', '#0A1228', '#0F1B36', '#152542', '#1B2F50', '#1E3358', '#24406A'];
     for (let y = 0; y < groundY; y++) {
       const t = y / groundY;
       let b = Math.min(bands.length - 1, Math.floor(t * bands.length));
@@ -426,75 +428,69 @@
     const mx = Math.floor(W * (portrait ? 0.18 : 0.16)), my = Math.floor(groundY * (portrait ? 0.56 : 0.2)), mr = 8;
     for (let y = -mr - 6; y <= mr + 6; y++) for (let x = -mr - 6; x <= mr + 6; x++) {
       const d = Math.sqrt(x * x + y * y);
-      if (d <= mr) px(c, mx + x, my + y, (x + y > 4 && d > mr - 3) ? '#E8D9A8' : '#FFF4CF');
-      else if (d <= mr + 3 && (x + y) % 2 === 0) px(c, mx + x, my + y, 'rgba(255,240,200,0.18)');
+      if (d <= mr) px(c, mx + x, my + y, (x + y > 4 && d > mr - 3) ? '#C9D8EE' : '#F2F7FF');
+      else if (d <= mr + 3 && (x + y) % 2 === 0) px(c, mx + x, my + y, 'rgba(220, 235, 255, 0.18)');
     }
-    [[-3, -2], [2, 3], [3, -3]].forEach(([x, y]) => px(c, mx + x, my + y, '#E0CF98'));
+    [[-3, -2], [2, 3], [3, -3]].forEach(([x, y]) => px(c, mx + x, my + y, '#B7C9E4'));
 
-    // far pine trees
+    // far pines, dark with snowy branch tips
     function pines(baseY, minH, maxH, color, step) {
       for (let x = -4; x < W + 4; x += step + Math.floor(rnd() * step)) {
         const h = minH + Math.floor(rnd() * (maxH - minH));
         for (let i = 0; i < h; i++) {
           const half = Math.floor((i / h) * (h * 0.38)) + 1;
           rect(c, x - half, baseY - h + i, half * 2 + 1, 1, color);
+          if (i > 3 && i % 3 === 0) { px(c, x - half, baseY - h + i, '#C9DAEE'); px(c, x + half, baseY - h + i, '#C9DAEE'); }
         }
         rect(c, x, baseY - 1, 1, 2, color);
       }
     }
-    pines(groundY - 2, 14, 26, '#0F1430', 5);
-    pines(groundY, 12, 22, '#0C1A1E', 6);
+    pines(groundY - 2, 14, 26, '#16234A', 5);
+    pines(groundY, 12, 22, '#0F1C33', 6);
 
-    // stone tower (right of fire)
-    const tx = fireX + 26, tw = 30, ttop = groundY - 58;
-    for (let y = ttop; y < groundY; y += 4) {
-      const off = ((y - ttop) / 4) % 2 ? 3 : 0;
-      for (let x = tx - off; x < tx + tw; x += 6) {
-        const shade = ['#3B3448', '#433B52', '#4B425A', '#362F42'][Math.floor(rnd() * 4)];
-        const x0 = Math.max(x, tx), x1 = Math.min(x + 5, tx + tw);
-        if (x1 > x0) rect(c, x0, y, x1 - x0, 3, shade);
-      }
-    }
-    for (let x = tx; x < tx + tw; x += 6) rect(c, x, ttop - 4, 4, 4, '#433B52');   // battlements
-    rect(c, tx + tw, ttop, 1, groundY - ttop, '#221C2C');
-    // window frame (light drawn each frame)
-    rect(c, tx + 11, ttop + 13, 7, 10, '#221C2C');
-
-    // low ruined wall behind the fire
-    const wx0 = fireX - 30, wx1 = tx;
-    for (let row = 0; row < 3; row++) {
-      const y = groundY - 4 - row * 4;
-      const len = (wx1 - wx0) - row * 9;
-      for (let x = wx1 - len; x < wx1; x += 7) {
-        const shade = ['#4A3B36', '#54443D', '#3E322E'][Math.floor(rnd() * 3)];
-        rect(c, x + (row % 2) * 3, y, 6, 3, shade);
-      }
-    }
-
-    // ground
+    // snowy ground: lighter up front, bluer in the distance
     for (let y = groundY; y < H; y++) {
       for (let x = 0; x < W; x++) {
         const n = rnd();
         const depth = (y - groundY) / (H - groundY);
-        const base = depth < 0.35 ? ['#1F3A22', '#23432A', '#1B331F'] : ['#16291A', '#1A2F1D', '#132416'];
+        const base = depth < 0.35 ? ['#DCE7F5', '#E8F0FA', '#CCDBEE'] : ['#B9CCE3', '#C7D7EA', '#AFC3DB'];
         px(c, x, y, base[n < 0.5 ? 0 : n < 0.8 ? 1 : 2]);
       }
     }
-    // grass blades and tiny flowers
-    for (let x = 0; x < W; x++) {
-      if (rnd() < 0.55) rect(c, x, groundY - 1, 1, 1, '#2D5530');
-      if (rnd() < 0.18) rect(c, x, groundY - 2, 1, 1, '#35663A');
-    }
-    for (let i = 0; i < W / 4; i++) {
-      const x = Math.floor(rnd() * W), y = groundY + 3 + Math.floor(rnd() * (H - groundY - 4));
+    // sparkly specks in the snow
+    for (let i = 0; i < W / 3; i++) {
+      const x = Math.floor(rnd() * W), y = groundY + 2 + Math.floor(rnd() * (H - groundY - 3));
       if (Math.abs(x - fireX) < 10 && Math.abs(y - fireY) < 6) continue;
-      px(c, x, y, ['#E8D9A8', '#C77DFF', '#FF9E4A'][Math.floor(rnd() * 3)]);
+      px(c, x, y, ['#FFFFFF', '#A9C2DE'][Math.floor(rnd() * 2)]);
     }
+
+    // snowdrifts
+    c.fillStyle = '#EEF5FF';
+    [[fireX - 56, 7, 4], [fireX + 8, 8, 3], [fireX + 74, 8, 4], [fireX - 18, 5, 2]].forEach(([x, rx, ry]) => {
+      c.beginPath(); c.ellipse(x, groundY + 1, rx, ry, 0, Math.PI, 0); c.fill();
+    });
+
+    // log cabin with a snowy roof, right of the fire
+    const cx0 = fireX + 32, cTop = groundY - 26;
+    for (let y = cTop; y < groundY; y += 3) {
+      rect(c, cx0, y, CABIN_W, 3, ((y - cTop) / 3) % 2 ? '#6B4424' : '#5C3A1E');
+      rect(c, cx0, y + 2, CABIN_W, 1, '#3E2412');              // log seams
+    }
+    rect(c, cx0 - 1, groundY - 1, CABIN_W + 2, 2, '#3E2412');    // sill
+    const mid = cx0 + CABIN_W / 2;
+    for (let r = 0; r < 9; r++) {                                // roof: shingles with a snow cap
+      const half = CABIN_W / 2 + 4 - r * ((CABIN_W / 2 + 4) / 9);
+      rect(c, mid - half, cTop - 9 + r, half * 2, 1, r < 2 ? '#EAF2FB' : '#2B2238');
+    }
+    rect(c, cx0 + CABIN_W - 6, cTop - 16, 4, 8, '#4A3B36');      // chimney
+    rect(c, cx0 + CABIN_W - 7, cTop - 17, 6, 1, '#EAF2FB');      // chimney snow
+    rect(c, cx0 + 5, cTop + 6, 7, 7, '#2A1A0E');                 // window frame (lit in frame())
+    rect(c, cx0 + CABIN_W - 10, groundY - 13, 6, 13, '#2A1A0E'); // door
 
     // fire pit stones and logs
     for (let i = -7; i <= 7; i++) {
       const sy = fireY + 2 + (Math.abs(i) > 5 ? -1 : 0);
-      rect(c, fireX + i, sy, 1, 2, (i % 2) ? '#6B6370' : '#857C8C');
+      rect(c, fireX + i, sy, 1, 2, (i % 2) ? '#8A9DB8' : '#B8C8DC');
     }
     rect(c, fireX - 6, fireY, 12, 2, '#5C3A1E');
     rect(c, fireX - 5, fireY - 1, 4, 1, '#7A4E28');
@@ -502,7 +498,7 @@
   }
 
   // ---- dynamic elements ----
-  let stars = [], embers = [], smoke = [], bats = [];
+  let stars = [], embers = [], smoke = [], flakes = [];
   function initDynamic() {
     seed = 99;
     stars = [];
@@ -510,7 +506,11 @@
     for (let i = 0; i < count; i++) {
       stars.push({ x: Math.floor(rnd() * W), y: Math.floor(rnd() * groundY * 0.75), p: rnd() * 6.28, s: 0.5 + rnd() * 2, big: rnd() < 0.1 });
     }
-    bats = [0, 1, 2].map(i => ({ x: rnd() * W, y: 10 + rnd() * groundY * 0.4, v: 0.18 + rnd() * 0.2, ph: rnd() * 6, dir: i % 2 ? -1 : 1 }));
+    flakes = [];
+    const n = Math.floor((W * H) / 200);
+    for (let i = 0; i < n; i++) {
+      flakes.push({ x: rnd() * W, y: rnd() * H, v: 0.12 + rnd() * 0.2, ph: rnd() * 6.28, big: rnd() < 0.15 });
+    }
     embers = []; smoke = [];
   }
 
@@ -536,8 +536,8 @@
     stars.forEach(s => {
       const b = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 0.05 * s.s + s.p));
       ctx.globalAlpha = b;
-      px(ctx, s.x, s.y, s.big ? '#FFF4CF' : '#C9C2E8');
-      if (s.big && b > 0.85) { px(ctx, s.x - 1, s.y, '#8E86B8'); px(ctx, s.x + 1, s.y, '#8E86B8'); px(ctx, s.x, s.y - 1, '#8E86B8'); px(ctx, s.x, s.y + 1, '#8E86B8'); }
+      px(ctx, s.x, s.y, s.big ? '#F2F7FF' : '#C3D3EA');
+      if (s.big && b > 0.85) { px(ctx, s.x - 1, s.y, '#7F97B8'); px(ctx, s.x + 1, s.y, '#7F97B8'); px(ctx, s.x, s.y - 1, '#7F97B8'); px(ctx, s.x, s.y + 1, '#7F97B8'); }
     });
     ctx.globalAlpha = 1;
 
@@ -545,59 +545,42 @@
     const ss = t % 900;
     if (ss < 26) {
       const sx = W * 0.45 + ss * 2.2, sy = groundY * 0.12 + ss * 0.9;
-      for (let k = 0; k < 6; k++) { ctx.globalAlpha = 1 - k / 6; px(ctx, sx - k * 2, sy - k * 0.9, '#FFF4CF'); }
+      for (let k = 0; k < 6; k++) { ctx.globalAlpha = 1 - k / 6; px(ctx, sx - k * 2, sy - k * 0.9, '#F2F7FF'); }
       ctx.globalAlpha = 1;
     }
 
-    // bats
-    bats.forEach(b => {
-      b.x += b.v * b.dir;
-      if (b.x > W + 12) b.x = -12; if (b.x < -12) b.x = W + 12;
-      const y = b.y + Math.sin(t * 0.06 + b.ph) * 3;
-      ctx.drawImage(Math.floor(t / 6 + b.ph) % 2 ? sprites.batA : sprites.batB, Math.round(b.x), Math.round(y));
-    });
-
-    // tower window flicker
-    const tx = fireX + 26, ttop = groundY - 58;
+    // cabin window: warm light that flickers
+    const cx0 = fireX + 32, cTop = groundY - 26;
     const wf = 0.75 + 0.25 * Math.sin(t * 0.21) * Math.sin(t * 0.07);
-    rect(ctx, tx + 12, ttop + 14, 5, 8, wf > 0.8 ? '#FFC24A' : '#F2A13A');
-    rect(ctx, tx + 14, ttop + 14, 1, 8, '#7A4A1A');
-    rect(ctx, tx + 12, ttop + 17, 5, 1, '#7A4A1A');
-    ctx.globalAlpha = 0.12 * wf;
-    rect(ctx, tx + 9, ttop + 11, 11, 14, '#FFC24A');
+    ctx.globalAlpha = 0.16 * wf;
+    rect(ctx, cx0 + 3, cTop + 4, 11, 11, '#FFC24A');
     ctx.globalAlpha = 1;
+    rect(ctx, cx0 + 6, cTop + 7, 5, 5, wf > 0.8 ? '#FFD27A' : '#F2A541');
 
-    // ghost drifting by the tower
-    const gp = (t % 1200) / 1200;
-    const ga = Math.sin(gp * Math.PI);
-    if (ga > 0.05) {
-      ctx.globalAlpha = 0.55 * ga;
-      ctx.drawImage(ghost, Math.round(tx - 14 + gp * 12), Math.round(groundY - 32 + Math.sin(t * 0.05) * 3));
-      ctx.globalAlpha = 1;
-    }
+    // snowman standing by the path
+    ctx.drawImage(snowman, fireX - 68, groundY - 15);
 
-    // fire light on the ground (banded glow)
+    // fire light on the snow (banded glow)
     const flick = 0.85 + 0.15 * Math.sin(t * 0.33) * Math.sin(t * 0.17 + 1);
     const rings = [[30, 0.05], [22, 0.07], [15, 0.09], [9, 0.11]];
     rings.forEach(([r, a]) => {
       ctx.globalAlpha = a * flick;
-      ctx.fillStyle = '#FF8A1F';
+      ctx.fillStyle = '#F2A541';
       const rr = Math.round(r * (0.96 + 0.04 * flick));
       ctx.beginPath(); ctx.ellipse(fireX, fireY - 2, rr, rr * 0.55, 0, 0, Math.PI * 2); ctx.fill();
     });
     ctx.globalAlpha = 1;
 
-    // jack-o-lanterns
+    // harvest gourds by the fire
     const g1 = 0.5 + 0.5 * Math.sin(t * 0.27), g2 = 0.5 + 0.5 * Math.sin(t * 0.23 + 2);
-    ctx.drawImage(pumpkinSprite(g1), fireX + 30, groundY - 1);
-    ctx.drawImage(pumpkinSprite(g2), fireX + 36, groundY + 4);
-    ctx.drawImage(pumpkinSprite(g2), fireX - 47, groundY + 3);
+    ctx.drawImage(pumpkinSprite(g1), fireX - 52, groundY - 1);
+    ctx.drawImage(pumpkinSprite(g2), fireX - 40, groundY + 4);
 
-    // turtle resting by the fire (breathes, blinks, snores)
+    // turtle resting by the fire in its cranberry scarf (breathes, blinks, snores)
     const breathe = Math.floor(t / 40) % 2;
     const blink = !(t % 260 > 250 && t % 260 < 258) ? true : false;
     ctx.drawImage(blink ? sprites.turtle : sprites.turtleOpen, fireX - 34, fireY - 13 + breathe);
-    // Clarrent resting on a log: slow breathing, the odd blink, a sip now and then
+    // Clarrent resting on a log: slow breathing, the odd blink, a sip of cocoa now and then
     const lx = fireX + 9, ly = fireY - 1;
     rect(ctx, lx, ly, 19, 3, '#6B4424'); rect(ctx, lx, ly, 19, 1, '#8A5A30'); px(ctx, lx, ly + 1, '#4A2E16'); px(ctx, lx + 18, ly + 1, '#4A2E16');
     const cyc = t % 300;
@@ -632,8 +615,8 @@
       for (let dy = 0; dy < h; dy++) {
         const f = dy / h;
         if (f > 0.75 && Math.random() < 0.35) continue;
-        let col = f < 0.25 ? '#FFF6C8' : f < 0.5 ? '#FFD23F' : f < 0.78 ? '#FF8A1F' : '#D43D1A';
-        if (Math.abs(dx) >= 4) col = f < 0.5 ? '#FF8A1F' : '#D43D1A';
+        let col = f < 0.25 ? '#FFF6C8' : f < 0.5 ? '#FFE08A' : f < 0.78 ? '#F2A541' : '#D43D1A';
+        if (Math.abs(dx) >= 4) col = f < 0.5 ? '#F2A541' : '#D43D1A';
         px(ctx, fireX + dx, fireY - 1 - dy, col);
       }
     }
@@ -644,17 +627,29 @@
     embers.forEach(e => {
       e.age++; e.y += e.vy; e.x += Math.sin(e.age * 0.08 + e.ph) * 0.15;
       ctx.globalAlpha = 1 - e.age / e.life;
-      px(ctx, e.x, e.y, e.age < e.life * 0.4 ? '#FFD23F' : '#FF8A1F');
+      px(ctx, e.x, e.y, e.age < e.life * 0.4 ? '#FFE08A' : '#F2A541');
     });
     ctx.globalAlpha = 1;
 
-    // smoke
+    // smoke from the fire and from the cabin chimney
     if (t % 5 === 0) smoke.push({ x: fireX + (Math.random() - 0.5) * 3, y: fireY - 10, age: 0, life: 120 });
+    if (t % 9 === 0) smoke.push({ x: cx0 + CABIN_W - 4 + (Math.random() - 0.5), y: cTop - 18, age: 0, life: 110 });
     smoke = smoke.filter(s => s.age < s.life);
     smoke.forEach(s => {
       s.age++; s.y -= 0.12; s.x += Math.sin(s.age * 0.05) * 0.12 + 0.03;
       ctx.globalAlpha = 0.22 * (1 - s.age / s.life);
-      rect(ctx, s.x, s.y, s.age > 50 ? 2 : 1, s.age > 50 ? 2 : 1, '#8E86A8');
+      rect(ctx, s.x, s.y, s.age > 50 ? 2 : 1, s.age > 50 ? 2 : 1, '#B8C6DC');
+    });
+    ctx.globalAlpha = 1;
+
+    // falling snow (in front of everything)
+    flakes.forEach(f => {
+      f.y += f.v;
+      f.x += Math.sin(t * 0.03 + f.ph) * 0.15;
+      if (f.y > H) { f.y = -2; f.x = Math.random() * W; }
+      if (f.x < 0) f.x += W; else if (f.x >= W) f.x -= W;
+      ctx.globalAlpha = f.big ? 0.9 : 0.6;
+      rect(ctx, f.x, f.y, f.big ? 2 : 1, f.big ? 2 : 1, '#F2F7FF');
     });
     ctx.globalAlpha = 1;
   }
@@ -672,6 +667,6 @@
   requestAnimationFrame(loop);
 })();
 </script>
-<script src="music.js?v=6" data-pos="top"></script>
+<script src="music.js?v=11" data-pos="top"></script>
 </body>
 </html>

@@ -1,22 +1,22 @@
 /* KBA Mock Exams: 8-bit game style for the lesson pages.
    Loaded after each page's own styles, so these rules win. */
 
-/* Night-time palette in both light and dark mode, to match the campfire screen */
+/* Winter night palette in both light and dark mode, to match the cabin scene */
 :root, :root:not([data-theme="light"]), :root[data-theme="dark"], :root[data-theme="light"] {
-  --ink: #F5EDE0 !important;
-  --ink-soft: #B9A8C8 !important;
-  --bg: #0B0814 !important;
-  --panel: rgba(14, 9, 24, 0.9) !important;
-  --border: #4A3A63 !important;
-  --accent: #FF8A1F !important;
-  --accent-2: #A86BFF !important;
-  --accent-soft: rgba(255, 138, 31, 0.14) !important;
-  --good: #7FDB5A !important;
-  --good-bg: rgba(127, 219, 90, 0.14) !important;
-  --bad: #FF6B6B !important;
-  --bad-bg: rgba(255, 107, 107, 0.14) !important;
+  --ink: #EAF2FB !important;
+  --ink-soft: #A9BCD3 !important;
+  --bg: #070B16 !important;
+  --panel: rgba(9, 15, 30, 0.9) !important;
+  --border: #34506F !important;
+  --accent: #F2A541 !important;
+  --accent-2: #7FB8E0 !important;
+  --accent-soft: rgba(242, 165, 65, 0.14) !important;
+  --good: #8ED08F !important;
+  --good-bg: rgba(142, 208, 143, 0.14) !important;
+  --bad: #E0646B !important;
+  --bad-bg: rgba(224, 100, 107, 0.14) !important;
   --on-accent: #1A0F05 !important;
-  --gold: #FFD23F;
+  --gold: #FFE08A;
   --pixel: 'Press Start 2P', 'Courier New', monospace;
   --read: 'VT323', 'Courier New', monospace;
   --sans: var(--read) !important;
@@ -26,7 +26,7 @@
 
 /* quiet static starry sky (no animation on test screens) */
 html {
-  background-color: #0B0814;
+  background-color: #070B16;
   background-image:
     radial-gradient(2px 2px at 30px 40px, #C9C2E8 50%, transparent 51%),
     radial-gradient(2px 2px at 140px 90px, #8E86B8 50%, transparent 51%),
@@ -34,7 +34,7 @@ html {
     radial-gradient(2px 2px at 90px 170px, #8E86B8 50%, transparent 51%),
     radial-gradient(2px 2px at 260px 210px, #C9C2E8 50%, transparent 51%),
     radial-gradient(2px 2px at 180px 250px, #8E86B8 50%, transparent 51%),
-    linear-gradient(180deg, #0A0716 0%, #120E2A 45%, #24194A 100%);
+    linear-gradient(180deg, #060B1A 0%, #0F1B36 45%, #1E3358 100%);
   background-size: 300px 280px, 300px 280px, 300px 280px, 300px 280px, 300px 280px, 300px 280px, 100% 100%;
   background-attachment: fixed;
   min-height: 100%;
@@ -79,7 +79,7 @@ body {
 .brand {
   font-family: var(--pixel) !important; font-size: 13px !important; line-height: 1.5 !important;
   color: var(--accent) !important; letter-spacing: 1px !important; white-space: normal !important;
-  text-shadow: 2px 2px 0 #6A2A00; display: block !important; text-transform: uppercase;
+  text-shadow: 2px 2px 0 #1E2E48; display: block !important; text-transform: uppercase;
 }
 .brand small {
   font-family: var(--read) !important; font-size: 18px !important; letter-spacing: 0 !important;
@@ -106,7 +106,7 @@ button { font-family: var(--pixel) !important; border-radius: 0 !important; }
   border: 3px solid #000 !important;
   box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.28), inset 4px 4px 0 rgba(255, 255, 255, 0.3), 4px 4px 0 #000 !important;
 }
-.btn-primary:hover { transform: none !important; background: #FFA040 !important; }
+.btn-primary:hover { transform: none !important; background: #FFC070 !important; }
 .btn-primary:active, .btn-next:active, .btn-secondary:active { transform: translate(2px, 2px) !important; }
 .btn-ghost { font-size: 9px !important; color: var(--ink-soft) !important; letter-spacing: 1px; margin-top: 14px !important; }
 .btn-ghost:hover { color: var(--gold) !important; }
@@ -116,7 +116,7 @@ button { font-family: var(--pixel) !important; border-radius: 0 !important; }
 }
 .btn-secondary { background: #000 !important; color: var(--ink) !important; }
 .btn-secondary:hover:not(:disabled) { color: var(--gold) !important; border-color: var(--gold) !important; }
-.btn-next { background: var(--ink) !important; color: #0B0814 !important; }
+.btn-next { background: var(--ink) !important; color: #070B16 !important; }
 .btn-next:hover:not(:disabled) { background: var(--gold) !important; opacity: 1 !important; }
 .btn-secondary:disabled, .btn-next:disabled { opacity: 0.3 !important; }
 .btn-row button { line-height: 1.6; }
@@ -148,7 +148,7 @@ button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !impor
   width: 26px !important; height: 26px !important; background: #000 !important; border: 2px solid var(--border);
   color: var(--ink-soft) !important;
 }
-.opt.selected { border-color: var(--accent) !important; background: rgba(255, 138, 31, 0.16) !important; color: var(--gold) !important; }
+.opt.selected { border-color: var(--accent) !important; background: rgba(242, 165, 65, 0.16) !important; color: var(--gold) !important; }
 .opt.selected .tag { background: var(--accent) !important; color: var(--on-accent) !important; border-color: #000; }
 .opt.removed { text-decoration: line-through; opacity: 0.25 !important; }
 
@@ -164,7 +164,7 @@ button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !impor
 .hint-box b { font-family: var(--pixel); font-size: 9px; font-weight: 400; color: var(--gold) !important; }
 
 /* ---------- results ---------- */
-.score-num { font-family: var(--pixel) !important; font-size: 34px !important; color: var(--gold) !important; letter-spacing: 2px !important; text-shadow: 3px 3px 0 #6A2A00; margin: 10px 0 12px !important; }
+.score-num { font-family: var(--pixel) !important; font-size: 34px !important; color: var(--gold) !important; letter-spacing: 2px !important; text-shadow: 3px 3px 0 #1E2E48; margin: 10px 0 12px !important; }
 .score-pct { font-family: var(--pixel) !important; font-size: 12px !important; color: var(--ink) !important; }
 .score-verdict { font-family: var(--read) !important; font-size: 24px !important; color: var(--ink) !important; line-height: 1.1 !important; }
 .score-wrap .q-meta { font-size: 11px !important; color: var(--accent) !important; }
@@ -213,7 +213,7 @@ button:focus-visible, .opt:focus-visible { outline: 3px solid var(--gold) !impor
 .cc-row { display: flex; gap: 16px; align-items: center; }
 .cc-portrait { width: 96px; height: 96px; image-rendering: pixelated; image-rendering: crisp-edges; border: 3px solid var(--ink); box-shadow: 0 0 0 3px #000; flex-shrink: 0; }
 .cc-role { font-family: var(--pixel); font-size: 8px; color: var(--ink-soft); margin: 0 0 6px; letter-spacing: 1px; }
-.cc-name { font-family: var(--pixel); font-size: 12px; color: var(--accent); margin: 0 0 8px; line-height: 1.5; text-shadow: 2px 2px 0 #6A2A00; }
+.cc-name { font-family: var(--pixel); font-size: 12px; color: var(--accent); margin: 0 0 8px; line-height: 1.5; text-shadow: 2px 2px 0 #1E2E48; }
 .cc-body { font-size: 20px; line-height: 1.1; margin: 0; color: var(--ink); }
 .cc-ask { font-size: 20px; line-height: 1.1; margin: 16px 0 12px; color: var(--ink); text-align: center; }
 .cc-btn {
