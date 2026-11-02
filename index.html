@@ -352,21 +352,6 @@
     }, '#0E1A10');
   }
 
-  // ---- jack-o-lantern ----
-  function pumpkinSprite(glow) {
-    const face = glow > 0.6 ? '#FFF3A0' : '#FFE08A';
-    return makeSprite(11, 9, (x, y) => {
-      if (y <= 1) return (x === 5 || (x === 6 && y === 0)) ? '#5A7A2A' : null;
-      const dx = (x - 5) / 5.4, dy = (y - 5) / 3.7;
-      if (dx * dx + dy * dy > 1) return null;
-      if ((y === 4 && (x === 3 || x === 7)) || (y === 3 && (x === 3 || x === 7))) return face; // eyes
-      if (y === 6 && x >= 3 && x <= 7 && x !== 5) return face;                                  // mouth
-      if (y === 7 && x >= 4 && x <= 6) return face;
-      if (x === 2 || x === 5 || x === 8) return '#C2510A';
-      return '#F07A1A';
-    }, '#2A1206');
-  }
-
   // ---- snowman (top hat, carrot nose, coal eyes) ----
   function snowmanSprite() {
     return makeSprite(9, 14, (x, y) => {
@@ -479,11 +464,11 @@
     rect(c, cx0 - 1, groundY - 1, CABIN_W + 2, 2, '#3E2412');    // sill
     const mid = cx0 + CABIN_W / 2;
     for (let r = 0; r < 9; r++) {                                // roof: shingles with a snow cap
-      const half = CABIN_W / 2 + 4 - r * ((CABIN_W / 2 + 4) / 9);
+      const half = (CABIN_W / 2 + 4) * (r + 1) / 9;               // narrow at the peak, wide at the eaves
       rect(c, mid - half, cTop - 9 + r, half * 2, 1, r < 2 ? '#EAF2FB' : '#2B2238');
     }
-    rect(c, cx0 + CABIN_W - 6, cTop - 16, 4, 8, '#4A3B36');      // chimney
-    rect(c, cx0 + CABIN_W - 7, cTop - 17, 6, 1, '#EAF2FB');      // chimney snow
+    rect(c, cx0 + 18, cTop - 16, 4, 9, '#4A3B36');              // chimney
+    rect(c, cx0 + 17, cTop - 17, 6, 1, '#EAF2FB');              // chimney snow
     rect(c, cx0 + 5, cTop + 6, 7, 7, '#2A1A0E');                 // window frame (lit in frame())
     rect(c, cx0 + CABIN_W - 10, groundY - 13, 6, 13, '#2A1A0E'); // door
 
@@ -571,11 +556,6 @@
     });
     ctx.globalAlpha = 1;
 
-    // harvest gourds by the fire
-    const g1 = 0.5 + 0.5 * Math.sin(t * 0.27), g2 = 0.5 + 0.5 * Math.sin(t * 0.23 + 2);
-    ctx.drawImage(pumpkinSprite(g1), fireX - 52, groundY - 1);
-    ctx.drawImage(pumpkinSprite(g2), fireX - 40, groundY + 4);
-
     // turtle resting by the fire in its cranberry scarf (breathes, blinks, snores)
     const breathe = Math.floor(t / 40) % 2;
     const blink = !(t % 260 > 250 && t % 260 < 258) ? true : false;
@@ -633,7 +613,7 @@
 
     // smoke from the fire and from the cabin chimney
     if (t % 5 === 0) smoke.push({ x: fireX + (Math.random() - 0.5) * 3, y: fireY - 10, age: 0, life: 120 });
-    if (t % 9 === 0) smoke.push({ x: cx0 + CABIN_W - 4 + (Math.random() - 0.5), y: cTop - 18, age: 0, life: 110 });
+    if (t % 9 === 0) smoke.push({ x: cx0 + 20 + (Math.random() - 0.5), y: cTop - 18, age: 0, life: 110 });
     smoke = smoke.filter(s => s.age < s.life);
     smoke.forEach(s => {
       s.age++; s.y -= 0.12; s.x += Math.sin(s.age * 0.05) * 0.12 + 0.03;

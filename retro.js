@@ -395,13 +395,6 @@
       if (y >= 7 && x >= 2 && x <= 6) return y === 9 ? '#8A5A00' : '#FFE08A';
       return null;
     }, '#2A1A00');
-    var pumpkin = sprite(9, 7, function (x, y) {
-      if (y === 0) return x === 4 ? '#5A7A2A' : null;
-      var dx = (x - 4) / 4.5, dy = (y - 4) / 3.1;
-      if (dx * dx + dy * dy > 1) return null;
-      if ((y === 3 && (x === 2 || x === 6)) || (y === 5 && x >= 2 && x <= 6 && x !== 4)) return '#FFE08A';
-      return (x === 1 || x === 4 || x === 7) ? '#C2510A' : '#F07A1A';
-    }, '#2A1206');
     var snowman = sprite(9, 14, function (x, y) {
       if (y <= 1 && x >= 2 && x <= 6) return '#1B1A24';
       if (y === 2 && x >= 1 && x <= 7) return '#1B1A24';
@@ -563,9 +556,6 @@
         embers = embers.filter(function (e) { return e.a < e.l; });
         embers.forEach(function (e) { e.a++; e.y -= 0.3; e.x += Math.sin(e.a * 0.1) * 0.2; c.globalAlpha = 1 - e.a / e.l; px(c, e.x, e.y, '#FFE08A'); });
         c.globalAlpha = 1;
-        // pumpkins
-        c.drawImage(pumpkin, fx + 12, gy + 2);
-        c.drawImage(pumpkin, 136, gy + 5);
 
         if (mood === 'pass') {
           // turtle awake, hopping next to a trophy, fireworks overhead
