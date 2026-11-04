@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🦃 KBA Lesson 606 Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14201A;
+    --ink-soft: #5B6F62;
+    --bg: #F5F7EE;
+    --panel: #FFFFFF;
+    --border: #DCE6D2;
+    --accent: #2F8F4E;
+    --accent-2: #7CB518;
+    --accent-soft: #E8F3E1;
+    --good: #2F8F4E;
+    --good-bg: #E7F5E9;
+    --bad: #C2542A;
+    --bad-bg: #FBEDE6;
+    --shadow: 0 1px 2px rgba(20,32,26,0.05), 0 8px 24px rgba(20,32,26,0.08);
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E9F1E6;
+      --ink-soft: #93A895;
+      --bg: #0E1712;
+      --panel: #16211A;
+      --border: #253326;
+      --accent: #6BC17E;
+      --accent-2: #A3D65C;
+      --accent-soft: #1C2C1F;
+      --good: #6BC17E;
+      --good-bg: #17281B;
+      --bad: #E08857;
+      --bad-bg: #2E1E14;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9F1E6;
+    --ink-soft: #93A895;
+    --bg: #0E1712;
+    --panel: #16211A;
+    --border: #253326;
+    --accent: #6BC17E;
+    --accent-2: #A3D65C;
+    --accent-soft: #1C2C1F;
+    --good: #6BC17E;
+    --good-bg: #17281B;
+    --bad: #E08857;
+    --bad-bg: #2E1E14;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 640px; padding: 28px 20px 40px; position: relative; }
+  .top-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 18px; margin-bottom: 24px;
+  }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .clock { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; background: var(--accent-soft); padding: 6px 12px; border-radius: 10px; }
+  .clock.low { color: var(--bad); background: var(--bad-bg); }
+
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+  h1.hero { font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 22px; }
+  .meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .meta-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .meta-cell .num { font-family: var(--mono); font-weight: 700; font-size: 20px; display: block; color: var(--accent); }
+  .meta-cell .lbl { font-size: 11px; color: var(--ink-soft); margin-top: 3px; display: block; font-weight: 500; }
+  .domains { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .domains li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 22px; position: relative; }
+  .domains li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  button { font-family: var(--sans); cursor: pointer; border: none; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 14px; width: 100%;
+    transition: transform 0.12s ease, box-shadow 0.12s ease; box-shadow: 0 4px 14px rgba(47,143,78,0.28);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(47,143,78,0.36); }
+  .btn-primary:focus-visible, .opt:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible, .btn-next:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-ghost { background: none; color: var(--ink-soft); font-size: 13.5px; font-weight: 600; padding: 12px 0; margin-top: 8px; width: 100%; }
+  .btn-ghost:hover { color: var(--accent); }
+
+  .progress-track { height: 6px; background: var(--border); margin-bottom: 24px; border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s ease; border-radius: 999px; }
+  .q-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 600; }
+  .q-text { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.4; margin: 0 0 8px; }
+  .q-hint { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; margin-bottom: 18px; }
+  .helper-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .btn-helper { background: var(--panel); color: var(--ink); border: 1.5px dashed var(--border); padding: 8px 14px; font-size: 13px; font-weight: 700; border-radius: 999px; cursor: pointer; font-family: var(--sans); }
+  .btn-helper:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .btn-helper:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-helper .left { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-left: 4px; }
+  .hint-box { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent-2); font-size: 14px; line-height: 1.5; }
+  .hint-box b { color: var(--accent); }
+  .opt.removed { opacity: 0.35; text-decoration: line-through; pointer-events: none; }
+  .review-tags { display: inline-flex; gap: 6px; margin-left: auto; }
+  .review-tag { font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--ink-soft); }
+  .helper-summary { text-align: center; font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+  .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; margin-top: 14px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: var(--panel); border: 1.5px solid var(--border);
+    padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); border-radius: 14px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt .tag {
+    font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--ink-soft); flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 7px; background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected .tag { color: #fff; background: var(--accent); }
+
+  .nav-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .btn-secondary { background: var(--panel); color: var(--ink); border: 1.5px solid var(--border); padding: 12px 20px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:disabled { opacity: 0.35; cursor: default; }
+  .btn-next { background: var(--ink); color: var(--bg); padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 12px; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+  .score-wrap { text-align: center; padding: 6px 0 4px; position: relative; }
+  .score-emoji { font-size: 40px; margin-bottom: 6px; line-height: 1; }
+  .score-num { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; margin: 4px 0 6px; }
+  .score-pct { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; font-weight: 600; }
+  .score-verdict { font-size: 15px; color: var(--ink-soft); margin-bottom: 26px; font-weight: 500; }
+
+  .breakdown { text-align: left; margin: 0 0 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+  .breakdown-title { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { margin-bottom: 14px; }
+  .bd-row:last-child { margin-bottom: 0; }
+  .bd-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; margin-bottom: 6px; }
+  .bd-head .name { font-weight: 700; }
+  .bd-head .frac { font-family: var(--mono); color: var(--ink-soft); font-weight: 600; }
+  .bd-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .bd-tag.strong { color: var(--good); background: var(--good-bg); }
+  .bd-tag.weak { color: var(--bad); background: var(--bad-bg); }
+  .bd-tag.mid { color: var(--accent); background: var(--accent-soft); }
+  .bd-bar-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .bd-bar-fill { height: 100%; border-radius: 999px; }
+
+  .btn-row { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-row button { flex: 1; }
+
+  .review-list { margin-top: 20px; }
+  .review-item { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+  .review-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .review-num { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+  .review-status { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 4px; }
+  .review-status.good { color: var(--good); }
+  .review-status.bad { color: var(--bad); }
+  .review-domain { font-size: 11px; color: var(--ink-soft); margin-left: auto; font-weight: 500; }
+  .review-q { font-weight: 700; font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+  .review-line { font-size: 13.5px; line-height: 1.6; margin: 4px 0; }
+  .review-line .lbl { color: var(--ink-soft); }
+  .review-line.your-wrong { color: var(--bad); }
+  .review-line.your-right { color: var(--good); }
+  .review-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 4px 0; padding-left: 2px; }
+  .review-why { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .review-source { font-size: 11.5px; color: var(--accent); margin-top: 10px; font-weight: 700; }
+
+  .credit {
+    text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; opacity: 0.75;
+  }
+  .credit span { font-weight: 600; }
+
+  #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; display: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    h1.hero { font-size: 25px; }
+    .q-text { font-size: 17px; }
+    .meta-cell .num { font-size: 17px; }
+    .wrap { padding: 20px 14px 36px; }
+    .card { padding: 22px; border-radius: 16px; }
+    .score-num { font-size: 42px; }
+  }
+
+  /* ===== Winter Thanksgiving theme ===== */
+  :root {
+    --ink: #2A1636;
+    --ink-soft: #6E5A78;
+    --bg: #FBF3E6;
+    --panel: #FFFFFF;
+    --border: #EAD9C4;
+    --accent: #C2510A;
+    --accent-2: #7B3FC4;
+    --accent-soft: #FCE7D3;
+    --good: #2F8A3E;
+    --good-bg: #E6F4E3;
+    --bad: #B3261E;
+    --bad-bg: #FBE4E1;
+    --on-accent: #FFFFFF;
+    --glow: rgba(194,81,10,0.30);
+    --moon: rgba(255,214,140,0.55);
+    --spooky: 'Mountains of Christmas', 'Manrope', cursive;
+    --shadow: 0 1px 2px rgba(42,22,54,0.06), 0 8px 24px rgba(42,22,54,0.10);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #F5EDE0;
+      --ink-soft: #B5A3C4;
+      --bg: #120C1A;
+      --panel: #1D1428;
+      --border: #34264A;
+      --accent: #FF8A1F;
+      --accent-2: #A86BFF;
+      --accent-soft: #2E1E2A;
+      --good: #7FDB5A;
+      --good-bg: #18291A;
+      --bad: #FF6B6B;
+      --bad-bg: #3A1620;
+      --on-accent: #1A0F05;
+      --glow: rgba(255,138,31,0.35);
+      --moon: rgba(255,214,140,0.22);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F5EDE0;
+    --ink-soft: #B5A3C4;
+    --bg: #120C1A;
+    --panel: #1D1428;
+    --border: #34264A;
+    --accent: #FF8A1F;
+    --accent-2: #A86BFF;
+    --accent-soft: #2E1E2A;
+    --good: #7FDB5A;
+    --good-bg: #18291A;
+    --bad: #FF6B6B;
+    --bad-bg: #3A1620;
+    --on-accent: #1A0F05;
+    --glow: rgba(255,138,31,0.35);
+    --moon: rgba(255,214,140,0.22);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  }
+  body {
+    background:
+      radial-gradient(circle at 88% 6%, var(--moon) 0, transparent 160px),
+      radial-gradient(ellipse at 50% 110%, var(--glow) 0, transparent 60%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  .btn-primary { color: var(--on-accent) !important; box-shadow: 0 4px 14px var(--glow) !important; }
+  .btn-primary:hover { box-shadow: 0 6px 18px var(--glow) !important; }
+  .opt.selected .tag { color: var(--on-accent) !important; }
+  h1, .brand, .score-num { font-family: var(--spooky); font-weight: 400; letter-spacing: 0.03em; }
+  h1 { font-size: 34px; color: var(--accent); }
+  .brand { font-size: 21px; color: var(--accent); white-space: nowrap; }
+  .brand small { white-space: normal; }
+  .brand small { font-family: var(--sans); letter-spacing: 0; }
+  .score-num { color: var(--accent); }
+  .wrap { position: relative; z-index: 1; }
+  .bats { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .bats span { position: absolute; font-size: 22px; opacity: 0.55; animation: flap 14s ease-in-out infinite; }
+  .bats span:nth-child(1) { top: 8%; left: 6%; animation-duration: 16s; }
+  .bats span:nth-child(2) { top: 18%; left: 78%; font-size: 16px; animation-delay: -4s; }
+  .bats span:nth-child(3) { top: 62%; left: 4%; font-size: 18px; animation-delay: -8s; }
+  .bats span:nth-child(4) { top: 82%; left: 86%; animation-duration: 18s; animation-delay: -2s; }
+  .bats span:nth-child(5) { top: 40%; left: 92%; font-size: 14px; animation-delay: -11s; }
+  @keyframes flap {
+    0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+    50% { transform: translate(18px, -22px) rotate(6deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .bats span { animation: none; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retro.css?v=11">
+</head>
+<body>
+<div class="bats" aria-hidden="true"><span>❄️</span><span>❄️</span><span>🍂</span><span>❄️</span><span>⛄</span></div>
+<canvas id="fx-canvas"></canvas>
+<div class="wrap">
+
+  <div class="top-strip">
+    <div class="brand">🦃 KBA Mock Exam<small>Lesson 606 (606.1 / 606.2) &middot; Salesforce Admin Bootcamp</small></div>
+    <div class="clock" id="clock">45:00</div>
+  </div>
+
+  <div id="screen-start" class="card">
+    <div class="meta-row" style="margin-top: 4px;">
+      <div class="meta-cell"><span class="num">20</span><span class="lbl">Questions</span></div>
+      <div class="meta-cell"><span class="num">45:00</span><span class="lbl">Time limit</span></div>
+      <div class="meta-cell"><span class="num">3</span><span class="lbl">Domains</span></div>
+    </div>
+
+    <ul class="domains">
+      <li>Case Management Capabilities (Lesson 606.1, 10%): case records, Email-to-Case, Web-to-Case, case assignment rules, queues and list views</li>
+      <li>Automating Case Management (Lessons 606.1 / 606.2, 10%): support processes, auto-response rules, escalation rules, record types, picklists, Einstein for Service</li>
+      <li>Service Console &amp; Knowledge (Lesson 606.2, 10%): Service Console productivity tools, utility bar, macros, Quick Text, knowledge articles, data categories</li>
+    </ul>
+
+    <p class="helper-summary" style="margin:0 0 14px;">You get 3 💡 hints and 3 ✂️ 50/50 lifelines per test. 50/50 crosses out two wrong answers.</p>
+    <button class="btn-primary" id="btn-start">▶ START QUEST</button>
+    <button class="btn-ghost" id="btn-reshuffle">🔀 SHUFFLE NEW SET</button>
+  </div>
+
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-meta" id="q-meta">Question 1 of 20 &middot; Case Management Capabilities (606.1)</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <div class="q-hint hidden" id="q-hint"></div>
+    <div class="helper-row">
+      <button class="btn-helper" id="btn-hint" type="button">💡 Hint<span class="left" id="hint-left">3 left</span></button>
+      <button class="btn-helper" id="btn-fifty" type="button">✂️ 50/50<span class="left" id="fifty-left">3 left</span></button>
+    </div>
+    <div class="hint-box hidden" id="hint-box"></div>
+    <div class="opt-list" id="opt-list"></div>
+    <div class="nav-row">
+      <button class="btn-secondary" id="btn-prev">◀ BACK</button>
+      <button class="btn-next" id="btn-next" disabled>NEXT ▶</button>
+    </div>
+  </div>
+
+  <div id="screen-results" class="hidden">
+    <div class="card score-wrap">
+      <div class="score-emoji" id="score-emoji">🦃</div>
+      <div class="q-meta" style="text-align:center;">RESULTS</div>
+      <div class="score-num" id="score-num">0 / 20</div>
+      <div class="score-pct" id="score-pct">0%</div>
+      <div class="score-verdict" id="score-verdict"></div>
+      <div class="helper-summary" id="helper-summary"></div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-title">📊 By domain</div>
+        <div id="breakdown-rows"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-review">📖 REVIEW</button>
+        <button class="btn-next" id="btn-retake">🔁 CONTINUE? RETAKE</button>
+      </div>
+    </div>
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <div class="credit">Built with 🧡 by <span>Clarrent Nguyen</span> for Turtle Striker Force 🐢, Class 2026-2027</div>
+
+</div>
+
+<script>
+(function() {
+  const CASE = "Case Management Capabilities (606.1)";
+  const AUTO = "Automating Case Management (606.1 / 606.2)";
+  const SVC = "Service Console & Knowledge (606.2)";
+
+  const BANK = [
+
+    { domain: CASE, source: "Lesson 606.1, Email-to-Case",
+      q: "What does Email-to-Case do?",
+      hint: "It starts from an inbound email, not a form.",
+      opts: ["Converts received emails into Cases", "Sends marketing emails to Contacts", "Creates Accounts from Leads", "Sends auto-responses only"],
+      notes: ["Correct, each received email becomes a Case with the email attached.", "Marketing emails are not part of Email-to-Case.", "Leads and Accounts are not created this way.", "Auto-responses are a separate rule, not the feature itself."],
+      correct: 0,
+      why: "Email-to-Case converts received emails into Cases, attaches the original email, and can auto-fill fields from its content." },
+
+    { domain: CASE, source: "Lesson 606.1, Email-to-Case",
+      q: "How does Email-to-Case link an incoming email to an existing record?",
+      hint: "Think about who sent the email.",
+      opts: ["It matches the sender's email address to a Contact", "It matches the subject line to an Account name", "It needs the Case number typed in the body", "It matches the email to a Queue name"],
+      notes: ["Correct, the sender's address is matched to a Contact record.", "The subject line is not used to match an Account.", "A typed Case number is not required.", "Queues do not receive matches from email addresses."],
+      correct: 0,
+      why: "Email-to-Case uses the sender's email to match a Contact, so the new Case is linked to the right customer." },
+
+    { domain: CASE, source: "Lesson 606.1, Email-to-Case",
+      q: "Which two actions can an incoming Email-to-Case trigger? Select 2.",
+      hint: "Both are rules you already studied for Cases.",
+      type: "multi",
+      opts: ["Assignment rule", "Auto-response rule", "Lead conversion", "Opportunity stage change"],
+      notes: ["Correct, the new Case can be assigned to a User or Queue.", "Correct, an auto-response can reply to the customer.", "Lead conversion is unrelated to Cases.", "Opportunity stages are not part of Email-to-Case."],
+      correct: [0, 1],
+      why: "Email-to-Case can trigger an assignment rule and an auto-response rule when a Case is created." },
+
+    { domain: CASE, source: "Lesson 606.1, Web-to-Case",
+      q: "What does Web-to-Case do?",
+      hint: "It starts from a form on the company website.",
+      opts: ["Captures information from a website form and creates a Case automatically", "Converts emails into Leads", "Sends Chatter posts to agents", "Creates Queues from a list of users"],
+      notes: ["Correct, the form data becomes a Case with no manual entry.", "Leads come from different features, not Web-to-Case.", "Chatter is not part of Web-to-Case.", "Queues are created in Setup, not by Web-to-Case."],
+      correct: 0,
+      why: "Web-to-Case captures contact details, the problem, and product information from a customer-facing form and creates the Case automatically." },
+
+    { domain: CASE, source: "Lesson 606.1, Web-to-Case",
+      q: "What is the daily limit for Web-to-Case submissions?",
+      hint: "It is a thousands-sized number.",
+      opts: ["1,000", "5,000", "10,000", "Unlimited"],
+      notes: ["Too low for the limit shown in the lesson.", "Correct, 5,000 submissions per day.", "Too high for the limit shown in the lesson.", "Web-to-Case has a daily cap."],
+      correct: 1,
+      why: "Web-to-Case has a daily limit of 5,000 submissions." },
+
+    { domain: CASE, source: "Lesson 606.1, Web-to-Case",
+      q: "Which Setup tool generates the HTML for a Web-to-Case form on your website?",
+      hint: "The name says what it generates.",
+      opts: ["Web-to-Case HTML Generator", "Email Template", "Quick Text", "Escalation Rules"],
+      notes: ["Correct, the HTML Generator builds the form code.", "Email templates are used for replies, not form code.", "Quick Text is a text snippet tool.", "Escalation Rules reassign or escalate Cases."],
+      correct: 0,
+      why: "The Web-to-Case HTML Generator lets you choose fields and copy the generated HTML onto your website." },
+
+    { domain: CASE, source: "Lesson 606.1, Case Assignment Rules",
+      q: "What does a Case Assignment Rule do?",
+      hint: "It decides who owns the Case.",
+      opts: ["Assigns Case ownership to a User or Queue based on criteria", "Sends an email reply to the customer", "Escalates Cases after a set time", "Creates a list view for a queue"],
+      notes: ["Correct, ownership goes to a User or Queue that matches the criteria.", "Replies are handled by auto-response rules.", "Escalation is handled by escalation rules.", "List views are created with queues, not by assignment rules."],
+      correct: 0,
+      why: "A Case Assignment Rule sets the owner of a Case, a User or a Queue, based on the criteria you define." },
+
+    { domain: CASE, source: "Lesson 606.1, Case Assignment Rules",
+      q: "When does a Case Assignment Rule run?",
+      hint: "Look for the event that starts it.",
+      opts: ["Only when a record is created", "Every time the Case status changes", "Only when the Case is closed", "Every hour on a schedule"],
+      notes: ["Correct, assignment runs when the Case is created.", "Status changes do not trigger assignment.", "Closing a Case does not trigger assignment.", "Assignment rules are not scheduled."],
+      correct: 0,
+      why: "Case assignment rules are triggered when a Case record is created." },
+
+    { domain: CASE, source: "Lesson 606.1, Case Assignment Rules",
+      q: "Which two statements about Case Assignment Rules are true? Select 2.",
+      hint: "Think about how many can be active at once.",
+      type: "multi",
+      opts: ["Only one can be active in an org", "Can assign based on criteria", "Can only assign to Users, not Queues", "Several can be active at the same time"],
+      notes: ["Correct, only one Case Assignment Rule can be active at a time.", "Correct, the entries use criteria to choose the owner.", "False, assignment can go to a User or a Queue.", "False, only one rule can be active, though it can hold many rule entries."],
+      correct: [0, 1],
+      why: "Only one Case Assignment Rule can be active, but that rule can include multiple rule entries that use criteria." },
+
+    { domain: CASE, source: "Lesson 606.1, Queues",
+      q: "What is the purpose of a queue in case management?",
+      hint: "A queue is a holding place.",
+      opts: ["To store unassigned cases until a user takes ownership", "To send email alerts", "To let several users edit the same record at once", "To escalate high-priority cases"],
+      notes: ["Correct, cases wait in the queue until someone accepts or is assigned them.", "Email alerts come from escalation or workflow rules.", "Queues do not allow simultaneous edits.", "Escalation is handled by escalation rules."],
+      correct: 0,
+      why: "A queue is a temporary holding place for Leads or Cases that are not yet assigned to a User." },
+
+    { domain: CASE, source: "Lesson 606.1, Queues",
+      q: "What is automatically created when you create a queue?",
+      hint: "It is a view of the queue's records.",
+      opts: ["A list view for that queue", "A new Profile", "A Case Assignment Rule", "A Public Group"],
+      notes: ["Correct, a list view is created with each new queue.", "Profiles are not created with queues.", "Assignment rules are separate and must be created.", "Public groups are created separately."],
+      correct: 0,
+      why: "When a queue is created, a list view for that queue is created automatically." },
+
+    { domain: CASE, source: "Lesson 606.1, Queues",
+      q: "Which objects can a queue hold records for?",
+      hint: "The lesson's queue examples use Cases and Leads.",
+      opts: ["Cases and Leads", "Accounts only", "Contacts and Opportunities", "Reports and Dashboards"],
+      notes: ["Correct, queues support Cases and Leads.", "Accounts are not queue-supported records in this lesson.", "Contacts and Opportunities are not queue objects here.", "Reports and Dashboards are not records a queue holds."],
+      correct: 0,
+      why: "Queues hold Cases and Leads until a User accepts them or they are assigned." },
+
+    { domain: CASE, source: "Lesson 606.1, Queues and Assignment Rules",
+      q: "Support reps on a team work off a shared list of emails as they arrive. Which tool fits?",
+      hint: "Shared work that waits for someone to take it.",
+      opts: ["Queues", "Escalation Rules", "Auto-response Rules", "Macros"],
+      notes: ["Correct, a queue holds the shared list until a rep accepts it.", "Escalation Rules reassign aged Cases.", "Auto-response Rules send replies, not work lists.", "Macros automate repetitive steps."],
+      correct: 0,
+      why: "Queues let a team share unassigned work until a rep takes it." },
+
+    { domain: CASE, source: "Lesson 606.1, Queues and Assignment Rules",
+      q: "Some reps work on product installation and others on product performance. Which tool routes each case to the right rep?",
+      hint: "Routing by product skill is about criteria.",
+      opts: ["Assignment Rules", "Auto-response Rules", "Macros", "Knowledge Articles"],
+      notes: ["Correct, assignment rules route Cases by criteria such as product.", "Auto-response Rules send replies, not routing.", "Macros do not route Cases.", "Knowledge Articles hold answers, not routing."],
+      correct: 0,
+      why: "Assignment Rules route Cases to reps with the right skills, based on criteria like product." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules",
+      q: "Which feature automatically replies to a customer who submits a case by email or web form?",
+      hint: "The reply is automatic, not manual.",
+      opts: ["Escalation Rules", "Workflow Rules", "Auto-response Rules", "Approval Process"],
+      notes: ["Escalation Rules reassign and escalate aged Cases.", "Workflow Rules run actions on record changes, not form replies.", "Correct, auto-response rules send the automatic reply.", "Approval Processes route records for approval."],
+      correct: 2,
+      why: "Auto-response rules send an automatic reply to the customer when a Case arrives by Web-to-Case or Email-to-Case." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules",
+      q: "How many active auto-response rules can a Salesforce org have for Cases?",
+      hint: "Only one is active at a time.",
+      opts: ["Unlimited", "One per user", "One", "Two"],
+      notes: ["Not allowed in an org.", "Rules are not counted per user.", "Correct, only one active auto-response rule is allowed, but it can hold several rule entries.", "Only one is allowed."],
+      correct: 2,
+      why: "Only one auto-response rule can be active, but it can contain multiple rule entries." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules",
+      q: "What can trigger auto-response rules for Cases? Select 2.",
+      hint: "Automatic replies start from the two channels that create Cases from outside.",
+      type: "multi",
+      opts: ["Case created via Web-to-Case", "Case created manually by an agent", "Case created via Email-to-Case", "Case created via Chatter"],
+      notes: ["Correct, Web-to-Case triggers auto-responses.", "A manual Case does not trigger them.", "Correct, Email-to-Case triggers auto-responses.", "Chatter does not trigger them in this lesson."],
+      correct: [0, 2],
+      why: "Auto-response rules are triggered by Web-to-Case submissions and Email-to-Case communications." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules",
+      q: "What should exist before you create an auto-response rule?",
+      hint: "The rule needs something to send.",
+      opts: ["An email template", "An escalation rule", "A queue of 100 users", "A Macro"],
+      notes: ["Correct, email templates should be created first.", "Escalation rules are a separate feature.", "Queues do not need a set user count.", "Macros are not needed to create auto-responses."],
+      correct: 0,
+      why: "Email templates should be created before you create auto-response rules, because the rule sends one of them." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules and Assignment",
+      q: "A customer submits a case through a web form. You want Salesforce to reply to the customer and assign the case. What tools should you use?",
+      hint: "One tool replies, one tool assigns.",
+      opts: ["Escalation Rules and Flows", "Auto-response Rule and Assignment Rule", "Process Builder and Approval Process", "Web-to-Case and Support Process"],
+      notes: ["Escalation Rules handle aged Cases, not the first reply.", "Correct, the auto-response replies and the assignment rule sets the owner.", "Approval Processes are not needed here.", "Web-to-Case creates the Case, but does not reply or assign it."],
+      correct: 1,
+      why: "The auto-response rule sends the reply, and the assignment rule sets the owner when the Case is created." },
+
+    { domain: AUTO, source: "Lesson 606.1, Web-to-Case Scenario",
+      q: "Lauren's Customer Service team wants a form on the website that creates a Case in Salesforce when a customer submits it. What should she implement?",
+      hint: "The feature starts from the website form.",
+      opts: ["Auto-response Rule", "Case Assignment Rule", "Web-to-Case Form", "Digital Channel"],
+      notes: ["An auto-response replies but does not create the Case.", "An assignment rule assigns an existing Case.", "Correct, Web-to-Case creates Cases from website forms.", "Digital channels are a broader feature than this need."],
+      correct: 2,
+      why: "A Web-to-Case form captures the customer's information from the website and creates a Case automatically." },
+
+    { domain: AUTO, source: "Lesson 606.1, Auto-Response Rules",
+      q: "The admin is getting calls about whether web-to-case inquiries were received, and reps get repeated submissions. What should the admin configure?",
+      hint: "The customer needs a confirmation that the inquiry arrived.",
+      opts: ["Assignment Rules", "Auto-response rules", "Queues", "Omni-channel"],
+      notes: ["Assignment rules route Cases but do not confirm receipt.", "Correct, an auto-response tells the customer the submission was received.", "Queues hold work but do not confirm receipt.", "Omni-channel routes work, not confirmations."],
+      correct: 1,
+      why: "An auto-response confirms the submission was received, which answers the calls and reduces repeat submissions." },
+
+    { domain: AUTO, source: "Lesson 606.1, Escalation Rules",
+      q: "What does an Escalation Rule do?",
+      hint: "It acts on Cases that have been open too long.",
+      opts: ["Reassigns and escalates a Case based on its age and criteria", "Sends a marketing campaign", "Creates a Contact for each email", "Locks the Case record"],
+      notes: ["Correct, escalation reassigns a Case when its age and criteria match.", "Marketing campaigns are not Escalation Rules.", "Contacts are created by Email-to-Case, not escalation.", "Records are not locked by escalation."],
+      correct: 0,
+      why: "An Escalation Rule reassigns and escalates a Case based on how old it is and the criteria you set." },
+
+    { domain: AUTO, source: "Lesson 606.1, Escalation Rules",
+      q: "Customers cannot wait more than 5 hours for their issues to be solved. Which tool escalates Cases that are still open after that time?",
+      hint: "The tool works on the age of the Case.",
+      opts: ["Escalation Rules", "Auto-response Rules", "Queues", "Macros"],
+      notes: ["Correct, escalation rules act on Cases by age.", "Auto-responses reply on creation, not on age.", "Queues hold work but do not escalate it.", "Macros do not escalate Cases."],
+      correct: 0,
+      why: "Escalation Rules check the age of open Cases and act when a time limit like 5 hours is reached." },
+
+    { domain: AUTO, source: "Lesson 606.1, Escalation Rules",
+      q: "Which object can an Escalation Rule act on?",
+      hint: "It is the same object as the case itself.",
+      opts: ["Cases only", "Leads only", "Accounts only", "All objects"],
+      notes: ["Correct, escalation rules are only for Cases.", "Leads are not escalated by this rule.", "Accounts are not escalated by this rule.", "Escalation is limited to Cases."],
+      correct: 0,
+      why: "Escalation Rules are only available for Cases." },
+
+    { domain: AUTO, source: "Lesson 606.1, Escalation Rules",
+      q: "When creating an Escalation Rule, auto-reassignment of Cases can be assigned to which two options? Select 2.",
+      hint: "Escalated Cases go to someone who can work them.",
+      type: "multi",
+      opts: ["Users", "Roles", "Public Groups", "Queues"],
+      notes: ["Correct, a Case can be reassigned to a User.", "Roles are not an escalation destination.", "Public Groups are not an escalation destination.", "Correct, a Case can be reassigned to a Queue."],
+      correct: [0, 3],
+      why: "An escalation can reassign a Case to a User or to a Queue." },
+
+    { domain: AUTO, source: "Lesson 606.1, Support Processes",
+      q: "What is a support process?",
+      hint: "It is about steps for resolving a specific kind of issue.",
+      opts: ["The steps to resolve a specific support issue, depending on the product, service, or inquiry", "A list of users who can view a Case", "A type of email template", "The format for a Case number"],
+      notes: ["Correct, a support process holds the steps for a specific issue.", "User visibility is set with sharing, not support processes.", "Email templates are a separate feature.", "Case numbers are set separately."],
+      correct: 0,
+      why: "A support process contains the steps to resolve a specific issue, depending on the product, service, or customer inquiry." },
+
+    { domain: AUTO, source: "Lesson 606.1, Support Processes",
+      q: "What does a support process control?",
+      hint: "It is built on a field on the Case.",
+      opts: ["The status values available on a case", "The list of users who can view a case", "The record type assigned to a case", "The priority level of a case"],
+      notes: ["Correct, the support process controls the status values through the status field.", "Visibility is controlled elsewhere.", "A record type is assigned to a support process, but the process does not control it.", "Priority is a separate field."],
+      correct: 0,
+      why: "A support process is built on the Case status field, so it controls which status values are available." },
+
+    { domain: AUTO, source: "Lesson 606.1, Support Processes",
+      q: "Which two are key skills or tools for implementing a custom support process? Select 2.",
+      hint: "Think about the object setup items you use for stages and record types.",
+      type: "multi",
+      opts: ["Record types", "Email signatures", "Picklist management", "Quick Text"],
+      notes: ["Correct, each support process is assigned a record type.", "Email signatures are not part of support process setup.", "Correct, picklist management controls the stage values.", "Quick Text is a service productivity tool, not a support process tool."],
+      correct: [0, 2],
+      why: "Key tools for a support process include record types and picklist management, along with user management, public groups, queues, and escalation rules." },
+
+    { domain: AUTO, source: "Lesson 606.1, Knowledge Check",
+      q: "A Salesforce Administrator is implementing Service Cloud for hardware and software support processes. Which three should they implement so the right agents see the right Cases? Select 3.",
+      hint: "One item connects to the support process, one holds the work, and one routes it.",
+      type: "multi",
+      opts: ["Record Types", "Auto-response Rules", "Queues", "Escalation Rules", "Assignment Rules"],
+      notes: ["Correct, each support process is tied to a record type.", "Auto-responses reply to customers, not agents.", "Correct, queues hold the cases for each team.", "Escalation Rules handle aged Cases, not access.", "Correct, assignment rules route Cases to the right agents."],
+      correct: [0, 2, 4],
+      why: "Record types connect each support process, queues hold work for each team, and assignment rules route Cases to agents trained for them." },
+
+    { domain: SVC, source: "Lesson 606.2, Salesforce Knowledge",
+      q: "What is a primary benefit of using Salesforce Knowledge in a support organization?",
+      hint: "Think about what agents and customers need from answers.",
+      opts: ["Tracks employee performance", "Reduces email spam", "Enables faster, consistent answers to common questions", "Sends automated marketing emails"],
+      notes: ["Performance tracking is a different feature.", "Spam is handled by email tools.", "Correct, Knowledge gives agents and customers consistent answers quickly.", "Marketing emails are not Knowledge."],
+      correct: 2,
+      why: "Salesforce Knowledge gives faster, consistent answers, so customers find answers on their own and new agents get the information they need." },
+
+    { domain: SVC, source: "Lesson 606.2, Knowledge Base",
+      q: "Where can Salesforce Knowledge articles be made visible?",
+      hint: "Knowledge can be shared beyond the internal team.",
+      opts: ["Only to internal users", "Only to customers via email", "To internal users, partners, and customers", "Only in Salesforce reports"],
+      notes: ["Internal users are one audience, not the only one.", "Email is not the only channel.", "Correct, articles can be visible to internal users, partners, and customers.", "Articles are not limited to reports."],
+      correct: 2,
+      why: "Knowledge can be made visible to internal users, partners, and customers, through customer-facing pages or portals." },
+
+    { domain: SVC, source: "Lesson 606.2, Creating a Knowledge Article",
+      q: "What is the correct lifecycle order for a Knowledge article?",
+      hint: "You write it, check it, release it, then retire it.",
+      opts: ["Draft, review, publish, archive", "Publish, draft, archive, review", "Draft, publish, review, archive", "Archive, draft, review, publish"],
+      notes: ["Correct, the cycle is draft, review, publish, then archive.", "Publishing comes after review, not before.", "Review has to come before publish.", "Archive is the last step, not the first."],
+      correct: 0,
+      why: "A Knowledge article moves through draft, review, publish, and archive." },
+
+    { domain: SVC, source: "Lesson 606.2, Creating a Knowledge Article",
+      q: "What happens when an edit is made to a Knowledge article?",
+      hint: "Versions are kept so you can go back.",
+      opts: ["A new version is created", "The original is deleted", "It is automatically published to customers", "Nothing; edits are not tracked"],
+      notes: ["Correct, each edit creates a new version.", "The original is kept as a version.", "Edits do not publish automatically.", "Edits are tracked as versions."],
+      correct: 0,
+      why: "When an edit is made to an article, a new version is created, and you can revert to an older version if needed." },
+
+    { domain: SVC, source: "Lesson 606.2, Data Categories",
+      q: "What do data categories let you do?",
+      hint: "They organize articles.",
+      opts: ["Organize and filter articles and control visibility by user role", "Assign Cases to users", "Send auto-response emails", "Track call durations"],
+      notes: ["Correct, categories organize articles and control who sees them.", "Case assignment is done with assignment rules.", "Auto-responses are separate rules.", "Call tracking is not a data category feature."],
+      correct: 0,
+      why: "Data categories organize and filter articles by topic, product, or region, and control visibility based on user roles." },
+
+    { domain: SVC, source: "Lesson 606.2, Data Categories",
+      q: "Which two statements about data categories are true? Select 2.",
+      hint: "Look for what an article can hold and what the categories control.",
+      type: "multi",
+      opts: ["An article can have multiple categories", "An article can only have one category", "Categories control article visibility by user role", "Categories send emails to customers"],
+      notes: ["Correct, you can assign multiple categories per article.", "Articles can have more than one category.", "Correct, visibility is controlled by user roles.", "Categories do not send emails."],
+      correct: [0, 2],
+      why: "An article can be assigned multiple categories, and those categories help control which user roles can see it." },
+
+    { domain: SVC, source: "Lesson 606.2, Service Console",
+      q: "What does the Service Console provide?",
+      hint: "It is a unified workspace for support agents.",
+      opts: ["A unified interface for support agents with tab-based navigation", "A marketing campaign builder", "A sales forecasting tool", "A dashboard builder for executives"],
+      notes: ["Correct, agents access Cases, Knowledge, CTI, email, and chat in one place.", "Campaigns are a marketing feature.", "Forecasting is a sales feature.", "Dashboards are built with reports, not the console."],
+      correct: 0,
+      why: "The Service Console gives support agents one interface to access Cases, Knowledge, CTI, emails, and live chat, with tab-based navigation for multitasking." },
+
+    { domain: SVC, source: "Lesson 606.2, Service Console",
+      q: "What is the purpose of utility bar components in the Console?",
+      hint: "They sit at the bottom of the console.",
+      opts: ["Manage dashboards", "Control user logins", "Provide quick access to tools like Macros, History, or Notes", "Assign tasks to leads"],
+      notes: ["Dashboards are managed elsewhere.", "Logins are managed in Setup.", "Correct, the utility bar gives quick access to tools like Macros, History, and Notes.", "Task assignment is not a utility bar function."],
+      correct: 2,
+      why: "Utility bar components provide quick access to productivity tools such as Macros, History, and Notes." },
+
+    { domain: SVC, source: "Lesson 606.2, Macros",
+      q: "What are Macros used for?",
+      hint: "They do several steps at once.",
+      opts: ["Completing repetitive tasks, such as sending an email or updating a Case status", "Assigning Users to Profiles", "Building dashboards", "Creating Permission Sets"],
+      notes: ["Correct, a Macro runs several steps at once.", "Profiles are set in Setup, not Macros.", "Dashboards are built with reports.", "Permission Sets are a separate setup item."],
+      correct: 0,
+      why: "Macros complete repetitive tasks such as sending an email, selecting a template, or updating a Case status, in one step." },
+
+    { domain: SVC, source: "Lesson 606.2, Macros",
+      q: "Which of the following is NOT a supported Macro action?",
+      hint: "Look for the action that removes data.",
+      opts: ["Send an email", "Update case status", "Add case comment", "Delete a record"],
+      notes: ["Email is a supported Macro action.", "Updating Case status is a supported Macro action.", "Adding a Case comment is a supported Macro action.", "Correct, Macros do not delete records."],
+      correct: 3,
+      why: "Macros can send emails, update Case status, and add comments, but they cannot delete a record." },
+
+    { domain: SVC, source: "Lesson 606.2, Macros",
+      q: "Who can create Macros?",
+      hint: "Admins control this, and the permission should be given sparingly.",
+      opts: ["A Salesforce Admin, or end users if they are given permission", "Only Salesforce Support", "Only customers", "Any user, with no setup"],
+      notes: ["Correct, admins create Macros or grant permission to end users.", "Salesforce Support does not create your Macros.", "Customers do not create Macros.", "Permission must be given first."],
+      correct: 0,
+      why: "A Salesforce Admin can create Macros for end users, or give end users permission to create their own, which should be given out sparingly." },
+
+    { domain: SVC, source: "Lesson 606.2, Quick Text",
+      q: "What are Quick Text messages?",
+      hint: "They save time when the same message is sent often.",
+      opts: ["Reusable, pre-written text snippets an agent can insert into a chat or email", "Automatic emails sent when a Case closes", "Scheduled reports sent to managers", "Text messages sent to Leads by SMS"],
+      notes: ["Correct, Quick Text stores reusable snippets for agents.", "Closing-related emails are not Quick Text.", "Reports are not Quick Text.", "Quick Text is not an SMS campaign feature."],
+      correct: 0,
+      why: "Quick Text messages are reusable snippets that agents insert into chats and emails to answer common questions quickly." },
+
+    { domain: SVC, source: "Lesson 606.2, Einstein for Service",
+      q: "What does Einstein Work Summaries do?",
+      hint: "It helps agents close cases quickly.",
+      opts: ["Drafts a summary with key details such as reasons and outcomes to help agents close cases quickly", "Translates Case emails into another language", "Creates Accounts automatically from a chat", "Escalates Cases after 5 hours"],
+      notes: ["Correct, Work Summaries draft the summary with the reason and outcome.", "Translation is not Work Summaries.", "Accounts are not created by Work Summaries.", "Escalation is handled by escalation rules."],
+      correct: 0,
+      why: "Einstein Work Summaries draft a summary of key details, like reasons and outcomes, so agents can close conversations faster." },
+
+    { domain: SVC, source: "Lesson 606.2, Einstein for Service",
+      q: "How do Einstein Reply Recommendations work?",
+      hint: "They learn from past chat conversations.",
+      opts: ["They learn from past chat transcripts and suggest replies that an admin can select, edit, and publish", "They send automatic replies to all Cases", "They create Knowledge articles from email attachments", "They reassign Cases to queues"],
+      notes: ["Correct, the model learns from transcripts and admins publish replies.", "Auto-response rules send replies, not Einstein.", "Articles are not created from attachments.", "Queues are assigned by routing rules."],
+      correct: 0,
+      why: "Einstein Reply Recommendations are trained on past chat transcripts. An admin selects, edits, and publishes the replies that agents can use in real time." },
+
+    { domain: SVC, source: "Lesson 606.2, Einstein for Service",
+      q: "Einstein Reply Recommendations are used in which service channel?",
+      hint: "The lesson's example is a live conversation.",
+      opts: ["Chat service channel", "Phone only", "Social media only", "Field service"],
+      notes: ["Correct, the model learns from common chat responses.", "Phone calls are not the training source here.", "Social media is not the example used.", "Field service is a separate feature."],
+      correct: 0,
+      why: "Einstein Reply Recommendations identify common responses to customer inquiries in the Chat service channel." },
+
+    { domain: SVC, source: "Lesson 606.2, Einstein for Service",
+      q: "Einstein for Service is an example of which kind of feature?",
+      hint: "It saves agents time by drafting content.",
+      opts: ["Generative AI features for service", "A reporting tool", "An email deliverability tool", "A Lightning page type"],
+      notes: ["Correct, Einstein for Service adds generative AI to service work.", "Reports are a separate feature.", "Email deliverability is not Einstein for Service.", "Lightning pages are a different setup item."],
+      correct: 0,
+      why: "Einstein for Service adds generative AI features such as Work Summaries and Reply Recommendations to help agents." }
+  ];
+
+  const TOTAL_Q = 20;
+  const TIME_LIMIT = 45 * 60;
+
+  let questions = [];
+  let current = 0;
+  let answers = [];
+  let timer = null;
+  let secondsLeft = TIME_LIMIT;
+  const MAX_HINTS = 3;
+  const MAX_FIFTY = 3;
+  let hintsLeft = MAX_HINTS;
+  let fiftyLeft = MAX_FIFTY;
+
+  const screenStart = document.getElementById('screen-start');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResults = document.getElementById('screen-results');
+  const clockEl = document.getElementById('clock');
+  const qMeta = document.getElementById('q-meta');
+  const qText = document.getElementById('q-text');
+  const optList = document.getElementById('opt-list');
+  const progressFill = document.getElementById('progress-fill');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildQuestionSet() {
+    const picked = shuffle(BANK).slice(0, TOTAL_Q);
+    questions = picked.map(orig => {
+      const order = shuffle(orig.opts.map((_, i) => i));
+      const isMulti = orig.type === 'multi';
+      return {
+        domain: orig.domain,
+        source: orig.source,
+        q: orig.q,
+        why: orig.why,
+        hint: orig.hint || "",
+        multi: isMulti,
+        selectCount: isMulti ? orig.correct.length : 1,
+        displayOpts: order.map(i => orig.opts[i]),
+        displayNotes: order.map(i => (orig.notes && orig.notes[i]) ? orig.notes[i] : ""),
+        correctIndex: isMulti ? null : order.indexOf(orig.correct),
+        correctIndices: isMulti ? orig.correct.map(c => order.indexOf(c)).sort((a, b) => a - b) : null
+      };
+    });
+    answers = questions.map(item => item.multi ? [] : null);
+    questions.forEach(item => { item.hintUsed = false; item.removed = []; });
+    hintsLeft = MAX_HINTS;
+    fiftyLeft = MAX_FIFTY;
+    current = 0;
+  }
+
+  function isAnswered(item, ans) {
+    if (item.multi) return Array.isArray(ans) && ans.length === item.selectCount;
+    return ans !== null;
+  }
+
+  function isCorrectAnswer(item, ans) {
+    if (item.multi) {
+      if (!Array.isArray(ans) || ans.length !== item.correctIndices.length) return false;
+      const sorted = ans.slice().sort((a, b) => a - b);
+      return sorted.every((v, i) => v === item.correctIndices[i]);
+    }
+    return ans === item.correctIndex;
+  }
+
+  function formatClock(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function startTimer() {
+    secondsLeft = TIME_LIMIT;
+    clockEl.textContent = formatClock(secondsLeft);
+    clockEl.classList.remove('low');
+    clearInterval(timer);
+    timer = setInterval(() => {
+      secondsLeft--;
+      clockEl.textContent = formatClock(secondsLeft);
+      if (secondsLeft <= 300) clockEl.classList.add('low');
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        finishTest();
+      }
+    }, 1000);
+  }
+
+  function wrongIndices(item) {
+    return item.displayOpts.map((_, i) => i).filter(i =>
+      item.multi ? !item.correctIndices.includes(i) : i !== item.correctIndex);
+  }
+
+  // 50/50 always leaves at least one wrong answer, so it never gives the answer away
+  function fiftyRemoveCount(item) {
+    const wrong = wrongIndices(item).length;
+    return Math.max(0, Math.min(2, wrong - 1));
+  }
+
+  function renderHelpers(item) {
+    const btnHint = document.getElementById('btn-hint');
+    const btnFifty = document.getElementById('btn-fifty');
+    const box = document.getElementById('hint-box');
+    document.getElementById('hint-left').textContent = hintsLeft + ' left';
+    document.getElementById('fifty-left').textContent = fiftyLeft + ' left';
+    btnHint.disabled = item.hintUsed || hintsLeft === 0 || !item.hint;
+    const canFifty = fiftyRemoveCount(item) > 0;
+    btnFifty.disabled = item.removed.length > 0 || fiftyLeft === 0 || !canFifty;
+    btnFifty.title = canFifty ? '' : 'Not available on this question';
+    if (item.hintUsed) {
+      box.innerHTML = '<b>💡 Tip:</b> ' + item.hint;
+      box.classList.remove('hidden');
+    } else {
+      box.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('btn-hint').addEventListener('click', () => {
+    const item = questions[current];
+    if (item.hintUsed || hintsLeft === 0) return;
+    item.hintUsed = true;
+    hintsLeft--;
+    renderQuestion();
+  });
+
+  document.getElementById('btn-fifty').addEventListener('click', () => {
+    const item = questions[current];
+    const n = fiftyRemoveCount(item);
+    if (item.removed.length || fiftyLeft === 0 || n === 0) return;
+    item.removed = shuffle(wrongIndices(item)).slice(0, n);
+    fiftyLeft--;
+    // clear any selection that was just crossed out
+    const ans = answers[current];
+    if (item.multi) answers[current] = ans.filter(i => !item.removed.includes(i));
+    else if (item.removed.includes(ans)) answers[current] = null;
+    renderQuestion();
+  });
+
+  function renderQuestion() {
+    const item = questions[current];
+    qMeta.textContent = 'Question ' + (current + 1) + ' of ' + questions.length + ' \u00b7 ' + item.domain;
+    qText.textContent = item.q;
+    progressFill.style.width = ((current) / questions.length * 100) + '%';
+
+    const qHint = document.getElementById('q-hint');
+    if (item.multi) {
+      qHint.textContent = 'Select ' + item.selectCount + ' answers';
+      qHint.classList.remove('hidden');
+    } else {
+      qHint.classList.add('hidden');
+    }
+
+    optList.innerHTML = '';
+    item.displayOpts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      const ans = answers[current];
+      const isSelected = item.multi ? (Array.isArray(ans) && ans.includes(idx)) : (ans === idx);
+      if (isSelected) btn.classList.add('selected');
+      if (item.removed.includes(idx)) { btn.classList.add('removed'); btn.disabled = true; }
+      btn.innerHTML = '<span class="tag">' + String.fromCharCode(65 + idx) + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => {
+        if (item.multi) {
+          const cur = Array.isArray(answers[current]) ? answers[current].slice() : [];
+          const pos = cur.indexOf(idx);
+          if (pos >= 0) {
+            cur.splice(pos, 1);
+          } else if (cur.length < item.selectCount) {
+            cur.push(idx);
+          }
+          answers[current] = cur;
+        } else {
+          answers[current] = idx;
+        }
+        renderQuestion();
+      });
+      optList.appendChild(btn);
+    });
+
+    renderHelpers(item);
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = !isAnswered(item, answers[current]);
+    btnNext.textContent = current === questions.length - 1 ? 'FINISH ▶' : 'NEXT ▶';
+  }
+
+  function finishTest() {
+    clearInterval(timer);
+    screenQuiz.classList.add('hidden');
+    screenResults.classList.remove('hidden');
+    renderResults();
+  }
+
+  function domainColor(pct) {
+    if (pct >= 80) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+    if (pct >= 60) return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+  }
+
+  // ---- Fireworks celebration (canvas particles, no external libs) ----
+  function launchFireworks() {
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#F2A541', '#FFE08A', '#7FB8E0', '#FFFFFF', '#E0646B', '#8ED08F'];
+    let particles = [];
+
+    function spawnBurst(x, y) {
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = 2 + Math.random() * 4;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2 + Math.random() * 2.5
+        });
+      }
+    }
+
+    const bursts = 5;
+    for (let b = 0; b < bursts; b++) {
+      setTimeout(() => {
+        spawnBurst(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.2 + Math.random() * 0.35)
+        );
+      }, b * 350);
+    }
+
+    let frame = 0;
+    const maxFrames = bursts * 21 + 90;
+
+    function tick() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 1;
+        if (p.life > 0) {
+          ctx.globalAlpha = Math.max(p.life / 90, 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+
+      if (frame < maxFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.style.display = 'none';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function renderResults() {
+    let correctCount = 0;
+    const domainTotals = {};
+    const domainCorrect = {};
+
+    questions.forEach((item, i) => {
+      domainTotals[item.domain] = (domainTotals[item.domain] || 0) + 1;
+      const isRight = isCorrectAnswer(item, answers[i]);
+      if (isRight) {
+        correctCount++;
+        domainCorrect[item.domain] = (domainCorrect[item.domain] || 0) + 1;
+      } else {
+        domainCorrect[item.domain] = domainCorrect[item.domain] || 0;
+      }
+    });
+
+    const pct = Math.round((correctCount / questions.length) * 100);
+    document.getElementById('score-num').textContent = correctCount + ' / ' + questions.length;
+    document.getElementById('score-pct').textContent = pct + '%';
+
+    const scoreEmoji = document.getElementById('score-emoji');
+    const verdict = document.getElementById('score-verdict');
+    if (pct >= 85) {
+      verdict.textContent = "Gobble-tastic! You're crushing it.";
+      scoreEmoji.textContent = "🦃🐢💨";
+      if (!window.kbaKeyMode) launchFireworks();
+    } else if (pct >= 70) {
+      verdict.textContent = "Turkey-trot pace! Review the misses below to pick up speed.";
+      scoreEmoji.textContent = "❄️🐢";
+      if (!window.kbaKeyMode) launchFireworks();
+    } else {
+      verdict.textContent = "Don't let the chill get you. Review below and try again.";
+      scoreEmoji.textContent = "⛄🐢";
+    }
+
+    const bdRows = document.getElementById('breakdown-rows');
+    bdRows.innerHTML = '';
+    Object.keys(domainTotals).sort().forEach(domain => {
+      const total = domainTotals[domain];
+      const right = domainCorrect[domain];
+      const dpct = Math.round((right / total) * 100);
+      let tag = 'mid', tagLabel = 'Solid';
+      if (dpct >= 80) { tag = 'strong'; tagLabel = 'Strong'; }
+      else if (dpct < 60) { tag = 'weak'; tagLabel = 'Study more'; }
+
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      row.innerHTML =
+        '<div class="bd-head"><span class="name">' + domain + '<span class="bd-tag ' + tag + '">' + tagLabel + '</span></span><span class="frac">' + right + '/' + total + '</span></div>' +
+        '<div class="bd-bar-track"><div class="bd-bar-fill" style="width:' + dpct + '%; background:' + domainColor(dpct) + ';"></div></div>';
+      bdRows.appendChild(row);
+    });
+
+    document.getElementById('helper-summary').textContent =
+      'Hints used: ' + (MAX_HINTS - hintsLeft) + ' of ' + MAX_HINTS + ' \u00b7 50/50 used: ' + (MAX_FIFTY - fiftyLeft) + ' of ' + MAX_FIFTY;
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    reviewList.classList.add('hidden');
+
+    questions.forEach((item, i) => {
+      const userAns = answers[i];
+      const isCorrect = isCorrectAnswer(item, userAns);
+      const div = document.createElement('div');
+      div.className = 'review-item';
+
+      function labelFor(idx) { return String.fromCharCode(65 + idx) + '. ' + item.displayOpts[idx]; }
+
+      let userLabel, correctLabel, userNote;
+      if (item.multi) {
+        const ansArr = Array.isArray(userAns) ? userAns.slice().sort((a, b) => a - b) : [];
+        userLabel = ansArr.length ? ansArr.map(labelFor).join('; ') : 'No answer';
+        correctLabel = item.correctIndices.map(labelFor).join('; ');
+        const wrongNotes = ansArr.filter(idx => !item.correctIndices.includes(idx)).map(idx => item.displayNotes[idx]).filter(Boolean);
+        userNote = (!isCorrect && wrongNotes.length) ? '<div class="review-note">' + wrongNotes.join(' ') + '</div>' : '';
+      } else {
+        userLabel = userAns === null ? 'No answer' : labelFor(userAns);
+        correctLabel = labelFor(item.correctIndex);
+        userNote = (userAns !== null && !isCorrect && item.displayNotes[userAns]) ? '<div class="review-note">' + item.displayNotes[userAns] + '</div>' : '';
+      }
+
+      div.innerHTML =
+        '<div class="review-head">' +
+          '<span class="review-num">Q' + (i + 1) + '</span>' +
+          '<span class="review-status ' + (isCorrect ? 'good' : 'bad') + '">' + (isCorrect ? '✅ Correct' : '❌ Incorrect') + '</span>' +
+          '<span class="review-domain">' + item.domain + '</span>' +
+          ((item.hintUsed || item.removed.length) ? '<span class="review-tags">' +
+            (item.hintUsed ? '<span class="review-tag">💡 hint</span>' : '') +
+            (item.removed.length ? '<span class="review-tag">✂️ 50/50</span>' : '') + '</span>' : '') +
+        '</div>' +
+        '<p class="review-q">' + item.q + '</p>' +
+        '<div class="review-line ' + (isCorrect ? 'your-right' : 'your-wrong') + '"><span class="lbl">Your answer: </span>' + userLabel + '</div>' +
+        userNote +
+        (isCorrect ? '' : '<div class="review-line your-right"><span class="lbl">Correct answer: </span>' + correctLabel + '</div>') +
+        '<div class="review-why">' + item.why + '</div>' +
+        '<div class="review-source">Read more: ' + item.source + '</div>';
+      reviewList.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    buildQuestionSet();
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.remove('hidden');
+    renderQuestion();
+    startTimer();
+  });
+
+  document.getElementById('btn-reshuffle').addEventListener('click', () => {
+    buildQuestionSet();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (current > 0) { current--; renderQuestion(); }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else { finishTest(); }
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    const list = document.getElementById('review-list');
+    list.classList.toggle('hidden');
+  });
+
+  document.getElementById('btn-retake').addEventListener('click', () => {
+    screenResults.classList.add('hidden');
+    screenStart.classList.remove('hidden');
+    clockEl.textContent = formatClock(TIME_LIMIT);
+    clockEl.classList.remove('low');
+  });
+
+
+  // Answer key mode: fill every question with the correct answer and jump to the end
+  window.kbaAnswerKey = function () {
+    window.kbaKeyMode = true;
+    buildQuestionSet();
+    questions.forEach((item, i) => {
+      answers[i] = item.multi ? item.correctIndices.slice() : item.correctIndex;
+    });
+    clearInterval(timer);
+    screenStart.classList.add('hidden');
+    screenQuiz.classList.add('hidden');
+    finishTest();
+    document.getElementById('review-list').classList.remove('hidden');
+  };
+
+  clockEl.textContent = formatClock(TIME_LIMIT);
+})();
+</script>
+<script src="retro.js?v=11"></script>
+<script src="music.js?v=11" data-pos="header"></script>
+</body>
+</html>
